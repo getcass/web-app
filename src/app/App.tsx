@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import backgroundImage from 'figma:asset/de3dc79ead86de6bf95cc23a50597bd6d98ddcbc.png';
+import backgroundImage from '../assets/de3dc79ead86de6bf95cc23a50597bd6d98ddcbc.png';
 import { InvitationContent } from './components/InvitationContent';
 import { Hero } from './components/Hero';
 import { FloatingParticles } from './components/FloatingParticles';

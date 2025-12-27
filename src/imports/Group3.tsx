@@ -1,5 +1,5 @@
 import svgPaths from "./svg-vc5xxzgoh6";
-import imgMidnight1 from "figma:asset/de3dc79ead86de6bf95cc23a50597bd6d98ddcbc.png";
+import imgMidnight1 from "../assets/de3dc79ead86de6bf95cc23a50597bd6d98ddcbc.png";
 import { imgGroup } from "./svg-eyfyv";
 
 function Group() {
