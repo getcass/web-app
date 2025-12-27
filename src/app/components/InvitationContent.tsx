@@ -43,7 +43,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
             <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-8 md:p-12">
               <h2 className="text-3xl md:text-4xl mb-6 text-white">Welcome to the Cass Private Alpha</h2>
               <p className="text-lg text-white/80 mb-6 leading-relaxed">
-                Two years ago, I was lucky enough to meet my now wife on a dating app. She was actually the very first date I arranged on it. I've learned that stories like this seem to be the exception. In my view, there are three major problems with how dating apps work today:
+                Hello, I'm Zain, founder of Cass. Two years ago, I was lucky enough to meet my now wife on a dating app. She was actually the very first date I arranged on it. I've learned that stories like this seem to be the exception. In my view, there are three major problems with how dating apps work today:
               </p>
               
               <div className="space-y-4 mb-6">

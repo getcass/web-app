@@ -14,38 +14,12 @@ export function Hero({ isLoaded }: HeroProps) {
           transition={{ duration: 1, ease: 'easeOut' }}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
-            className="mb-6"
-          >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl text-white">
-              Welcome to the<br />Cass Private Alpha
-            </h1>
-            <motion.div
-              className="h-1 w-24 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-6 rounded-full"
-              initial={{ width: 0 }}
-              animate={isLoaded ? { width: 96 } : {}}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            />
-          </motion.div>
-          
-          <motion.p 
-            className="text-xl md:text-2xl text-white/80 mb-12"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            You've been invited to shape the next generation of dating
-          </motion.p>
-
-          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.8 }}
-            className="flex flex-col items-center gap-3"
+            className="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-3"
           >
-            <span className="text-white/40 text-sm uppercase tracking-wider">Scroll to explore</span>
+            <span className="text-white/40 text-sm uppercase tracking-wider">Scroll to begin</span>
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
