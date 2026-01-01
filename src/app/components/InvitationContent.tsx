@@ -78,7 +78,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
 
           {/* Alpha Program */}
           <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Alpha Program</h2>
+            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Alpha Programme</h2>
             <Card className="p-8 md:p-12">
               <p className="text-foreground mb-5 leading-relaxed">
                 As an Alpha Tester you will be a founding member of the community. Your feedback will directly influence the final UX/UI and feature set of the app.
@@ -109,7 +109,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
             <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">What's In It For You?</h2>
             <Card className="p-8 md:p-12">
               <p className="text-foreground mb-5 leading-relaxed">
-                We value your time and your insights. Beyond helping shape the next big thing in dating, Alpha Testers receive:
+                We value your time and your insights. Beyond helping shape the next big thing in dating, Alpha Testers will receive:
               </p>
               
               <div className="grid md:grid-cols-2 gap-3">
