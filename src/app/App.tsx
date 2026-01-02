@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 import backgroundImage from '../assets/cass_bg.png';
+import backgroundImageVertical from '../assets/cass-bg-vertical.png';
 import { InvitationContent } from './components/InvitationContent';
 import { Hero } from './components/Hero';
 import { FloatingParticles } from './components/FloatingParticles';
@@ -66,10 +67,15 @@ export default function App() {
       {/* Animated Background */}
       <motion.div className="fixed left-0 top-0 z-0 w-full h-[100svh]">
         <div className="absolute inset-0">
-          <img 
-            src={backgroundImage} 
-            alt="" 
-            className="w-full h-full object-contain md:object-cover object-center saturate-125 contrast-105"
+          <img
+            src={backgroundImageVertical}
+            alt=""
+            className="w-full h-full object-cover object-center saturate-125 contrast-105 md:hidden"
+          />
+          <img
+            src={backgroundImage}
+            alt=""
+            className="w-full h-full object-cover object-center saturate-125 contrast-105 hidden md:block"
           />
         </div>
         <FloatingParticles />
