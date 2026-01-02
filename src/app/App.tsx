@@ -59,17 +59,17 @@ export default function App() {
   const overlayClassName = 'bg-gradient-to-b from-black/10 via-transparent to-black/35';
   
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-black">
+    <div className="relative min-h-[100svh] overflow-x-hidden bg-black">
       {/* Grain Overlay */}
       <GrainOverlay />
       
       {/* Animated Background */}
-      <motion.div className="fixed inset-0 z-0">
+      <motion.div className="fixed left-0 top-0 z-0 w-full h-[100svh]">
         <div className="absolute inset-0">
           <img 
             src={backgroundImage} 
             alt="" 
-            className="w-full h-full object-cover object-center saturate-125 contrast-105"
+            className="w-full h-full object-contain md:object-cover object-center saturate-125 contrast-105"
           />
         </div>
         <FloatingParticles />
