@@ -20,7 +20,7 @@ export function Hero({ isLoaded }: HeroProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={isLoaded ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, delay: 0.8 }}
-        className="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-3"
+        className="absolute bottom-[calc(5rem+env(safe-area-inset-bottom))] left-0 right-0 flex flex-col items-center gap-3"
       >
         <span className="text-white/40 text-sm uppercase tracking-wider">Scroll to begin</span>
         <motion.div

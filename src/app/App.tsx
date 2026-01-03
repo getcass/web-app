@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
-import { motion } from 'motion/react';
 import backgroundImage from '../assets/cass_bg.png';
 import backgroundImageVertical from '../assets/cass-bg-vertical.png';
 import { InvitationContent } from './components/InvitationContent';
@@ -12,7 +11,7 @@ import { BackToTop } from './components/BackToTop';
 function TopNav() {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-20">
-      <div className="pointer-events-auto flex items-center justify-between px-6 py-5">
+      <div className="pointer-events-auto flex items-center justify-between px-6 pb-5 pt-[calc(1.25rem+env(safe-area-inset-top))]">
         <Link
           to="/"
           className="text-white/70 hover:text-white text-xs tracking-wide"
@@ -65,7 +64,7 @@ export default function App() {
       <GrainOverlay />
       
       {/* Animated Background */}
-      <motion.div className="fixed left-0 top-0 z-0 w-full h-[100svh]">
+      <div className="fixed inset-x-0 top-0 z-0 h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={backgroundImageVertical}
@@ -81,7 +80,7 @@ export default function App() {
         <FloatingParticles />
         {/* Gradient Overlay */}
         <div className={"absolute inset-0 " + overlayClassName} />
-      </motion.div>
+      </div>
 
       <TopNav />
 

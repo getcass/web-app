@@ -85,7 +85,10 @@ export function SignUpForm() {
           <label className="block text-foreground mb-2">
             Invite Code <span className="text-destructive">*</span>
           </label>
-          <div className="flex gap-2 justify-center md:justify-start" onPaste={handleCodePaste}>
+          <div
+            className="grid w-full grid-cols-6 gap-2 md:flex md:justify-start"
+            onPaste={handleCodePaste}
+          >
             {formData.inviteCode.map((digit, index) => (
               <input
                 key={index}
@@ -97,7 +100,7 @@ export function SignUpForm() {
                 value={digit}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
                 onKeyDown={(e) => handleCodeKeyDown(index, e)}
-                className="w-12 h-12 text-center text-lg bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+                className="h-12 w-full min-w-0 text-center text-lg bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all md:w-12 md:flex-none"
               />
             ))}
           </div>
@@ -170,7 +173,7 @@ export function SignUpForm() {
             required
             value={formData.dateOfBirth}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+            className="block w-full max-w-full min-w-0 px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
           />
         </div>
 

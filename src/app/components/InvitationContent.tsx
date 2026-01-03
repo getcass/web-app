@@ -38,7 +38,7 @@ const itemVariantsNoOpacity = {
 export function InvitationContent({ isLoaded }: InvitationContentProps) {
   return (
     <div className="relative bg-gradient-to-b from-transparent via-black/50 to-black">
-      <div className="max-w-4xl mx-auto px-6 py-20">
+      <div className="max-w-4xl mx-auto px-6 pt-0 pb-20">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -50,7 +50,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
             <Card className="p-8 md:p-12">
               <h2 className="text-3xl md:text-4xl mb-4 text-foreground font-semibold tracking-tight">Welcome to the Cass Private Alpha</h2>
               <p className="text-foreground mb-4 leading-relaxed">
-                Hello! I'm Zain, founder of Cass. Two years ago, I was lucky enough to meet my now wife on a dating app. She was actually the very first date I arranged on it. I've learned that stories like this seem to be the exception. In my view, there are three major problems with how dating apps work today:
+                Hello! I’m Zain, founder of Cass. Two years ago, I was lucky enough to meet my wife on a dating app - she was actually the very first date I arranged on it. Experiences like ours are rare, and that’s not by chance. In my view, there are three major ways today’s dating apps fall short:
               </p>
               
               <div className="space-y-2 mb-4">
