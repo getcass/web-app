@@ -48,12 +48,14 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
           {/* Introduction */}
           <motion.div variants={itemVariantsNoOpacity} className="mb-16">
             <Card className="p-8 md:p-12">
-              <h2 className="text-3xl md:text-4xl mb-4 text-foreground font-semibold tracking-tight">Welcome to the Cass Private Alpha</h2>
-              <p className="text-foreground mb-4 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl text-foreground font-semibold tracking-tight text-balance">
+                Welcome to the Cass Private Alpha
+              </h2>
+              <p className="mt-4 leading-relaxed text-foreground">
                 Hello! I’m Zain, founder of Cass. Two years ago, I was lucky enough to meet my wife on a dating app - she was actually the very first date I arranged on it. Experiences like ours are rare, and that’s not by chance. In my view, there are three major ways today’s dating apps fall short:
               </p>
               
-              <div className="space-y-2 mb-4">
+              <div className="mt-5 space-y-3">
                 <ProblemItem 
                   icon={<ShieldAlert className="w-6 h-6" />}
                   text="They are unsafe and untrustworthy, particularly for women and vulnerable people."
@@ -68,7 +70,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
                 />
               </div>
 
-              <div className="pearl-card rounded-[var(--radius)] p-5 border border-border/50">
+              <div className="pearl-card mt-5 rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
                 <p className="text-foreground leading-relaxed">
                   <strong className="text-foreground">Cass</strong> aims to be the antidote to these problems. We're building a safe, trustworthy, and free to use platform that prioritises real compatibility over endless swiping. Before we launch to the world, we need a select group of users to help us break things and build things.
                 </p>
@@ -135,7 +137,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
                 We ask for three simple things from our Alpha Testers:
               </p>
               
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <CommitmentItem 
                   icon={<Activity className="w-6 h-6" />}
                   title="Active Engagement"
@@ -180,11 +182,11 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
 
 function ProblemItem({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <div className="flex items-start gap-4 text-foreground">
-      <div className="flex-shrink-0 w-10 h-10 rounded-[var(--radius)] bg-secondary/50 flex items-center justify-center text-primary border border-border/60">
+    <div className="grid grid-cols-[2.75rem_1fr] items-center gap-4 rounded-[calc(var(--radius)+0.25rem)] border border-border/60 bg-muted/20 p-4 text-foreground shadow-sm">
+      <div className="flex h-11 w-11 items-center justify-center rounded-[calc(var(--radius)+0.25rem)] border border-border/70 bg-muted/50 text-foreground/70 shadow-sm">
         {icon}
       </div>
-      <p className="flex-1 pt-1 text-foreground">{text}</p>
+      <p className="leading-relaxed text-foreground">{text}</p>
     </div>
   );
 }
@@ -196,7 +198,7 @@ function InfoCard({ icon, title, description }: { icon: React.ReactNode; title: 
       transition={{ duration: 0.2 }}
       className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm backdrop-blur-lg backdrop-saturate-150"
     >
-      <div className="text-primary mb-2">{icon}</div>
+      <div className="mb-2 text-foreground/70">{icon}</div>
       <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>
       <p className="text-sm text-foreground">{description}</p>
     </motion.div>
@@ -210,7 +212,7 @@ function RewardCard({ icon, title, description }: { icon: React.ReactNode; title
       transition={{ duration: 0.2 }}
       className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm backdrop-blur-lg backdrop-saturate-150"
     >
-      <div className="text-primary mb-2">{icon}</div>
+      <div className="mb-2 text-foreground/70">{icon}</div>
       <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>
       <p className="text-sm text-foreground">{description}</p>
     </motion.div>
@@ -219,13 +221,13 @@ function RewardCard({ icon, title, description }: { icon: React.ReactNode; title
 
 function CommitmentItem({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
-    <div className="flex gap-4">
-      <div className="flex-shrink-0 w-10 h-10 rounded-[var(--radius)] bg-secondary/50 text-primary flex items-center justify-center border border-border/60">
+    <div className="grid grid-cols-[2.75rem_1fr] items-center gap-4 rounded-[calc(var(--radius)+0.25rem)] border border-border/60 bg-muted/20 p-4 shadow-sm">
+      <div className="flex h-11 w-11 items-center justify-center rounded-[calc(var(--radius)+0.25rem)] border border-border/70 bg-muted/50 text-foreground/70 shadow-sm">
         {icon}
       </div>
-      <div className="flex-1">
-        <h4 className="text-base font-semibold mb-1 text-foreground">{title}</h4>
-        <p className="text-sm text-foreground">{description}</p>
+      <div>
+        <h4 className="text-base font-semibold tracking-tight text-foreground">{title}</h4>
+        <p className="mt-1 text-sm leading-relaxed text-foreground">{description}</p>
       </div>
     </div>
   );
