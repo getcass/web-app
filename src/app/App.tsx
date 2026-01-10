@@ -42,7 +42,7 @@ export default function App() {
           <img
             src={backgroundImageVertical}
             alt=""
-            className="w-full h-full object-cover object-center saturate-125 contrast-105 md:hidden"
+            className="w-full h-full object-cover object-top saturate-125 contrast-105 md:hidden"
           />
           <img
             src={backgroundImage}

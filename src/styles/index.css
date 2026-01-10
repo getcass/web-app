@@ -8,7 +8,7 @@ html {
   min-height: 100dvh;
   background-color: black;
   background-image: url('../assets/cass-bg-vertical.png');
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -22,7 +22,7 @@ body {
   position: relative;
   background-color: black;
   background-image: url('../assets/cass-bg-vertical.png');
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -34,7 +34,7 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background-image: url('../assets/cass-bg-vertical.png');
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -43,10 +43,12 @@ body::before {
   html,
   body {
     background-image: url('../assets/cass_bg.png');
+    background-position: center;
   }
 
   body::before {
     background-image: url('../assets/cass_bg.png');
+    background-position: center;
   }
 }
 
