@@ -5,6 +5,7 @@
 html {
   scroll-behavior: smooth;
   height: 100%;
+  min-height: 100dvh;
   background-color: black;
   background-image: url('../assets/cass-bg-vertical.png');
   background-position: center;
@@ -15,10 +16,23 @@ html {
 body {
   overflow-x: hidden;
   overscroll-behavior-y: none;
-  min-height: 100%;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
+  position: relative;
   background-color: black;
+  background-image: url('../assets/cass-bg-vertical.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background-image: url('../assets/cass-bg-vertical.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -30,10 +44,16 @@ body {
   body {
     background-image: url('../assets/cass_bg.png');
   }
+
+  body::before {
+    background-image: url('../assets/cass_bg.png');
+  }
 }
 
 #root {
-  min-height: 100%;
+  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
 }
 
 input[type='date'] {
