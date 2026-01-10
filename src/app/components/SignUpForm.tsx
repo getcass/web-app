@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Check } from 'lucide-react';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -16,16 +18,35 @@ export function SignUpForm() {
     osVersion: '',
     consent: false
   });
+  const [submitState, setSubmitState] = useState<
+    { status: 'idle' } | { status: 'submitting' } | { status: 'success' } | { status: 'error'; message: string }
+  >({ status: 'idle' });
 
   const codeInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', {
+    setSubmitState({ status: 'submitting' });
+
+    const payload = {
       ...formData,
-      inviteCode: formData.inviteCode.join('')
-    });
-    // Handle form submission
+      inviteCode: formData.inviteCode.join(''),
+      submittedAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, 'signups'), payload);
+
+      setSubmitState({ status: 'success' });
+    } catch (err) {
+      setSubmitState({
+        status: 'error',
+        message:
+          err instanceof Error
+            ? err.message
+            : 'Submission failed. Please try again.'
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -271,10 +292,22 @@ export function SignUpForm() {
             type="submit"
             size="lg"
             className="w-full"
+            disabled={submitState.status === 'submitting'}
           >
-            Submit Application
+            {submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
           </Button>
         </motion.div>
+
+        {submitState.status === 'success' && (
+          <p className="text-sm text-center text-foreground">
+            Thanks — we received your application.
+          </p>
+        )}
+        {submitState.status === 'error' && (
+          <p className="text-sm text-center text-destructive">
+            {submitState.message}
+          </p>
+        )}
 
         <p className="text-foreground text-sm text-center">
           By submitting this form, you agree to participate in the Alpha testing Programme and provide honest feedback.
