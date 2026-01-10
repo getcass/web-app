@@ -3,7 +3,6 @@ import backgroundImage from '../assets/cass_bg.png';
 import backgroundImageVertical from '../assets/cass-bg-vertical.png';
 import { InvitationContent } from './components/InvitationContent';
 import { Hero } from './components/Hero';
-import { FloatingParticles } from './components/FloatingParticles';
 import { GrainOverlay } from './components/GrainOverlay';
 import { BackToTop } from './components/BackToTop';
 
@@ -32,7 +31,7 @@ export default function App() {
   const overlayClassName = 'bg-gradient-to-b from-black/10 via-transparent to-black/35';
   
   return (
-    <div className="relative min-h-[100dvh] overflow-x-hidden">
+    <div className="relative min-h-[100svh] overflow-x-hidden">
       {/* Grain Overlay */}
       <GrainOverlay />
       
@@ -50,7 +49,6 @@ export default function App() {
             className="w-full h-full object-cover object-center saturate-125 contrast-105 hidden md:block"
           />
         </div>
-        <FloatingParticles />
         {/* Gradient Overlay */}
         <div className={"absolute inset-0 " + overlayClassName} />
       </div>

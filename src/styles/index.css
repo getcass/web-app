@@ -5,7 +5,7 @@
 html {
   scroll-behavior: smooth;
   height: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
   background-color: black;
   background-image: url('../assets/cass-bg-vertical.png');
   background-position: top center;
@@ -16,7 +16,7 @@ html {
 body {
   overflow-x: hidden;
   overscroll-behavior-y: none;
-  min-height: 100dvh;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   position: relative;
@@ -53,9 +53,17 @@ body::before {
 }
 
 #root {
-  min-height: 100dvh;
+  min-height: 100vh;
   position: relative;
   z-index: 1;
+}
+
+@supports (height: 100svh) {
+  html,
+  body,
+  #root {
+    min-height: 100svh;
+  }
 }
 
 input[type='date'] {
