@@ -52,27 +52,27 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
                 Welcome to the Cass Private Alpha
               </h2>
               <p className="mt-4 leading-relaxed text-foreground">
-                Hello! I’m Zain, founder of Cass. Two years ago, I was lucky enough to meet my wife on a dating app - she was actually the very first date I arranged on it. Experiences like ours are rare, and that’s not by chance. In my view, there are three major ways today’s dating apps fall short:
+                Hi, I’m Zain, founder of Cass. Two years ago I met my wife on a dating app - she was actually the first date I set up. Stories like that should be normal, but they’re not. Here’s what I think most apps still get wrong:
               </p>
               
-              <div className="mt-5 space-y-3">
+              <div className="mt-3 space-y-3">
                 <ProblemItem 
                   icon={<ShieldAlert className="w-6 h-6" />}
-                  text="They are unsafe and untrustworthy, particularly for women and vulnerable people."
+                  text="They can be unsafe and untrustworthy"
                 />
                 <ProblemItem 
                   icon={<Shuffle className="w-6 h-6" />}
-                  text="The swiping dynamics create inequality and fatigue."
+                  text="Endless swiping feels exhausting"
                 />
                 <ProblemItem 
                   icon={<Lock className="w-6 h-6" />}
-                  text="They are heavily paywalled."
+                  text="Everything is paywalled"
                 />
               </div>
 
-              <div className="pearl-card mt-5 rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
+              <div className="pearl-card mt-4 rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
                 <p className="text-foreground leading-relaxed">
-                  <strong className="text-foreground">Cass</strong> aims to be the antidote to these problems. We're building a safe, trustworthy, and free to use platform that prioritises real compatibility over endless swiping. Before we launch to the world, we need a select group of users to help us break things and build things.
+                  <strong className="text-foreground">Cass</strong> is our attempt to fix these problems: safer, more trustworthy, and free to use. Built around real compatibility instead of endless swiping. Before we launch, we want a small group of users to try it, tell us what feels off, and help shape the product.
                 </p>
               </div>
             </Card>
@@ -82,7 +82,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
           <motion.div variants={itemVariantsNoOpacity} className="mb-16">
             <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Alpha Programme</h2>
             <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-5 leading-relaxed">
+              <p className="text-foreground mb-1 leading-relaxed">
                 As an Alpha Tester you will be a founding member of the community. Your feedback will directly influence the final UX/UI and feature set of the app.
               </p>
               
@@ -110,8 +110,8 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
           <motion.div variants={itemVariantsNoOpacity} className="mb-16">
             <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">What's In It For You?</h2>
             <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-5 leading-relaxed">
-                We value your time and your insights. Beyond helping shape the next big thing in dating, Alpha Testers will receive:
+              <p className="text-foreground mb-1 leading-relaxed">
+                We value your time and your insights. Beyond helping shape the next big thing in dating, Alpha Testers receive:
               </p>
               
               <div className="grid md:grid-cols-2 gap-3">
@@ -133,7 +133,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
           <motion.div variants={itemVariantsNoOpacity} className="mb-16">
             <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Commitment</h2>
             <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-5 leading-relaxed">
+              <p className="text-foreground mb-1 leading-relaxed">
                 We ask for three simple things from our Alpha Testers:
               </p>
               

@@ -76,7 +76,7 @@ export function SignUpForm() {
 
   return (
     <Card className="p-8 md:p-12">
-      <h3 className="text-2xl md:text-3xl mb-2 text-foreground font-semibold tracking-tight">Join the Alpha Program</h3>
+      <h3 className="text-2xl md:text-3xl mb-2 text-foreground font-semibold tracking-tight">Join the Alpha Programme</h3>
       <p className="text-foreground mb-5">Complete the form below to apply for early access.</p>
       
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -215,8 +215,8 @@ export function SignUpForm() {
 
         {/* Lives in London */}
         <div>
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <div className="relative flex-shrink-0 mt-1">
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex-shrink-0">
               <input
                 type="checkbox"
                 name="livesInLondon"
@@ -225,12 +225,12 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border">
-                <Check className="w-4 h-4 text-primary-foreground opacity-0 peer-checked:opacity-100 transition-opacity" />
+              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20">
+                <Check className="w-4 h-4 text-primary-foreground opacity-0 scale-75 peer-checked:opacity-100 peer-checked:scale-100 transition-[opacity,transform]" />
               </div>
             </div>
             <div className="flex-1">
-              <span className="text-foreground">
+              <span className="mt-3 block text-foreground">
                 I confirm that I currently live in London <span className="text-destructive">*</span>
               </span>
             </div>
@@ -239,8 +239,8 @@ export function SignUpForm() {
 
         {/* Consent to follow-up */}
         <div>
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <div className="relative flex-shrink-0 mt-1">
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex-shrink-0">
               <input
                 type="checkbox"
                 name="consent"
@@ -249,12 +249,12 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border">
-                <Check className="w-4 h-4 text-primary-foreground opacity-0 peer-checked:opacity-100 transition-opacity" />
+              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20">
+                <Check className="w-4 h-4 text-primary-foreground opacity-0 scale-75 peer-checked:opacity-100 peer-checked:scale-100 transition-[opacity,transform]" />
               </div>
             </div>
             <div className="flex-1">
-              <span className="text-foreground">
+              <span className="block text-foreground">
                 I consent to being contacted for follow-up surveys and feedback <span className="text-destructive">*</span>
               </span>
             </div>
@@ -277,7 +277,7 @@ export function SignUpForm() {
         </motion.div>
 
         <p className="text-foreground text-sm text-center">
-          By submitting this form, you agree to participate in the Alpha testing program and provide honest feedback.
+          By submitting this form, you agree to participate in the Alpha testing Programme and provide honest feedback.
         </p>
       </form>
     </Card>
