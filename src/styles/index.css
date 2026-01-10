@@ -4,17 +4,32 @@
 
 html {
   scroll-behavior: smooth;
-  background-color: black;
   height: 100%;
+  background-color: black;
+  background-image: url('../assets/cass-bg-vertical.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body {
   overflow-x: hidden;
   overscroll-behavior-y: none;
-  background-color: black;
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background-color: black;
+  background-image: url('../assets/cass-bg-vertical.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
+  html,
+  body {
+    background-image: url('../assets/cass_bg.png');
+  }
 }
 
 #root {

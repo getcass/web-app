@@ -164,7 +164,7 @@ export function InvitationContent({ isLoaded }: InvitationContentProps) {
           {/* Footer */}
           <motion.div variants={itemVariants} className="text-center">
             <p className="text-xl text-white/70 italic mb-4">
-              Fairly ever after :)
+              For ever after 💕
             </p>
             <p className="text-white/80">
               <strong className="text-white">Zain</strong>
