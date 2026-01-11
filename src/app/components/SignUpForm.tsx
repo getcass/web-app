@@ -2,7 +2,6 @@ import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
-import { Check } from 'lucide-react';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -246,9 +245,7 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20">
-                <Check className="w-4 h-4 text-primary-foreground opacity-0 scale-75 peer-checked:opacity-100 peer-checked:scale-100 transition-[opacity,transform]" />
-              </div>
+              <div className="relative w-6 h-6 bg-input-background border-2 border-border/60 rounded-full flex items-center justify-center transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
               <span className="mt-3 block text-foreground">
@@ -270,9 +267,7 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="w-6 h-6 bg-input-background border-2 border-border/60 rounded-[calc(var(--radius)-8px)] flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20">
-                <Check className="w-4 h-4 text-primary-foreground opacity-0 scale-75 peer-checked:opacity-100 peer-checked:scale-100 transition-[opacity,transform]" />
-              </div>
+              <div className="relative w-6 h-6 bg-input-background border-2 border-border/60 rounded-full flex items-center justify-center transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
               <span className="block text-foreground">
@@ -299,9 +294,18 @@ export function SignUpForm() {
         </motion.div>
 
         {submitState.status === 'success' && (
-          <p className="text-sm text-center text-foreground">
-            Thanks — we received your application.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="rounded-[var(--radius)] border border-border/60 bg-input-background px-4 py-3 text-center"
+          >
+            <div className="flex items-center justify-center gap-2 text-foreground">
+              <span className="font-medium">Thanks!</span>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              We’ll be in touch shortly if you’re selected.
+            </p>
+          </motion.div>
         )}
         {submitState.status === 'error' && (
           <p className="text-sm text-center text-destructive">
