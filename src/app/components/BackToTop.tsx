@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type CSSProperties } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
 
 export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const containerStyle: CSSProperties = {
+    bottom: 'calc(2rem + env(safe-area-inset-bottom))',
+    paddingLeft: '2rem',
+    paddingRight: 'calc(2rem + env(safe-area-inset-right))',
+  };
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -28,18 +33,23 @@ export function BackToTop() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
-          onClick={scrollToTop}
-          className="fixed bottom-[calc(2rem+env(safe-area-inset-bottom))] right-8 z-50 p-4 rounded-full pearl-card border border-border/60 text-foreground/80 shadow-lg backdrop-blur-xl backdrop-saturate-150 hover:text-foreground hover:shadow-xl transition-[box-shadow,color]"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          aria-label="Back to top"
+          className="fixed inset-x-0 z-50 flex justify-end pointer-events-none"
+          style={containerStyle}
         >
-          <ArrowUp className="w-6 h-6" />
-        </motion.button>
+          <motion.button
+            onClick={scrollToTop}
+            className="pointer-events-auto p-4 rounded-full pearl-card border border-border/60 text-foreground/80 shadow-lg hover:text-foreground hover:shadow-xl transition-[box-shadow,color]"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Back to top"
+          >
+            <ArrowUp className="w-6 h-6" />
+          </motion.button>
+        </motion.div>
       )}
     </AnimatePresence>
   );

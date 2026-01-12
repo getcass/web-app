@@ -187,12 +187,12 @@
 
 @layer utilities {
   .pearl-card {
-    background-color: oklch(1 0 0 / 0.34);
+    background-color: oklch(1 0 0 / 0.72);
     background-image:
-      radial-gradient(140% 170% at 18% 8%, oklch(var(--pearl-2) / 0.55) 0%, transparent 52%),
-      radial-gradient(140% 170% at 82% 20%, oklch(var(--pearl-1) / 0.52) 0%, transparent 54%),
-      radial-gradient(140% 170% at 60% 110%, oklch(var(--pearl-3) / 0.48) 0%, transparent 58%),
-      linear-gradient(180deg, oklch(1 0 0 / 0.40) 0%, oklch(1 0 0 / 0.24) 100%);
+      radial-gradient(140% 170% at 18% 8%, oklch(var(--pearl-2) / 0.7) 0%, transparent 52%),
+      radial-gradient(140% 170% at 82% 20%, oklch(var(--pearl-1) / 0.65) 0%, transparent 54%),
+      radial-gradient(140% 170% at 60% 110%, oklch(var(--pearl-3) / 0.62) 0%, transparent 58%),
+      linear-gradient(180deg, oklch(1 0 0 / 0.65) 0%, oklch(1 0 0 / 0.45) 100%);
     background-blend-mode: screen, screen, screen, normal;
   }
 }

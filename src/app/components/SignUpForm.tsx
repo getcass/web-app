@@ -120,7 +120,7 @@ export function SignUpForm() {
                 value={digit}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
                 onKeyDown={(e) => handleCodeKeyDown(index, e)}
-                className="h-12 w-full min-w-0 text-center text-lg bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all md:w-12 md:flex-none"
+                className="h-12 w-full min-w-0 text-center text-lg bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all md:w-12 md:flex-none"
               />
             ))}
           </div>
@@ -138,7 +138,7 @@ export function SignUpForm() {
             required
             value={formData.fullName}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
             placeholder="John Doe"
           />
         </div>
@@ -155,7 +155,7 @@ export function SignUpForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
             placeholder="john@example.com"
           />
         </div>
@@ -171,7 +171,7 @@ export function SignUpForm() {
             required
             value={formData.gender}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all appearance-none cursor-pointer"
+            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all appearance-none cursor-pointer"
           >
             <option value="">Select gender</option>
             <option value="male">Male</option>
@@ -193,7 +193,7 @@ export function SignUpForm() {
             required
             value={formData.dateOfBirth}
             onChange={handleChange}
-            className="block w-full max-w-full min-w-0 px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+            className="block w-full max-w-full min-w-0 px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
           />
         </div>
 
@@ -208,7 +208,7 @@ export function SignUpForm() {
             required
             value={formData.deviceType}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all appearance-none cursor-pointer"
+            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all appearance-none cursor-pointer"
           >
             <option value="">Select device type</option>
             <option value="iphone">iPhone</option>
@@ -228,7 +228,7 @@ export function SignUpForm() {
             required
             value={formData.osVersion}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-input-background border border-border/60 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/30 focus:border-ring transition-all"
+            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
             placeholder="e.g., 17.2"
           />
         </div>
@@ -245,7 +245,7 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="relative w-6 h-6 bg-input-background border-2 border-border/60 rounded-full flex items-center justify-center transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+              <div className="relative w-6 h-6 bg-white/90 border-2 border-border/70 rounded-full flex items-center justify-center shadow-sm transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/25 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
               <span className="mt-3 block text-foreground">
@@ -267,7 +267,7 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="relative w-6 h-6 bg-input-background border-2 border-border/60 rounded-full flex items-center justify-center transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/20 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+              <div className="relative w-6 h-6 bg-white/90 border-2 border-border/70 rounded-full flex items-center justify-center shadow-sm transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/25 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
               <span className="block text-foreground">

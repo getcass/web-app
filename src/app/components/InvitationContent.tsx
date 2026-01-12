@@ -196,7 +196,7 @@ function InfoCard({ icon, title, description }: { icon: React.ReactNode; title: 
     <motion.div
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ duration: 0.2 }}
-      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm backdrop-blur-lg backdrop-saturate-150"
+      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm"
     >
       <div className="mb-2 text-foreground/70">{icon}</div>
       <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>
@@ -210,7 +210,7 @@ function RewardCard({ icon, title, description }: { icon: React.ReactNode; title
     <motion.div
       whileHover={{ scale: 1.03 }}
       transition={{ duration: 0.2 }}
-      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm backdrop-blur-lg backdrop-saturate-150"
+      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm"
     >
       <div className="mb-2 text-foreground/70">{icon}</div>
       <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>

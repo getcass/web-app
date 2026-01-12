@@ -14,7 +14,7 @@ export function InviteCodeInput() {
 
   return (
     <motion.div 
-      className="inline-flex items-center gap-2 bg-card/80 border border-border/60 rounded-[var(--radius)] px-4 py-2 backdrop-blur-sm shadow-sm"
+      className="inline-flex items-center gap-2 bg-card/90 border border-border/60 rounded-[var(--radius)] px-4 py-2 shadow-sm"
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
