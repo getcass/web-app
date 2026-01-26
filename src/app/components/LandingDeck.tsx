@@ -12,8 +12,10 @@ import {
   ApplyNowSectionContent,
 } from './InvitationContent';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { motion } from 'motion/react';
 
 const SECTION_COUNT = 6;
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 type LandingSectionProps = {
   index: number;
@@ -145,6 +147,44 @@ function BackgroundLayer({ activeIndex, reducedMotion }: BackgroundLayerProps) {
 
       <div className="absolute inset-0 bg-black/15" />
     </div>
+  );
+}
+
+type HeroPromptProps = {
+  isActive: boolean;
+  reducedMotion: boolean;
+  onNext?: () => void;
+};
+
+function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
+  if (!isActive) return null;
+
+  const transition = reducedMotion
+    ? { duration: 0.12, ease: 'linear' as const }
+    : { duration: 0.55, ease: EASE_OUT };
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onNext}
+      initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
+      transition={transition}
+      className="fixed bottom-[calc(1.75rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white/55 transition-[color] duration-150 hover:text-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+    >
+      <span className="text-xs uppercase tracking-[0.22em]">Scroll to begin</span>
+      <motion.span
+        className="text-white/70"
+        aria-hidden="true"
+        animate={!reducedMotion ? { y: [0, 6, 0] } : { y: 0 }}
+        transition={!reducedMotion ? { duration: 1.6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0 }}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </svg>
+      </motion.span>
+    </motion.button>
   );
 }
 
@@ -330,6 +370,8 @@ export function LandingDeck() {
       {activeIndex > 0 && (
         <ProgressDots activeIndex={activeIndex} onSelect={scrollToIndex} reducedMotion={reducedMotion} />
       )}
+
+      <HeroPrompt isActive={activeIndex === 0} reducedMotion={reducedMotion} onNext={() => scrollToIndex(1)} />
     </div>
   );
 }
