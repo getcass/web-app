@@ -5,64 +5,58 @@
 html {
   scroll-behavior: smooth;
   height: 100%;
-  min-height: 100vh;
   background-color: black;
-  background-image: url('../assets/cass-bg-vertical.png');
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
   overscroll-behavior-y: none;
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
   padding: 0;
   position: relative;
   background-color: black;
-  background-image: url('../assets/cass-bg-vertical.png');
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url('../assets/cass-bg-vertical.png');
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-@media (min-width: 768px) {
-  html,
-  body {
-    background-image: url('../assets/cass_bg.png');
-    background-position: center;
-  }
-
-  body::before {
-    background-image: url('../assets/cass_bg.png');
-    background-position: center;
-  }
 }
 
 #root {
-  min-height: 100vh;
+  height: 100%;
   position: relative;
   z-index: 1;
 }
 
-@supports (height: 100svh) {
-  html,
-  body,
-  #root {
-    min-height: 100svh;
+.cass-snap-container {
+  height: 100vh;
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.cass-snap-section {
+  height: 100vh;
+  height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.cass-hover-lift {
+  transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cass-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cass-hover-lift {
+    transition: none;
+  }
+
+  .cass-hover-lift:hover {
+    transform: none;
   }
 }
 

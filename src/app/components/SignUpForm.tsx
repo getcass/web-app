@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
@@ -95,13 +94,13 @@ export function SignUpForm() {
   };
 
   return (
-    <Card className="p-8 md:p-12">
+    <Card className="p-6 md:p-10">
       <h3 className="text-2xl md:text-3xl mb-2 text-foreground font-semibold tracking-tight">Join the Alpha Programme</h3>
       <p className="text-foreground mb-5">Complete the form below to apply for early access.</p>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
         {/* Invite Code */}
-        <div>
+        <div className="md:col-span-2">
           <label className="block text-foreground mb-2">
             Invite Code <span className="text-destructive">*</span>
           </label>
@@ -234,7 +233,7 @@ export function SignUpForm() {
         </div>
 
         {/* Lives in London */}
-        <div>
+        <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex-shrink-0">
               <input
@@ -256,7 +255,7 @@ export function SignUpForm() {
         </div>
 
         {/* Consent to follow-up */}
-        <div>
+        <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex-shrink-0">
               <input
@@ -278,42 +277,34 @@ export function SignUpForm() {
         </div>
 
         {/* Submit Button */}
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="pt-4"
-        >
+        <div className="pt-2 md:col-span-2">
           <Button 
             type="submit"
             size="lg"
-            className="w-full"
+            className="w-full cass-hover-lift"
             disabled={submitState.status === 'submitting'}
           >
             {submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
           </Button>
-        </motion.div>
+        </div>
 
         {submitState.status === 'success' && (
-          <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            className="rounded-[var(--radius)] border border-border/60 bg-input-background px-4 py-3 text-center"
-          >
+          <div className="md:col-span-2 rounded-[var(--radius)] border border-border/60 bg-input-background px-4 py-3 text-center">
             <div className="flex items-center justify-center gap-2 text-foreground">
               <span className="font-medium">Thanks!</span>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
               We’ll be in touch shortly if you’re selected.
             </p>
-          </motion.div>
+          </div>
         )}
         {submitState.status === 'error' && (
-          <p className="text-sm text-center text-destructive">
+          <p className="md:col-span-2 text-sm text-center text-destructive">
             {submitState.message}
           </p>
         )}
 
-        <p className="text-foreground text-sm text-center">
+        <p className="md:col-span-2 text-foreground text-sm text-center">
           By submitting this form, you agree to participate in the Alpha testing Programme and provide honest feedback.
         </p>
       </form>
