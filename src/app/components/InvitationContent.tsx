@@ -26,50 +26,50 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
   const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: enterY }}
-      animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: enterY }}
-      transition={transition}
-      className="mx-auto w-full max-w-4xl"
-    >
-      <Card className="p-6 md:p-10">
-        <div className="grid gap-5 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-7">
-            <h2 className="text-3xl md:text-4xl text-foreground font-semibold tracking-tight text-balance">
-              Welcome to the Cass Private Alpha
-            </h2>
-            <p className="mt-4 leading-relaxed text-foreground">
-              Hi, I’m Zain, founder of Cass. Two years ago I met my wife on a dating app - she was actually the first date I set up. Stories like that should be normal, but they’re not. Here’s what I think most apps still get wrong:
+    <div className="mx-auto w-full max-w-5xl">
+      <motion.h2
+        initial={{ opacity: 0, y: enterY }}
+        animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: enterY }}
+        transition={transition}
+        className="text-3xl md:text-4xl text-white tracking-tight text-balance"
+      >
+        Welcome to the Cass Private Alpha
+      </motion.h2>
+
+      <motion.div
+        initial={{ opacity: 0, y: enterY }}
+        animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: enterY }}
+        transition={{ ...transition, delay: reducedMotion ? 0 : 0.08 }}
+        className="mt-6"
+      >
+        <Card className="p-6 md:p-10">
+          <p className="leading-relaxed text-foreground">
+            Hi, I’m Zain, founder of Cass. Two years ago I met my wife on a dating app - she was actually the first date I set up. Stories like that should be normal, but they’re not. Here’s what I think most apps still get wrong:
+          </p>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            <ProblemItem
+              icon={<ShieldAlert className="w-6 h-6" />}
+              text="They can be unsafe and untrustworthy"
+            />
+            <ProblemItem
+              icon={<Shuffle className="w-6 h-6" />}
+              text="Endless swiping feels exhausting"
+            />
+            <ProblemItem
+              icon={<Lock className="w-6 h-6" />}
+              text="Everything is paywalled"
+            />
+          </div>
+
+          <div className="mt-6 pearl-card rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
+            <p className="text-foreground leading-relaxed">
+              <strong className="text-foreground">Cass</strong> is our attempt to fix these problems: safer, more trustworthy, and free to use. Built around real compatibility instead of endless swiping. Before we launch, we want a small group of users to try it, tell us what feels off, and help shape the product.
             </p>
           </div>
-
-          <div className="md:col-span-5">
-            <div className="space-y-3">
-              <ProblemItem
-                icon={<ShieldAlert className="w-6 h-6" />}
-                text="They can be unsafe and untrustworthy"
-              />
-              <ProblemItem
-                icon={<Shuffle className="w-6 h-6" />}
-                text="Endless swiping feels exhausting"
-              />
-              <ProblemItem
-                icon={<Lock className="w-6 h-6" />}
-                text="Everything is paywalled"
-              />
-            </div>
-          </div>
-
-          <div className="md:col-span-12">
-            <div className="pearl-card rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
-              <p className="text-foreground leading-relaxed">
-                <strong className="text-foreground">Cass</strong> is our attempt to fix these problems: safer, more trustworthy, and free to use. Built around real compatibility instead of endless swiping. Before we launch, we want a small group of users to try it, tell us what feels off, and help shape the product.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Card>
-    </motion.div>
+        </Card>
+      </motion.div>
+    </div>
   );
 }
 
