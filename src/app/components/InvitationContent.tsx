@@ -61,8 +61,8 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
         <div className="max-w-3xl">
           <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/55">What we’re building</p>
           <p className="mt-4 text-lg leading-relaxed text-white/75">
-            <span className="font-semibold text-white">Cass</span> is built to be safer, more trustworthy, and free — focused on compatibility,
-            not endless swiping. Before we launch, we’re inviting a small group to try it and shape the product.
+            <span className="font-semibold text-white">Cass</span> is safer, more trustworthy, and focused on compatibility scores.
+            There is no swiping mechanic; you can see everyone at once and message anyone you like.
           </p>
         </div>
 

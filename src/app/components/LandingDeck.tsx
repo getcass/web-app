@@ -38,19 +38,23 @@ function LandingSection({
     >
       <div className="relative flex w-full items-stretch">
         <div
-          className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 py-10 md:px-10"
+          className="flex w-full"
           style={{
-            paddingTop: '2.5rem',
-            paddingBottom: '2.5rem',
+            paddingTop: 'env(safe-area-inset-top)',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+            paddingLeft: 'env(safe-area-inset-left)',
+            paddingRight: 'env(safe-area-inset-right)',
           }}
         >
-          <div
-            className={cn(
-              'cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain',
-              index === 5 && 'cass-section-scroll--no-scrollbar',
-            )}
-          >
-            {children}
+          <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 py-10 md:px-10">
+            <div
+              className={cn(
+                'cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain',
+                index === 5 && 'cass-section-scroll--no-scrollbar',
+              )}
+            >
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -67,7 +71,7 @@ type ProgressDotsProps = {
 function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProps) {
   return (
     <div
-      className="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
+      className="fixed right-[calc(1rem+env(safe-area-inset-right))] top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
       aria-label="Section progress"
     >
       {Array.from({ length: SECTION_COUNT }).map((_, index) => {
@@ -100,7 +104,7 @@ function BackgroundLayer({ scrollProgress, reducedMotion }: BackgroundLayerProps
   const t = Math.max(0, Math.min(1, scrollProgress));
   const eased = reducedMotion ? t : t * t * (3 - 2 * t); // smoothstep
   const imageOpacity = 1 - 0.6 * eased;
-  const dimmerOpacity = 0.62 * eased;
+  const dimmerOpacity = 0.8 * eased;
   const vignetteOpacity = 0.12 + 0.32 * eased;
   const baseGradient = useMemo(
     () =>
@@ -157,7 +161,7 @@ function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
       transition={transition}
-      className="fixed bottom-7 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white/55 transition-[color] duration-150 hover:text-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+      className="fixed bottom-[calc(1.75rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white/55 transition-[color] duration-150 hover:text-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
     >
       <span className="text-xs uppercase tracking-[0.22em]">Scroll to begin</span>
       <motion.span
