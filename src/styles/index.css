@@ -4,9 +4,9 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100dvh;
-  min-height: 100dvh;
-  background-color: #5c5cdb;
+  height: 0dvh;
+  min-height: 0dvh;
+  background-color: #29292900;
 }
 
 body {
