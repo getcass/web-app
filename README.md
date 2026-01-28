@@ -9,6 +9,18 @@
 
   Run `npm run dev` to start the development server.
 
+  ## Deploy base path (fixes “white screen”)
+
+  If the deployed site loads as a blank white page, it usually means the built
+  `dist/index.html` is pointing at the wrong asset URLs (e.g. `/assets/...` when
+  the site is actually served under `/repo/`).
+
+  This project defaults to **relative** asset URLs for `npm run build`. If you
+  need a fixed base path, set `VITE_BASE` for the build:
+
+  - GitHub Pages repo site: `VITE_BASE=/your-repo/`
+  - Custom domain at root: `VITE_BASE=/`
+
   ## Firebase (Firestore) form submissions
 
   The signup form writes to Firestore collection `signups`.

@@ -1,7 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion } from 'motion/react';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -94,19 +92,22 @@ export function SignUpForm() {
     codeInputRefs.current[focusIndex]?.focus();
   };
 
+  const fieldClassName =
+    'mt-3 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/40 shadow-[0_1px_0_rgba(255,255,255,0.06)] outline-none backdrop-blur-xl backdrop-saturate-150 transition-[border-color,box-shadow] focus:border-white/30 focus:ring-4 focus:ring-white/10';
+
+  const selectClassName =
+    'mt-3 w-full cursor-pointer appearance-none rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white shadow-[0_1px_0_rgba(255,255,255,0.06)] outline-none backdrop-blur-xl backdrop-saturate-150 transition-[border-color,box-shadow] focus:border-white/30 focus:ring-4 focus:ring-white/10';
+
   return (
-    <Card className="p-8 md:p-12">
-      <h3 className="text-2xl md:text-3xl mb-2 text-foreground font-semibold tracking-tight">Join the Alpha Programme</h3>
-      <p className="text-foreground mb-5">Complete the form below to apply for early access.</p>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="mx-auto w-full max-w-4xl">
+      <form onSubmit={handleSubmit} className="grid gap-y-5 gap-x-7 md:grid-cols-2">
         {/* Invite Code */}
-        <div>
-          <label className="block text-foreground mb-2">
-            Invite Code <span className="text-destructive">*</span>
+        <div className="md:col-span-2">
+          <label className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Invite code <span className="text-red-300">*</span>
           </label>
           <div
-            className="grid w-full grid-cols-6 gap-2 md:flex md:justify-start"
+            className="mt-3 grid w-full grid-cols-6 gap-2.5 md:flex md:justify-start md:gap-3"
             onPaste={handleCodePaste}
           >
             {formData.inviteCode.map((digit, index) => (
@@ -120,7 +121,7 @@ export function SignUpForm() {
                 value={digit}
                 onChange={(e) => handleCodeChange(index, e.target.value)}
                 onKeyDown={(e) => handleCodeKeyDown(index, e)}
-                className="h-12 w-full min-w-0 text-center text-lg bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all md:w-12 md:flex-none"
+                className="h-12 w-full min-w-0 rounded-2xl border border-white/15 bg-white/10 text-center text-xl font-semibold tracking-[0.14em] text-white placeholder:text-white/35 shadow-[0_1px_0_rgba(255,255,255,0.06)] outline-none backdrop-blur-xl backdrop-saturate-150 transition-[border-color,box-shadow,transform] focus:border-white/30 focus:ring-4 focus:ring-white/10 md:w-12 md:flex-none"
               />
             ))}
           </div>
@@ -128,8 +129,8 @@ export function SignUpForm() {
 
         {/* Full Name */}
         <div>
-          <label htmlFor="fullName" className="block text-foreground mb-2">
-            Full Name <span className="text-destructive">*</span>
+          <label htmlFor="fullName" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Full name <span className="text-red-300">*</span>
           </label>
           <input
             type="text"
@@ -138,15 +139,15 @@ export function SignUpForm() {
             required
             value={formData.fullName}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
+            className={fieldClassName}
             placeholder="John Doe"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-foreground mb-2">
-            Email Address <span className="text-destructive">*</span>
+          <label htmlFor="email" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Email <span className="text-red-300">*</span>
           </label>
           <input
             type="email"
@@ -155,15 +156,15 @@ export function SignUpForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
+            className={fieldClassName}
             placeholder="john@example.com"
           />
         </div>
 
         {/* Gender */}
         <div>
-          <label htmlFor="gender" className="block text-foreground mb-2">
-            Gender <span className="text-destructive">*</span>
+          <label htmlFor="gender" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Gender <span className="text-red-300">*</span>
           </label>
           <select
             id="gender"
@@ -171,7 +172,7 @@ export function SignUpForm() {
             required
             value={formData.gender}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all appearance-none cursor-pointer"
+            className={selectClassName}
           >
             <option value="">Select gender</option>
             <option value="male">Male</option>
@@ -183,8 +184,8 @@ export function SignUpForm() {
 
         {/* Date of Birth */}
         <div>
-          <label htmlFor="dateOfBirth" className="block text-foreground mb-2">
-            Date of Birth <span className="text-destructive">*</span>
+          <label htmlFor="dateOfBirth" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Date of birth <span className="text-red-300">*</span>
           </label>
           <input
             type="date"
@@ -193,14 +194,14 @@ export function SignUpForm() {
             required
             value={formData.dateOfBirth}
             onChange={handleChange}
-            className="block w-full max-w-full min-w-0 px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
+            className={fieldClassName}
           />
         </div>
 
         {/* Device Type */}
         <div>
-          <label htmlFor="deviceType" className="block text-foreground mb-2">
-            Device Type <span className="text-destructive">*</span>
+          <label htmlFor="deviceType" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            Device <span className="text-red-300">*</span>
           </label>
           <select
             id="deviceType"
@@ -208,7 +209,7 @@ export function SignUpForm() {
             required
             value={formData.deviceType}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all appearance-none cursor-pointer"
+            className={selectClassName}
           >
             <option value="">Select device type</option>
             <option value="iphone">iPhone</option>
@@ -218,8 +219,8 @@ export function SignUpForm() {
 
         {/* OS Version */}
         <div>
-          <label htmlFor="osVersion" className="block text-foreground mb-2">
-            iOS Version <span className="text-destructive">*</span>
+          <label htmlFor="osVersion" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
+            iOS version <span className="text-red-300">*</span>
           </label>
           <input
             type="text"
@@ -228,13 +229,13 @@ export function SignUpForm() {
             required
             value={formData.osVersion}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/90 border border-border/80 rounded-[var(--radius)] text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-all"
+            className={fieldClassName}
             placeholder="e.g., 17.2"
           />
         </div>
 
         {/* Lives in London */}
-        <div>
+        <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex-shrink-0">
               <input
@@ -245,18 +246,18 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="relative w-6 h-6 bg-white/90 border-2 border-border/70 rounded-full flex items-center justify-center shadow-sm transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/25 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+              <div className="relative h-6 w-6 rounded-full border border-white/15 bg-white/10 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150 transition-[border-color,transform,box-shadow] group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-white/10 peer-checked:border-white/30 after:absolute after:inset-1.5 after:rounded-full after:bg-white after:opacity-0 after:scale-75 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
-              <span className="mt-3 block text-foreground">
-                I confirm that I currently live in London <span className="text-destructive">*</span>
+              <span className="block text-white/75">
+                I confirm that I currently live in London <span className="text-red-300">*</span>
               </span>
             </div>
           </label>
         </div>
 
         {/* Consent to follow-up */}
-        <div>
+        <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex-shrink-0">
               <input
@@ -267,56 +268,45 @@ export function SignUpForm() {
                 onChange={handleChange}
                 className="sr-only peer"
               />
-              <div className="relative w-6 h-6 bg-white/90 border-2 border-border/70 rounded-full flex items-center justify-center shadow-sm transition-all group-hover:border-border group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-ring/25 peer-checked:border-border after:content-[''] after:absolute after:h-3 after:w-3 after:rounded-full after:bg-black after:opacity-0 after:scale-50 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+              <div className="relative h-6 w-6 rounded-full border border-white/15 bg-white/10 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150 transition-[border-color,transform,box-shadow] group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-white/10 peer-checked:border-white/30 after:absolute after:inset-1.5 after:rounded-full after:bg-white after:opacity-0 after:scale-75 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
             </div>
             <div className="flex-1">
-              <span className="block text-foreground">
-                I consent to being contacted for follow-up surveys and feedback <span className="text-destructive">*</span>
+              <span className="block text-white/75">
+                I consent to being contacted for follow‑up surveys and feedback <span className="text-red-300">*</span>
               </span>
             </div>
           </label>
         </div>
 
         {/* Submit Button */}
-        <motion.div
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="pt-4"
-        >
-          <Button 
+        <div className="pt-2 md:col-span-2">
+          <Button
             type="submit"
             size="lg"
-            className="w-full"
+            variant="primary"
+            className="w-full cass-hover-lift"
             disabled={submitState.status === 'submitting'}
           >
             {submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
           </Button>
-        </motion.div>
+        </div>
 
         {submitState.status === 'success' && (
-          <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            className="rounded-[var(--radius)] border border-border/60 bg-input-background px-4 py-3 text-center"
-          >
-            <div className="flex items-center justify-center gap-2 text-foreground">
-              <span className="font-medium">Thanks!</span>
+          <div className="md:col-span-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-center shadow-[0_1px_0_rgba(255,255,255,0.06)]">
+            <div className="text-white">
+              <span className="text-base font-semibold">Thanks!</span>
             </div>
-            <p className="mt-1 text-sm text-muted-foreground">
-              We’ll be in touch shortly if you’re selected.
-            </p>
-          </motion.div>
+            <p className="mt-1 text-sm text-white/65">We’ll be in touch shortly if you’re selected.</p>
+          </div>
         )}
         {submitState.status === 'error' && (
-          <p className="text-sm text-center text-destructive">
-            {submitState.message}
-          </p>
+          <p className="md:col-span-2 text-center text-sm text-red-300">{submitState.message}</p>
         )}
 
-        <p className="text-foreground text-sm text-center">
-          By submitting this form, you agree to participate in the Alpha testing Programme and provide honest feedback.
+        <p className="md:col-span-2 text-center text-sm text-white/55">
+          By submitting, you agree to participate in the alpha testing programme and provide honest feedback.
         </p>
       </form>
-    </Card>
+    </div>
   );
 }

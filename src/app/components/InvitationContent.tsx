@@ -1,234 +1,351 @@
 import { motion } from 'motion/react';
-import { ShieldAlert, Shuffle, Lock, Activity, Bug, Users, Trophy, Gift, Calendar, Smartphone, MessageSquare, Search } from 'lucide-react';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
+import { Activity, Bug, Calendar, Gift, Heart, Lock, MessageSquare, Smartphone, Trophy, User } from 'lucide-react';
 import { SignUpForm } from './SignUpForm';
+import { cn } from './ui/utils';
 
-interface InvitationContentProps {
-  isLoaded: boolean;
-}
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.3
-    }
-  }
+type SectionContentProps = {
+  isActive: boolean;
+  hasEntered: boolean;
+  reducedMotion: boolean;
+  scrollToIndex: (index: number) => void;
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' }
-  }
-};
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-const itemVariantsNoOpacity = {
-  hidden: { y: 30 },
-  visible: {
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' }
-  }
-};
+function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
+  const shouldShow = isActive || hasEntered;
+  const enterY = reducedMotion ? 0 : 18;
+  const transition = reducedMotion
+    ? { duration: 0.12, ease: 'linear' as const }
+    : { duration: 0.65, ease: EASE_OUT };
 
-export function InvitationContent({ isLoaded }: InvitationContentProps) {
-  return (
-    <div className="relative bg-gradient-to-b from-transparent via-black/50 to-black">
-      <div className="max-w-4xl mx-auto px-6 pt-0 pb-20">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {/* Introduction */}
-          <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <Card className="p-8 md:p-12">
-              <h2 className="text-3xl md:text-4xl text-foreground font-semibold tracking-tight text-balance">
-                Welcome to the Cass Private Alpha
-              </h2>
-              <p className="mt-4 leading-relaxed text-foreground">
-                Hi, I’m Zain, founder of Cass. Two years ago I met my wife on a dating app - she was actually the first date I set up. Stories like that should be normal, but they’re not. Here’s what I think most apps still get wrong:
-              </p>
-              
-              <div className="mt-3 space-y-3">
-                <ProblemItem 
-                  icon={<ShieldAlert className="w-6 h-6" />}
-                  text="They can be unsafe and untrustworthy"
-                />
-                <ProblemItem 
-                  icon={<Shuffle className="w-6 h-6" />}
-                  text="Endless swiping feels exhausting"
-                />
-                <ProblemItem 
-                  icon={<Lock className="w-6 h-6" />}
-                  text="Everything is paywalled"
-                />
-              </div>
-
-              <div className="pearl-card mt-4 rounded-[var(--radius)] border border-border/60 bg-muted/25 p-5 shadow-sm">
-                <p className="text-foreground leading-relaxed">
-                  <strong className="text-foreground">Cass</strong> is our attempt to fix these problems: safer, more trustworthy, and free to use. Built around real compatibility instead of endless swiping. Before we launch, we want a small group of users to try it, tell us what feels off, and help shape the product.
-                </p>
-              </div>
-            </Card>
-          </motion.div>
-
-          {/* Alpha Program */}
-          <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Alpha Programme</h2>
-            <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-1 leading-relaxed">
-                As an Alpha Tester you will be a founding member of the community. Your feedback will directly influence the final UX/UI and feature set of the app.
-              </p>
-              
-              <div className="grid md:grid-cols-3 gap-3">
-                <InfoCard 
-                  icon={<Calendar className="w-8 h-8" />}
-                  title="Duration"
-                  description="1 Week"
-                />
-                <InfoCard 
-                  icon={<Smartphone className="w-8 h-8" />}
-                  title="Platform"
-                  description="iOS"
-                />
-                <InfoCard 
-                  icon={<MessageSquare className="w-8 h-8" />}
-                  title="Feedback"
-                  description="2 Google forms (~10 minutes each)"
-                />
-              </div>
-            </Card>
-          </motion.div>
-
-          {/* What's In It For You */}
-          <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">What's In It For You?</h2>
-            <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-1 leading-relaxed">
-                We value your time and your insights. Beyond helping shape the next big thing in dating, Alpha Testers receive:
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-3">
-                <RewardCard 
-                  icon={<Trophy className="w-8 h-8" />}
-                  title="Founding Member Status"
-                  description='A permanent "Alpha Member" badge on your profile post-launch.'
-                />
-                <RewardCard 
-                  icon={<Gift className="w-8 h-8" />}
-                  title="Exclusive Merch"
-                  description='A limited edition Cass "Alpha Member" tote bag delivered to you.'
-                />
-              </div>
-            </Card>
-          </motion.div>
-
-          {/* The Commitment */}
-          <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">The Commitment</h2>
-            <Card className="p-8 md:p-12">
-              <p className="text-foreground mb-1 leading-relaxed">
-                We ask for three simple things from our Alpha Testers:
-              </p>
-              
-              <div className="space-y-3">
-                <CommitmentItem 
-                  icon={<Activity className="w-6 h-6" />}
-                  title="Active Engagement"
-                  description="Use the app at least once a day during the testing period."
-                />
-                <CommitmentItem 
-                  icon={<MessageSquare className="w-6 h-6" />}
-                  title="Honest Feedback"
-                  description="Participate in two brief surveys regarding your experience."
-                />
-                <CommitmentItem 
-                  icon={<Bug className="w-6 h-6" />}
-                  title="Bug Hunting"
-                  description='Report any glitches or "weird" moments via our dedicated feedback portal.'
-                />
-              </div>
-            </Card>
-          </motion.div>
-
-          {/* How to Join - Sign Up Form */}
-          <motion.div variants={itemVariantsNoOpacity} className="mb-16">
-            <h2 className="text-3xl md:text-4xl mb-6 text-white tracking-tight">Apply Now</h2>
-            <SignUpForm />
-          </motion.div>
-
-          {/* Footer */}
-          <motion.div variants={itemVariants} className="text-center">
-            <p className="text-xl text-white/70 italic mb-4">
-              For ever after 💕
-            </p>
-            <p className="text-white/80">
-              <strong className="text-white">Zain</strong>
-              <br />
-              <span className="text-white/60">Founder, Cass</span>
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
-    </div>
-  );
+  return { shouldShow, enterY, transition };
 }
 
-function ProblemItem({ icon, text }: { icon: React.ReactNode; text: string }) {
-  return (
-    <div className="grid grid-cols-[2.75rem_1fr] items-center gap-4 rounded-[calc(var(--radius)+0.25rem)] border border-border/60 bg-muted/20 p-4 text-foreground shadow-sm">
-      <div className="flex h-11 w-11 items-center justify-center rounded-[calc(var(--radius)+0.25rem)] border border-border/70 bg-muted/50 text-foreground/70 shadow-sm">
-        {icon}
-      </div>
-      <p className="leading-relaxed text-foreground">{text}</p>
-    </div>
-  );
-}
+export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
 
-function InfoCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
     <motion.div
-      whileHover={{ scale: 1.05, y: -5 }}
-      transition={{ duration: 0.2 }}
-      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm"
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
     >
-      <div className="mb-2 text-foreground/70">{icon}</div>
-      <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>
-      <p className="text-sm text-foreground">{description}</p>
+      <motion.h2
+        variants={item}
+        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
+      >
+        Welcome
+      </motion.h2>
+
+      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
+        Hi, I’m Zain, founder of Cass. I met my wife on a dating app - she was actually my first date. That should be normal but it isn’t.
+        Cass is built around a few simple principles:
+      </motion.p>
+
+      <motion.div variants={item} className="mt-10">
+        <div className="max-w-3xl">
+          <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/55">What we’re building</p>
+          <p className="mt-4 text-lg leading-relaxed text-white/75">
+            <span className="font-semibold text-white">Cass</span> is built to be safer, more trustworthy, and free — focused on compatibility,
+            not endless swiping. Before we launch, we’re inviting a small group to try it and shape the product.
+          </p>
+        </div>
+
+	        <div className="mt-10 grid gap-6 sm:grid-cols-3">
+	          <FeatureRow
+	            icon={<Lock className="h-4 w-4" />}
+	            label="Trust"
+	            title="Safer by design"
+	          />
+	          <FeatureRow
+	            icon={<Heart className="h-4 w-4" />}
+	            label="Chemistry"
+	            title="Built on compatibility"
+	          />
+	          <FeatureRow
+	            icon={<User className="h-4 w-4" />}
+	            label="Accessibility"
+	            title="Free without paywalls"
+	          />
+	        </div>
+	      </motion.div>
+	    </motion.div>
+  );
+}
+
+export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
+    >
+      <motion.h2
+        variants={item}
+        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
+      >
+        The programme
+      </motion.h2>
+
+      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
+        As an alpha tester, you’ll be part of the first community. Your feedback will directly influence the UX and feature set before we launch.
+      </motion.p>
+
+      <motion.dl variants={item} className="mt-10 grid gap-6 sm:grid-cols-3">
+        <StatItem icon={<Calendar className="h-4 w-4" />} label="Duration" value="1 week" />
+        <StatItem icon={<Smartphone className="h-4 w-4" />} label="Platform" value="iOS" />
+        <StatItem icon={<MessageSquare className="h-4 w-4" />} label="Feedback" value="2 short forms (~10 min)" />
+      </motion.dl>
     </motion.div>
   );
 }
 
-function RewardCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+export function WhatsInItForYouSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
   return (
     <motion.div
-      whileHover={{ scale: 1.03 }}
-      transition={{ duration: 0.2 }}
-      className="pearl-card rounded-[var(--radius)] p-5 border border-border/50 shadow-sm"
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
     >
-      <div className="mb-2 text-foreground/70">{icon}</div>
-      <h4 className="text-base font-medium text-foreground mb-1">{title}</h4>
-      <p className="text-sm text-foreground">{description}</p>
+      <motion.h2
+        variants={item}
+        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
+      >
+        What’s In It For You?
+      </motion.h2>
+
+      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
+        We value your time and your insights. In return, you’ll get a couple of perks alongside early access.
+      </motion.p>
+
+      <motion.div variants={item} className="mt-10 grid gap-8 md:grid-cols-2">
+        <BenefitItem
+          icon={<Trophy className="h-5 w-5" />}
+          title="Founding member status"
+          description='A permanent “Alpha Member” badge on your profile post‑launch.'
+        />
+        <BenefitItem
+          icon={<Gift className="h-5 w-5" />}
+          title="Exclusive merch"
+          description='A limited‑edition Cass “Alpha Member” tote bag delivered to you.'
+        />
+      </motion.div>
     </motion.div>
   );
 }
 
-function CommitmentItem({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+export function CommitmentSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
   return (
-    <div className="grid grid-cols-[2.75rem_1fr] items-center gap-4 rounded-[calc(var(--radius)+0.25rem)] border border-border/60 bg-muted/20 p-4 shadow-sm">
-      <div className="flex h-11 w-11 items-center justify-center rounded-[calc(var(--radius)+0.25rem)] border border-border/70 bg-muted/50 text-foreground/70 shadow-sm">
-        {icon}
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
+    >
+      <motion.h2
+        variants={item}
+        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
+      >
+        The Commitment
+      </motion.h2>
+
+      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
+        We ask for three simple things from our alpha testers.
+      </motion.p>
+
+      <motion.ol variants={item} className="mt-10 space-y-6">
+        <CommitmentRow
+          icon={<Activity className="h-5 w-5" />}
+          title="Use it daily"
+          description="Open the app at least once a day during the test."
+        />
+        <CommitmentRow
+          icon={<MessageSquare className="h-5 w-5" />}
+          title="Share honest feedback"
+          description="Complete two quick surveys about your experience."
+        />
+        <CommitmentRow
+          icon={<Bug className="h-5 w-5" />}
+          title="Report the weird moments"
+          description="Flag bugs, glitches, and anything that feels off."
+        />
+      </motion.ol>
+    </motion.div>
+  );
+}
+
+export function ApplyNowSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
+    >
+      <motion.h2
+        variants={item}
+        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
+      >
+        Apply Now
+      </motion.h2>
+
+      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
+        Fill this out to apply for early access.
+      </motion.p>
+
+      <motion.div variants={item} className="mt-10">
+        <SignUpForm />
+      </motion.div>
+
+      <motion.div variants={item} className="mt-10 text-center">
+        <p className="mb-4 text-lg italic text-white/70">For ever after 💕</p>
+        <p className="text-white/80">
+          <span className="font-semibold text-white">Zain</span>
+          <br />
+          <span className="text-white/60">Founder, Cass</span>
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function FeatureRow({
+  icon,
+  label,
+  title,
+  className,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  title: string;
+  className?: string;
+}) {
+  return (
+    <div className={cn('border-l border-white/10 pl-5', className)}>
+      <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-white/55">
+        <span className="text-white/60">{icon}</span>
+        {label}
       </div>
-      <div>
-        <h4 className="text-base font-semibold tracking-tight text-foreground">{title}</h4>
-        <p className="mt-1 text-sm leading-relaxed text-foreground">{description}</p>
-      </div>
+      <div className="mt-3 text-2xl font-semibold tracking-tight text-white md:text-3xl">{title}</div>
     </div>
+  );
+}
+
+function StatItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="border-l border-white/10 pl-5">
+      <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-white/55">
+        <span className="text-white/60">{icon}</span>
+        {label}
+      </div>
+      <div className="mt-3 text-2xl font-semibold tracking-tight text-white md:text-3xl">{value}</div>
+    </div>
+  );
+}
+
+function BenefitItem({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+  return (
+    <div className="border-l border-white/10 pl-6">
+      <div className="flex items-center gap-3 text-white">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
+          {icon}
+        </span>
+        <h4 className="text-xl font-semibold tracking-tight">{title}</h4>
+      </div>
+      <p className="mt-4 text-lg leading-relaxed text-white/70">{description}</p>
+    </div>
+  );
+}
+
+function CommitmentRow({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+  return (
+    <li className="border-l border-white/10 pl-6">
+      <div className="flex items-start gap-4">
+        <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70">
+          {icon}
+        </div>
+        <div className="flex-1">
+          <p className="text-xl font-semibold tracking-tight text-white">{title}</p>
+          <p className="mt-2 text-lg leading-relaxed text-white/70">{description}</p>
+        </div>
+      </div>
+    </li>
   );
 }
