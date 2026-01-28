@@ -61,8 +61,7 @@ body {
 }
 
 .cass-section-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  scrollbar-width: none;
 }
 
 .cass-section-scroll--no-scrollbar {
@@ -70,7 +69,8 @@ body {
 }
 
 .cass-section-scroll::-webkit-scrollbar {
-  width: 10px;
+  width: 0;
+  height: 0;
 }
 
 .cass-section-scroll--no-scrollbar::-webkit-scrollbar {

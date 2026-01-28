@@ -71,7 +71,7 @@ type ProgressDotsProps = {
 function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProps) {
   return (
     <div
-      className="fixed right-[calc(1rem+env(safe-area-inset-right))] top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-row items-center gap-3 md:bottom-auto md:left-auto md:right-[calc(1rem+env(safe-area-inset-right))] md:top-1/2 md:-translate-x-0 md:-translate-y-1/2 md:flex-col"
       aria-label="Section progress"
     >
       {Array.from({ length: SECTION_COUNT }).map((_, index) => {
