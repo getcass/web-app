@@ -40,11 +40,16 @@ function LandingSection({
         <div
           className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 py-10 md:px-10"
           style={{
-            paddingTop: 'calc(2.5rem + env(safe-area-inset-top))',
-            paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom))',
+            paddingTop: '2.5rem',
+            paddingBottom: '2.5rem',
           }}
         >
-          <div className="cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain">
+          <div
+            className={cn(
+              'cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain',
+              index === 5 && 'cass-section-scroll--no-scrollbar',
+            )}
+          >
             {children}
           </div>
         </div>
@@ -62,7 +67,7 @@ type ProgressDotsProps = {
 function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProps) {
   return (
     <div
-      className="fixed right-[calc(1rem+env(safe-area-inset-right))] top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
+      className="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
       aria-label="Section progress"
     >
       {Array.from({ length: SECTION_COUNT }).map((_, index) => {
@@ -87,65 +92,46 @@ function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProp
 }
 
 type BackgroundLayerProps = {
-  activeIndex: number;
+  scrollProgress: number;
   reducedMotion: boolean;
 };
 
-function BackgroundLayer({ activeIndex, reducedMotion }: BackgroundLayerProps) {
-  const opacityTransitionClassName = reducedMotion ? 'transition-none' : 'transition-opacity duration-700';
-  const imageOpacityClassName = activeIndex === 0 ? 'opacity-100' : 'opacity-55';
-
-  const gradientLayers = useMemo(
-    () => [
-      'bg-transparent',
-      'bg-[radial-gradient(1200px_700px_at_20%_10%,rgba(255,255,255,0.12),transparent_55%),radial-gradient(900px_600px_at_75%_35%,rgba(205,215,255,0.10),transparent_60%),linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.85))]',
-      'bg-[radial-gradient(900px_650px_at_20%_20%,rgba(250,210,230,0.10),transparent_55%),radial-gradient(1100px_700px_at_85%_15%,rgba(190,220,255,0.10),transparent_60%),linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.88))]',
-      'bg-[radial-gradient(1100px_750px_at_30%_15%,rgba(255,255,255,0.10),transparent_55%),radial-gradient(900px_650px_at_80%_55%,rgba(255,210,235,0.10),transparent_62%),linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.88))]',
-      'bg-[radial-gradient(1000px_700px_at_25%_35%,rgba(205,215,255,0.10),transparent_60%),radial-gradient(900px_650px_at_80%_25%,rgba(255,255,255,0.08),transparent_62%),linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.9))]',
-      'bg-[radial-gradient(1200px_750px_at_25%_20%,rgba(255,210,235,0.12),transparent_58%),radial-gradient(900px_650px_at_80%_35%,rgba(205,215,255,0.10),transparent_62%),linear-gradient(to_bottom,rgba(0,0,0,0.25),rgba(0,0,0,0.9))]',
-    ],
+function BackgroundLayer({ scrollProgress, reducedMotion }: BackgroundLayerProps) {
+  const t = Math.max(0, Math.min(1, scrollProgress));
+  const eased = reducedMotion ? t : t * t * (3 - 2 * t); // smoothstep
+  const imageOpacity = 1 - 0.6 * eased;
+  const dimmerOpacity = 0.62 * eased;
+  const vignetteOpacity = 0.12 + 0.32 * eased;
+  const baseGradient = useMemo(
+    () =>
+      'bg-[radial-gradient(1200px_700px_at_20%_10%,rgba(255,255,255,0.08),transparent_60%),radial-gradient(900px_600px_at_75%_35%,rgba(205,215,255,0.06),transparent_64%)]',
     [],
   );
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-black">
+    <div className="fixed inset-0 z-0 overflow-hidden bg-[#050509]">
       <div className="absolute inset-0">
         <img
           src={backgroundImageVertical}
           alt=""
           className={cn(
-            'h-full w-full object-cover object-top saturate-125 contrast-105 md:hidden',
-            opacityTransitionClassName,
-            imageOpacityClassName,
+            'h-full w-full object-cover object-top saturate-110 contrast-105 lg:hidden',
           )}
-          style={!reducedMotion ? { willChange: 'opacity' } : undefined}
+          style={!reducedMotion ? { opacity: imageOpacity, willChange: 'opacity' } : { opacity: imageOpacity }}
         />
         <img
           src={backgroundImage}
           alt=""
           className={cn(
-            'hidden h-full w-full object-cover object-center saturate-125 contrast-105 md:block',
-            opacityTransitionClassName,
-            imageOpacityClassName,
+            'hidden h-full w-full object-cover object-center saturate-110 contrast-105 lg:block',
           )}
-          style={!reducedMotion ? { willChange: 'opacity' } : undefined}
+          style={!reducedMotion ? { opacity: imageOpacity, willChange: 'opacity' } : { opacity: imageOpacity }}
         />
       </div>
 
-      {gradientLayers.map((layer, index) => (
-        <div
-          key={layer}
-          className={cn(
-            'absolute inset-0',
-            opacityTransitionClassName,
-            layer,
-            index === activeIndex ? 'opacity-100' : 'opacity-0',
-          )}
-          style={!reducedMotion ? { willChange: 'opacity' } : undefined}
-        />
-      ))}
-
-      <div className="absolute inset-0 bg-black/15" />
+      <div className={cn('absolute inset-0', baseGradient)} />
+      <div className="absolute inset-0 bg-black" style={{ opacity: dimmerOpacity }} />
+      <div className="absolute inset-0 bg-black" style={{ opacity: vignetteOpacity }} />
     </div>
   );
 }
@@ -171,7 +157,7 @@ function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
       transition={transition}
-      className="fixed bottom-[calc(1.75rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white/55 transition-[color] duration-150 hover:text-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+      className="fixed bottom-7 left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white/55 transition-[color] duration-150 hover:text-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
     >
       <span className="text-xs uppercase tracking-[0.22em]">Scroll to begin</span>
       <motion.span
@@ -194,6 +180,7 @@ export function LandingDeck() {
   const sectionRefs = useRef<(HTMLElement | null)[]>(Array.from({ length: SECTION_COUNT }).fill(null));
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [entered, setEntered] = useState<boolean[]>(
     Array.from({ length: SECTION_COUNT }).map(() => false),
   );
@@ -211,6 +198,33 @@ export function LandingDeck() {
     const container = scrollRef.current;
     if (!container) return;
     container.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const height = container.clientHeight || 1;
+      const range = height;
+      const next = Math.max(0, Math.min(1, container.scrollTop / range));
+      setScrollProgress(next);
+    };
+
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(update);
+    };
+
+    container.addEventListener('scroll', onScroll, { passive: true });
+    update();
+
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
   }, []);
 
   const setSectionRef = useCallback(
@@ -319,9 +333,9 @@ export function LandingDeck() {
   );
 
   return (
-    <div className="relative bg-black">
+    <div className="relative bg-[#050509]">
       <GrainOverlay />
-      <BackgroundLayer activeIndex={activeIndex} reducedMotion={reducedMotion} />
+      <BackgroundLayer scrollProgress={scrollProgress} reducedMotion={reducedMotion} />
 
       <div ref={scrollRef} className="cass-snap-container relative z-10">
         <LandingSection
