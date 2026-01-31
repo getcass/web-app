@@ -53,39 +53,27 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        Hi, I’m Zain, founder of Cass. I met my wife on a dating app - she was actually my first date. That should be normal but it isn’t.
-        Cass is built around a few simple principles:
+        Hello! I’m Zain, founder of Cass. What’s Cass? It’s (hopefully) a simple and safe way to meet people who are highly compatible with you.
+        It’s built on three key principles:
       </motion.p>
 
-      <motion.div variants={item} className="mt-10">
-        <div className="max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/55">What we’re building</p>
-          <p className="mt-4 text-lg leading-relaxed text-white/75">
-            <span className="font-semibold text-white">Cass</span> is safer, more trustworthy, and focused on compatibility scores.
-            There is no swiping mechanic; you can see everyone at once and message anyone you like.
-          </p>
-        </div>
-
-	        <div className="mt-10 grid gap-6 sm:grid-cols-3">
-	          <FeatureRow
-	            icon={<Lock className="h-4 w-4" />}
-	            label="Trust"
-	            title="Safer by design"
-	          />
-	          <FeatureRow
-	            icon={<Heart className="h-4 w-4" />}
-	            label="Chemistry"
-	            title="Built on compatibility"
-	          />
-	          <FeatureRow
-	            icon={<User className="h-4 w-4" />}
-	            label="Accessibility"
-	            title="Free without paywalls"
-	          />
+		    <motion.div variants={item}>
+		        <div className="mt-10 grid gap-10 sm:grid-cols-3 md:gap-16">
+		          <FeatureRow icon={<Heart className="h-4 w-4" />} label="Chemistry" title="Based on compatibility" />
+		          <FeatureRow icon={<User className="h-4 w-4" />} label="Accessibility" title="Free without paywalls" />
+		          <FeatureRow icon={<Lock className="h-4 w-4" />} label="Trust" title="Safer by design" />
+		        </div>
+	
+	        <div className="mt-14 max-w-3xl">
+	          <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/55">What we&apos;re fixing</p>
+	          <p className="mt-4 text-pretty text-base leading-relaxed text-white/70 md:text-lg">
+	            We're getting rid of endless swiping, burnout, cat-fishing,
+	            ghosting, and paywalls. We’ve built Cass to be more intentional and more human.
+	          </p>
 	        </div>
 	      </motion.div>
 	    </motion.div>
-  );
+	  );
 }
 
 export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
