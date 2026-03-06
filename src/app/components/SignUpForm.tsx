@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react';
 import { Button } from './ui/button';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { db, firebaseConfigError, firebaseSetupHint, isFirebaseConfigured } from '../lib/firebase';
 
 export function SignUpForm() {
+  const formUnavailable = !isFirebaseConfigured;
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -23,6 +24,15 @@ export function SignUpForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!db) {
+      setSubmitState({
+        status: 'error',
+        message: firebaseConfigError ?? 'The application form is temporarily unavailable.',
+      });
+      return;
+    }
+
     setSubmitState({ status: 'submitting' });
 
     const payload = {
@@ -101,6 +111,16 @@ export function SignUpForm() {
   return (
     <div className="mx-auto w-full max-w-4xl">
       <form onSubmit={handleSubmit} className="grid gap-y-5 gap-x-7 md:grid-cols-2">
+        {formUnavailable && (
+          <div className="md:col-span-2 rounded-2xl border border-amber-200/20 bg-amber-100/10 px-5 py-4 shadow-[0_1px_0_rgba(255,255,255,0.06)]">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-amber-100/75">Form unavailable</p>
+            <p className="mt-2 text-sm text-white/75">
+              {firebaseConfigError ?? 'The application form is temporarily unavailable.'}
+            </p>
+            {firebaseSetupHint && <p className="mt-2 text-sm text-white/55">{firebaseSetupHint}</p>}
+          </div>
+        )}
+
         {/* Invite Code */}
         <div className="md:col-span-2">
           <label className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
@@ -285,9 +305,9 @@ export function SignUpForm() {
             size="lg"
             variant="primary"
             className="w-full cass-hover-lift"
-            disabled={submitState.status === 'submitting'}
+            disabled={submitState.status === 'submitting' || formUnavailable}
           >
-            {submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
+            {formUnavailable ? 'Form unavailable' : submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
           </Button>
         </div>
 
