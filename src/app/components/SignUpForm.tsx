@@ -1,7 +1,11 @@
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { CheckCircle2, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db, firebaseConfigError, firebaseSetupHint, isFirebaseConfigured } from '../lib/firebase';
+import { VALID_INVITE_CODES } from '../lib/inviteCodes';
+
+type InviteCodeValidationStatus = 'idle' | 'checking' | 'valid' | 'invalid';
 
 export function SignUpForm() {
   const formUnavailable = !isFirebaseConfigured;
@@ -19,11 +23,37 @@ export function SignUpForm() {
   const [submitState, setSubmitState] = useState<
     { status: 'idle' } | { status: 'submitting' } | { status: 'success' } | { status: 'error'; message: string }
   >({ status: 'idle' });
+  const [inviteCodeValidation, setInviteCodeValidation] = useState<InviteCodeValidationStatus>('idle');
 
   const codeInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const inviteCode = formData.inviteCode.join('');
+  const isInviteCodeComplete = formData.inviteCode.every((digit) => digit.length === 1);
+
+  useEffect(() => {
+    if (!isInviteCodeComplete) {
+      setInviteCodeValidation('idle');
+      return;
+    }
+
+    setInviteCodeValidation('checking');
+
+    const timeoutId = window.setTimeout(() => {
+      setInviteCodeValidation(VALID_INVITE_CODES.has(inviteCode) ? 'valid' : 'invalid');
+    }, 450);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [inviteCode, isInviteCodeComplete]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isInviteCodeComplete || !VALID_INVITE_CODES.has(inviteCode)) {
+      setSubmitState({
+        status: 'error',
+        message: 'Please enter a valid invite code.',
+      });
+      return;
+    }
 
     if (!db) {
       setSubmitState({
@@ -37,7 +67,7 @@ export function SignUpForm() {
 
     const payload = {
       ...formData,
-      inviteCode: formData.inviteCode.join(''),
+      inviteCode,
       submittedAt: serverTimestamp()
     };
 
@@ -89,7 +119,7 @@ export function SignUpForm() {
     const pastedData = e.clipboardData.getData('text').slice(0, 6);
     const digits = pastedData.match(/\d/g) || [];
     
-    const newCode = [...formData.inviteCode];
+    const newCode = ['', '', '', '', '', ''];
     digits.forEach((digit, i) => {
       if (i < 6) newCode[i] = digit;
     });
@@ -144,6 +174,23 @@ export function SignUpForm() {
                 className="h-12 w-full min-w-0 rounded-2xl border border-white/15 bg-white/10 text-center text-xl font-semibold tracking-[0.14em] text-white placeholder:text-white/35 shadow-[0_1px_0_rgba(255,255,255,0.06)] outline-none backdrop-blur-xl backdrop-saturate-150 transition-[border-color,box-shadow,transform] focus:border-white/30 focus:ring-4 focus:ring-white/10 md:w-12 md:flex-none"
               />
             ))}
+          </div>
+          <div className="mt-2 min-h-6">
+            {inviteCodeValidation === 'checking' && (
+              <div className="flex items-center gap-2 text-sm text-white/70">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Checking invite code…</span>
+              </div>
+            )}
+            {inviteCodeValidation === 'valid' && (
+              <div className="flex items-center gap-2 text-sm text-emerald-300">
+                <CheckCircle2 className="h-4 w-4" />
+                <span>Invite code accepted</span>
+              </div>
+            )}
+            {inviteCodeValidation === 'invalid' && (
+              <p className="text-sm text-red-300">Invalid code. Please check and try again.</p>
+            )}
           </div>
         </div>
 
@@ -305,7 +352,7 @@ export function SignUpForm() {
             size="lg"
             variant="primary"
             className="w-full cass-hover-lift"
-            disabled={submitState.status === 'submitting' || formUnavailable}
+            disabled={submitState.status === 'submitting' || formUnavailable || inviteCodeValidation !== 'valid'}
           >
             {formUnavailable ? 'Form unavailable' : submitState.status === 'submitting' ? 'Submitting…' : 'Submit Application'}
           </Button>
@@ -316,7 +363,7 @@ export function SignUpForm() {
             <div className="text-white">
               <span className="text-base font-semibold">Thanks!</span>
             </div>
-            <p className="mt-1 text-sm text-white/65">We’ll be in touch shortly if you’re selected.</p>
+            <p className="mt-1 text-sm text-white/65">We’ll be in touch shortly with next steps.</p>
           </div>
         )}
         {submitState.status === 'error' && (
