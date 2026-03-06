@@ -63,10 +63,6 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
               <FeatureRow icon={<Lock className="h-4 w-4" />} label="Safety" title="The screen for genuine users" />
 		          <FeatureRow icon={<User className="h-4 w-4" />} label="Alignment" title="We want the same outcome you do" />
 		        </div>
-	
-	        <div className="mt-14 max-w-3xl">
-	          <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/55">What we&apos;re fixing</p>
-	        </div>
 	      </motion.div>
 	    </motion.div>
 	  );
