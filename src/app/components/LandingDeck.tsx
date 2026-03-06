@@ -16,6 +16,36 @@ import { motion } from 'motion/react';
 
 const SECTION_COUNT = 6;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+const HERO_CHROME_COLOR = '#9a274c';
+const SCROLLED_CHROME_COLOR = '#050509';
+
+function hexToRgb(hex: string) {
+  const normalized = hex.replace('#', '');
+  const value = Number.parseInt(normalized, 16);
+
+  return {
+    r: (value >> 16) & 255,
+    g: (value >> 8) & 255,
+    b: value & 255,
+  };
+}
+
+function rgbToHex({ r, g, b }: { r: number; g: number; b: number }) {
+  return `#${[r, g, b]
+    .map((channel) => Math.max(0, Math.min(255, Math.round(channel))).toString(16).padStart(2, '0'))
+    .join('')}`;
+}
+
+function mixHexColors(start: string, end: string, amount: number) {
+  const startRgb = hexToRgb(start);
+  const endRgb = hexToRgb(end);
+
+  return rgbToHex({
+    r: startRgb.r + (endRgb.r - startRgb.r) * amount,
+    g: startRgb.g + (endRgb.g - startRgb.g) * amount,
+    b: startRgb.b + (endRgb.b - startRgb.b) * amount,
+  });
+}
 
 type LandingSectionProps = {
   index: number;
@@ -40,13 +70,11 @@ function LandingSection({
         <div
           className="flex w-full"
           style={{
-            paddingTop: 'env(safe-area-inset-top)',
-            paddingBottom: 'env(safe-area-inset-bottom)',
             paddingLeft: 'env(safe-area-inset-left)',
             paddingRight: 'env(safe-area-inset-right)',
           }}
         >
-          <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 py-10 md:px-10">
+          <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 md:px-10">
             <div
               className={cn(
                 'cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain',
@@ -113,7 +141,7 @@ function BackgroundLayer({ scrollProgress, reducedMotion }: BackgroundLayerProps
   );
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden bg-[#050509]">
+    <div className="cass-screen-bleed absolute overflow-hidden bg-[#050509]">
       <div className="absolute inset-0">
         <img
           src={backgroundImageVertical}
@@ -180,8 +208,9 @@ function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
 
 export function LandingDeck() {
   const reducedMotion = usePrefersReducedMotion();
-  const scrollRef = useRef<HTMLDivElement | null>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>(Array.from({ length: SECTION_COUNT }).fill(null));
+  const themeColorMetaRef = useRef<HTMLMetaElement | null>(null);
+  const initialThemeColorRef = useRef<string | null>(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -199,21 +228,42 @@ export function LandingDeck() {
   }, [activeIndex]);
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-    container.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    const raf = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
   }, []);
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
+    const params = new URLSearchParams(window.location.search);
+    const requestedSection = Number(params.get('section'));
+    if (!Number.isInteger(requestedSection) || requestedSection < 0 || requestedSection >= SECTION_COUNT) {
+      return;
+    }
 
+    const target = sectionRefs.current[requestedSection];
+    if (!target || requestedSection === 0) return;
+
+    const raf = window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    });
+
+    return () => window.cancelAnimationFrame(raf);
+  }, []);
+
+  useEffect(() => {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const height = container.clientHeight || 1;
-      const range = height;
-      const next = Math.max(0, Math.min(1, container.scrollTop / range));
+      const height = window.innerHeight || document.documentElement.clientHeight || 1;
+      const next = Math.max(0, Math.min(1, window.scrollY / height));
       setScrollProgress(next);
     };
 
@@ -222,11 +272,11 @@ export function LandingDeck() {
       raf = window.requestAnimationFrame(update);
     };
 
-    container.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     update();
 
     return () => {
-      container.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onScroll);
       if (raf) window.cancelAnimationFrame(raf);
     };
   }, []);
@@ -248,9 +298,6 @@ export function LandingDeck() {
   );
 
   useEffect(() => {
-    const root = scrollRef.current;
-    if (!root) return;
-
     const sections = sectionRefs.current.filter(Boolean) as HTMLElement[];
     if (!sections.length) return;
 
@@ -277,7 +324,7 @@ export function LandingDeck() {
         setActiveIndex(bestIndex);
       },
       {
-        root,
+        root: null,
         threshold: thresholds,
       },
     );
@@ -335,13 +382,45 @@ export function LandingDeck() {
     }),
     [reducedMotion, scrollToIndex],
   );
+  const chromeBlend = reducedMotion
+    ? scrollProgress
+    : scrollProgress * scrollProgress * (3 - 2 * scrollProgress);
+  const themeColor = useMemo(
+    () => mixHexColors(HERO_CHROME_COLOR, SCROLLED_CHROME_COLOR, chromeBlend),
+    [chromeBlend],
+  );
+
+  useEffect(() => {
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (!meta) return;
+
+    themeColorMetaRef.current = meta;
+    if (initialThemeColorRef.current === null) {
+      initialThemeColorRef.current = meta.content;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!themeColorMetaRef.current) return;
+    themeColorMetaRef.current.content = themeColor;
+  }, [themeColor]);
+
+  useEffect(
+    () => () => {
+      if (!themeColorMetaRef.current || initialThemeColorRef.current === null) return;
+      themeColorMetaRef.current.content = initialThemeColorRef.current;
+    },
+    [],
+  );
 
   return (
     <div className="relative bg-[#050509]">
-      <GrainOverlay />
-      <BackgroundLayer scrollProgress={scrollProgress} reducedMotion={reducedMotion} />
+      <div className="cass-background-stage">
+        <BackgroundLayer scrollProgress={scrollProgress} reducedMotion={reducedMotion} />
+        <GrainOverlay />
+      </div>
 
-      <div ref={scrollRef} className="cass-snap-container relative z-10">
+      <div className="cass-snap-container relative z-10">
         <LandingSection
           index={0}
           onRef={setSectionRef(0)}
