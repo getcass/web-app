@@ -59,8 +59,8 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
 
 		    <motion.div variants={item}>
 		        <div className="mt-10 grid gap-10 sm:grid-cols-3 md:gap-16">
-		          <FeatureRow icon={<Heart className="h-4 w-4" />} label="Chemistry" title="We match well" />
-              <FeatureRow icon={<Lock className="h-4 w-4" />} label="Safety" title="The people are genuine" />
+		          <FeatureRow icon={<Heart className="h-4 w-4" />} label="Chemistry" title="We match based on compatibility" />
+              <FeatureRow icon={<Lock className="h-4 w-4" />} label="Safety" title="The screen for genuine users" />
 		          <FeatureRow icon={<User className="h-4 w-4" />} label="Alignment" title="We want the same outcome you do" />
 		        </div>
 	
