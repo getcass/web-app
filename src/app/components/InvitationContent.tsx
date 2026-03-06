@@ -53,7 +53,7 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        Hello! I’m Zain, founder of Cass. What’s Cass? It’s (hopefully) a simple and safe way to meet people who are highly compatible with you.
+        Hello! I’m Zain, founder of Cass. Cass is a simple and safe way to meet people who are highly compatible with you.
         It’s built on three key principles:
       </motion.p>
 
@@ -99,7 +99,7 @@ export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMoti
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        As an alpha tester, you’ll be part of the first community. Your feedback will directly influence the UX and feature set before we launch.
+        As an alpha tester, you’ll help us shape the very first iteration of the app. Your feedback will directly influence the UX and feature set before we launch.
       </motion.p>
 
       <motion.dl variants={item} className="mt-10 grid gap-6 sm:grid-cols-3">
@@ -142,19 +142,19 @@ export function WhatsInItForYouSectionContent({ isActive, hasEntered, reducedMot
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        We value your time and your insights. In return, you’ll get a couple of perks alongside early access.
+        We value your time and your insights, and in return, you’ll get a couple of perks alongside early access:
       </motion.p>
 
       <motion.div variants={item} className="mt-10 grid gap-8 md:grid-cols-2">
         <BenefitItem
           icon={<Trophy className="h-5 w-5" />}
           title="Founding member status"
-          description='A permanent “Alpha Member” badge on your profile post‑launch.'
+          description='A permanent “Alpha" verification badge post‑launch, making your profile more visible.'
         />
         <BenefitItem
           icon={<Gift className="h-5 w-5" />}
           title="Exclusive merch"
-          description='A limited‑edition Cass “Alpha Member” tote bag delivered to you.'
+          description='A limited‑edition Cass tote bag delivered to you.'
         />
       </motion.div>
     </motion.div>
@@ -192,7 +192,7 @@ export function CommitmentSectionContent({ isActive, hasEntered, reducedMotion }
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        We ask for three simple things from our alpha testers.
+        We ask for three simple things from you.
       </motion.p>
 
       <motion.ol variants={item} className="mt-10 space-y-6">
@@ -246,16 +246,11 @@ export function ApplyNowSectionContent({ isActive, hasEntered, reducedMotion }: 
         Apply Now
       </motion.h2>
 
-      <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        Fill this out to apply for early access.
-      </motion.p>
-
       <motion.div variants={item} className="mt-10">
         <SignUpForm />
       </motion.div>
 
       <motion.div variants={item} className="mt-10 text-center">
-        <p className="mb-4 text-lg italic text-white/70">For ever after 💕</p>
         <p className="text-white/80">
           <span className="font-semibold text-white">Zain</span>
           <br />
