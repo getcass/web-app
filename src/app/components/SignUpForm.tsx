@@ -29,6 +29,17 @@ export function SignUpForm() {
   const inviteCode = formData.inviteCode.join('');
   const isInviteCodeComplete = formData.inviteCode.every((digit) => digit.length === 1);
 
+  const focusCodeInput = (index: number) => {
+    const input = codeInputRefs.current[index];
+    if (!input) return;
+
+    try {
+      input.focus({ preventScroll: true });
+    } catch {
+      input.focus();
+    }
+  };
+
   useEffect(() => {
     if (!isInviteCodeComplete) {
       setInviteCodeValidation('idle');
@@ -104,13 +115,13 @@ export function SignUpForm() {
 
     // Auto-focus next input
     if (value && index < 5) {
-      codeInputRefs.current[index + 1]?.focus();
+      focusCodeInput(index + 1);
     }
   };
 
   const handleCodeKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !formData.inviteCode[index] && index > 0) {
-      codeInputRefs.current[index - 1]?.focus();
+      focusCodeInput(index - 1);
     }
   };
 
@@ -129,7 +140,7 @@ export function SignUpForm() {
     // Focus the next empty input or the last one
     const nextEmptyIndex = newCode.findIndex(d => !d);
     const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
-    codeInputRefs.current[focusIndex]?.focus();
+    focusCodeInput(focusIndex);
   };
 
   const fieldClassName =
