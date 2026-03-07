@@ -77,7 +77,7 @@ function LandingSection({
           <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 md:px-10">
             <div
               className={cn(
-                'cass-section-scroll max-h-full min-h-0 overflow-y-auto overscroll-contain',
+                'cass-section-scroll max-h-full min-h-0 overflow-y-auto',
                 index === 5 && 'cass-section-scroll--no-scrollbar',
               )}
             >

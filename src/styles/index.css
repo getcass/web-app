@@ -7,7 +7,7 @@
   --cass-safe-right: env(safe-area-inset-right, 0px);
   --cass-safe-bottom: env(safe-area-inset-bottom, 0px);
   --cass-safe-left: env(safe-area-inset-left, 0px);
-  --cass-shell-height: 100lvh;
+  --cass-shell-height: 100vh;
   --cass-content-top-pad: calc(var(--cass-safe-top) + 1rem);
   --cass-content-bottom-pad: calc(var(--cass-safe-bottom) + 1.5rem);
   --cass-fade-top: max(calc(var(--cass-safe-top) + 2rem), 4rem);
@@ -15,23 +15,23 @@
   background-color: #050509;
 }
 
+@supports (height: 100dvh) {
+  :root {
+    --cass-shell-height: 100dvh;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   height: 100%;
   min-height: 100%;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   background-color: #050509;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  html {
-    scroll-snap-type: y mandatory;
-  }
 }
 
 body {
   overflow-x: hidden;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
   min-height: var(--cass-shell-height);
   margin: 0;
   padding: 0;
@@ -71,14 +71,8 @@ body {
 .cass-snap-section {
   height: var(--cass-shell-height);
   min-height: var(--cass-shell-height);
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cass-snap-section {
-    scroll-snap-stop: always;
-  }
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 .cass-section-scroll {
@@ -151,4 +145,9 @@ input[type='date'] {
   box-sizing: border-box;
   -webkit-appearance: none;
   appearance: none;
+}
+
+select option {
+  color: #111827;
+  background-color: #ffffff;
 }

@@ -16,8 +16,7 @@ export function SignUpForm() {
     gender: '',
     dateOfBirth: '',
     livesInLondon: false,
-    deviceType: '',
-    osVersion: '',
+    hasIphone: false,
     consent: false
   });
   const [submitState, setSubmitState] = useState<
@@ -276,42 +275,6 @@ export function SignUpForm() {
           />
         </div>
 
-        {/* Device Type */}
-        <div>
-          <label htmlFor="deviceType" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
-            Device <span className="text-red-300">*</span>
-          </label>
-          <select
-            id="deviceType"
-            name="deviceType"
-            required
-            value={formData.deviceType}
-            onChange={handleChange}
-            className={selectClassName}
-          >
-            <option value="">Select device type</option>
-            <option value="iphone">iPhone</option>
-            <option value="ipad">iPad</option>
-          </select>
-        </div>
-
-        {/* OS Version */}
-        <div>
-          <label htmlFor="osVersion" className="block text-xs font-medium uppercase tracking-[0.22em] text-white/60">
-            iOS version <span className="text-red-300">*</span>
-          </label>
-          <input
-            type="text"
-            id="osVersion"
-            name="osVersion"
-            required
-            value={formData.osVersion}
-            onChange={handleChange}
-            className={fieldClassName}
-            placeholder="e.g., 17.2"
-          />
-        </div>
-
         {/* Lives in London */}
         <div className="md:col-span-2">
           <label className="flex items-center gap-3 cursor-pointer group">
@@ -329,6 +292,28 @@ export function SignUpForm() {
             <div className="flex-1">
               <span className="block text-white/75">
                 I confirm that I currently live in London <span className="text-red-300">*</span>
+              </span>
+            </div>
+          </label>
+        </div>
+
+        {/* iPhone confirmation */}
+        <div className="md:col-span-2">
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex-shrink-0">
+              <input
+                type="checkbox"
+                name="hasIphone"
+                required
+                checked={formData.hasIphone}
+                onChange={handleChange}
+                className="sr-only peer"
+              />
+              <div className="relative h-6 w-6 rounded-full border border-white/15 bg-white/10 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150 transition-[border-color,transform,box-shadow] group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-white/10 peer-checked:border-white/30 after:absolute after:inset-1.5 after:rounded-full after:bg-white after:opacity-0 after:scale-75 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+            </div>
+            <div className="flex-1">
+              <span className="block text-white/75">
+                I confirm that I have an iPhone <span className="text-red-300">*</span>
               </span>
             </div>
           </label>
