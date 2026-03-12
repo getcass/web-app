@@ -223,8 +223,8 @@ export function CommitmentSectionContent({ isActive, hasEntered, reducedMotion }
       <motion.ol variants={item} className="mt-10 space-y-6">
         <CommitmentRow
           icon={<Activity className="h-5 w-5" />}
-          title="Use it daily"
-          description="Open the app at least once a day during the test."
+          title="Explore the app"
+          description="Use it regularly and try out the different features."
         />
         <CommitmentRow
           icon={<MessageSquare className="h-5 w-5" />}
@@ -233,7 +233,7 @@ export function CommitmentSectionContent({ isActive, hasEntered, reducedMotion }
         />
         <CommitmentRow
           icon={<Bug className="h-5 w-5" />}
-          title="Report the weird moments"
+          title="Report the issues"
           description="Flag bugs, glitches, and anything that feels off."
         />
       </motion.ol>
