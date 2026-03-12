@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Activity, Bug, Calendar, Gift, Heart, Lock, MessageSquare, Smartphone, Trophy, User } from 'lucide-react';
 import { SignUpForm } from './SignUpForm';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { cn } from './ui/utils';
 
 type SectionContentProps = {
@@ -11,6 +12,15 @@ type SectionContentProps = {
 };
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+const WELCOME_VALUE_DETAILS = {
+  Chemistry:
+    "Through Cass Labs quizzes, we go deeper than surface-level preferences to uncover how you think, feel, and connect with others. These insights help us measure genuine compatibility and surface the people you're most likely to click with. This means you're meeting people who actually make sense for you and not endlessly swiping. In fact - there is no swiping mechanic in Cass.",
+  Safety:
+    "Cass uses a thorough verification process alongside a referral system that encourages genuine users and discourages bad actors. The result is a community built on trust, where you can feel confident the people you're talking to are real and here for the right reasons.",
+  Alignment:
+    "Most dating apps are designed to keep you swiping for as long as possible. Cass isn't. Our incentives are aligned with yours: to help you meet the right person and move on from the app. Nothing is locked behind paywalls. We believe finding the right connection shouldn't depend on how much you're willing to spend.",
+} as const;
 
 function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
   const shouldShow = isActive || hasEntered;
@@ -53,19 +63,34 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        Hello! I’m Zain, founder of Cass. Cass is a simple and safe way to meet people who are highly compatible with you.
-        It’s built on three key principles:
+        Hello! I’m Zain, the founder of Cass. Cass is an app designed to help you find your person. 
+        It does things differently from traditional dating apps in three key ways:
       </motion.p>
 
-		    <motion.div variants={item}>
-		        <div className="mt-10 grid gap-10 sm:grid-cols-3 md:gap-16">
-		          <FeatureRow icon={<Heart className="h-4 w-4" />} label="Chemistry" title="We match based on compatibility" />
-              <FeatureRow icon={<Lock className="h-4 w-4" />} label="Safety" title="We screen for genuine users" />
-		          <FeatureRow icon={<User className="h-4 w-4" />} label="Alignment" title="We want the same outcomes you do" />
-		        </div>
-	      </motion.div>
-	    </motion.div>
-	  );
+      <motion.div variants={item}>
+        <div className="mt-10 grid gap-10 sm:grid-cols-3 md:gap-16">
+          <FeatureRow
+            icon={<Heart className="h-4 w-4" />}
+            label="Chemistry"
+            title="We match based on compatibility"
+            infoBody={WELCOME_VALUE_DETAILS.Chemistry}
+          />
+          <FeatureRow
+            icon={<Lock className="h-4 w-4" />}
+            label="Safety"
+            title="We screen for genuine users"
+            infoBody={WELCOME_VALUE_DETAILS.Safety}
+          />
+          <FeatureRow
+            icon={<User className="h-4 w-4" />}
+            label="Alignment"
+            title="We want the same outcomes you do"
+            infoBody={WELCOME_VALUE_DETAILS.Alignment}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
 }
 
 export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
@@ -105,7 +130,7 @@ export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMoti
       <motion.dl variants={item} className="mt-10 grid gap-6 sm:grid-cols-3">
         <StatItem icon={<Calendar className="h-4 w-4" />} label="Duration" value="1 week" />
         <StatItem icon={<Smartphone className="h-4 w-4" />} label="Platform" value="iOS" />
-        <StatItem icon={<MessageSquare className="h-4 w-4" />} label="Feedback" value="2 short forms (~10 min)" />
+        <StatItem icon={<MessageSquare className="h-4 w-4" />} label="Feedback" value="2 short forms (15 mins)" />
       </motion.dl>
     </motion.div>
   );
@@ -142,7 +167,7 @@ export function WhatsInItForYouSectionContent({ isActive, hasEntered, reducedMot
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        We value your time and your insights, and in return, you’ll get a couple of perks alongside early access:
+        We value your time and your insights, and on completion, you’ll get a couple of perks alongside early access:
       </motion.p>
 
       <motion.div variants={item} className="mt-10 grid gap-8 md:grid-cols-2">
@@ -265,18 +290,41 @@ function FeatureRow({
   icon,
   label,
   title,
+  infoBody,
   className,
 }: {
   icon: React.ReactNode;
   label: string;
   title: string;
+  infoBody?: string;
   className?: string;
 }) {
   return (
     <div className={cn('border-l border-white/10 pl-5', className)}>
       <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.22em] text-white/55">
         <span className="text-white/60">{icon}</span>
-        {label}
+        <span>{label}</span>
+        {infoBody ? (
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                aria-label={`Learn more about ${label}`}
+                className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-white/5 text-[10px] font-semibold lowercase tracking-normal text-white/80 transition hover:border-white/40 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              >
+                i
+              </button>
+            </DialogTrigger>
+            <DialogContent className="max-h-[85vh] overflow-y-auto border-white/10 bg-[#101010] text-white shadow-[0_24px_80px_rgba(0,0,0,0.55)] sm:max-w-xl">
+              <DialogHeader className="pr-8 text-left">
+                <DialogTitle className="text-2xl tracking-tight text-white">{label}</DialogTitle>
+                <DialogDescription className="text-base leading-relaxed text-white/70">
+                  {infoBody}
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        ) : null}
       </div>
       <div className="mt-3 text-2xl font-semibold tracking-tight text-white md:text-3xl">{title}</div>
     </div>
