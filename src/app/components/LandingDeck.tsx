@@ -6,19 +6,22 @@ import { GrainOverlay } from './GrainOverlay';
 import { Hero } from './Hero';
 import {
   IntroSectionContent,
-  WelcomeScreenshotsSectionContent,
   AlphaProgrammeSectionContent,
   WhatsInItForYouSectionContent,
   CommitmentSectionContent,
   ApplyNowSectionContent,
 } from './InvitationContent';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { useIsMobile } from './ui/use-mobile';
 import { motion } from 'motion/react';
 
-const SECTION_COUNT = 7;
+const SECTION_COUNT = 6;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const HERO_CHROME_COLOR = '#9a274c';
 const SCROLLED_CHROME_COLOR = '#050509';
+const MOBILE_SWIPE_THRESHOLD = 6;
+const MOBILE_SNAP_ZONE = 40;
+const MOBILE_SNAP_LOCK_MS = 520;
 
 function hexToRgb(hex: string) {
   const normalized = hex.replace('#', '');
@@ -65,6 +68,7 @@ function LandingSection({
     <section
       ref={onRef}
       data-index={index}
+      id={index === 0 ? 'home' : `section-${index}`}
       className={cn('cass-snap-section relative flex w-full items-stretch', className)}
     >
       <div className="relative flex w-full items-stretch">
@@ -75,7 +79,12 @@ function LandingSection({
             paddingRight: 'env(safe-area-inset-right)',
           }}
         >
-          <div className="mx-auto flex min-h-[var(--cass-shell-height)] w-full max-w-6xl flex-col justify-center px-6 md:h-full md:min-h-0 md:px-10">
+          <div
+            className={cn(
+              'mx-auto flex min-h-[var(--cass-shell-height)] w-full max-w-6xl flex-col px-6 md:h-full md:min-h-0 md:justify-center md:px-10',
+              index === SECTION_COUNT - 1 ? 'justify-start' : 'justify-center',
+            )}
+          >
             <div
               className={cn(
                 'cass-section-scroll min-h-0 md:max-h-full md:overflow-y-auto',
@@ -209,9 +218,19 @@ function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
 
 export function LandingDeck() {
   const reducedMotion = usePrefersReducedMotion();
+  const isMobile = useIsMobile();
   const sectionRefs = useRef<(HTMLElement | null)[]>(Array.from({ length: SECTION_COUNT }).fill(null));
   const themeColorMetaRef = useRef<HTMLMetaElement | null>(null);
   const initialThemeColorRef = useRef<string | null>(null);
+  const mobileSwipeRef = useRef<{
+    startIndex: number;
+    startScrollY: number;
+    startX: number;
+    startY: number;
+    shouldHandle: boolean;
+  } | null>(null);
+  const mobileSnapLockRef = useRef<number | null>(null);
+  const mobileSnapInFlightRef = useRef(false);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -249,13 +268,54 @@ export function LandingDeck() {
     [],
   );
 
-  const scrollToSection = useCallback((index: number, behavior: ScrollBehavior) => {
+  const getSectionTop = useCallback((index: number) => {
     const element = sectionRefs.current[index];
-    if (!element) return;
+    if (!element) return null;
 
-    const top = element.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
+    return Math.max(0, element.getBoundingClientRect().top + window.scrollY);
   }, []);
+
+  const getNearestSectionIndex = useCallback((scrollY: number) => {
+    let nearestIndex = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    for (let index = 0; index < SECTION_COUNT; index += 1) {
+      const top = getSectionTop(index);
+      if (top === null) continue;
+
+      const distance = Math.abs(scrollY - top);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    }
+
+    return nearestIndex;
+  }, [getSectionTop]);
+
+  const releaseMobileSnapLock = useCallback(() => {
+    mobileSnapInFlightRef.current = false;
+    if (mobileSnapLockRef.current) {
+      window.clearTimeout(mobileSnapLockRef.current);
+      mobileSnapLockRef.current = null;
+    }
+  }, []);
+
+  const lockMobileSnap = useCallback(() => {
+    releaseMobileSnapLock();
+    mobileSnapInFlightRef.current = true;
+    mobileSnapLockRef.current = window.setTimeout(() => {
+      mobileSnapInFlightRef.current = false;
+      mobileSnapLockRef.current = null;
+    }, reducedMotion ? 80 : MOBILE_SNAP_LOCK_MS);
+  }, [reducedMotion, releaseMobileSnapLock]);
+
+  const scrollToSection = useCallback((index: number, behavior: ScrollBehavior) => {
+    const top = getSectionTop(index);
+    if (top === null) return;
+
+    window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
+  }, [getSectionTop]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -272,6 +332,8 @@ export function LandingDeck() {
 
     return () => window.cancelAnimationFrame(raf);
   }, [scrollToSection]);
+
+  useEffect(() => releaseMobileSnapLock, [releaseMobileSnapLock]);
 
   useEffect(() => {
     let raf = 0;
@@ -302,6 +364,85 @@ export function LandingDeck() {
     },
     [reducedMotion, scrollToSection],
   );
+
+  useEffect(() => {
+    if (!isMobile) {
+      mobileSwipeRef.current = null;
+      releaseMobileSnapLock();
+      return;
+    }
+
+    const isInteractiveTarget = (target: EventTarget | null) =>
+      target instanceof HTMLElement &&
+      Boolean(
+        target.closest(
+          'input, textarea, select, button, a, [role="button"], [role="link"], [contenteditable="true"]',
+        ),
+      );
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1 || mobileSnapInFlightRef.current) {
+        mobileSwipeRef.current = null;
+        return;
+      }
+
+      const touch = event.touches[0];
+      const startScrollY = window.scrollY;
+
+      mobileSwipeRef.current = {
+        startIndex: getNearestSectionIndex(startScrollY),
+        startScrollY,
+        startX: touch.clientX,
+        startY: touch.clientY,
+        shouldHandle: !isInteractiveTarget(event.target),
+      };
+    };
+
+    const onTouchEnd = (event: TouchEvent) => {
+      const gesture = mobileSwipeRef.current;
+      mobileSwipeRef.current = null;
+
+      if (!gesture?.shouldHandle || event.changedTouches.length !== 1 || mobileSnapInFlightRef.current) {
+        return;
+      }
+
+      const anchorTop = getSectionTop(gesture.startIndex);
+      if (anchorTop === null || Math.abs(gesture.startScrollY - anchorTop) > MOBILE_SNAP_ZONE) {
+        return;
+      }
+
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - gesture.startX;
+      const deltaY = touch.clientY - gesture.startY;
+
+      if (Math.abs(deltaY) < MOBILE_SWIPE_THRESHOLD || Math.abs(deltaY) <= Math.abs(deltaX)) {
+        return;
+      }
+
+      const targetIndex = Math.max(
+        0,
+        Math.min(SECTION_COUNT - 1, gesture.startIndex + (deltaY < 0 ? 1 : -1)),
+      );
+      if (targetIndex === gesture.startIndex) return;
+
+      lockMobileSnap();
+      scrollToSection(targetIndex, reducedMotion ? 'auto' : 'smooth');
+    };
+
+    const onTouchCancel = () => {
+      mobileSwipeRef.current = null;
+    };
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchCancel, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchCancel);
+    };
+  }, [getNearestSectionIndex, getSectionTop, isMobile, lockMobileSnap, reducedMotion, releaseMobileSnapLock, scrollToSection]);
 
   useEffect(() => {
     const sections = sectionRefs.current.filter(Boolean) as HTMLElement[];
@@ -445,35 +586,28 @@ export function LandingDeck() {
           index={2}
           onRef={setSectionRef(2)}
         >
-          <WelcomeScreenshotsSectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
+          <AlphaProgrammeSectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={3}
           onRef={setSectionRef(3)}
         >
-          <AlphaProgrammeSectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
+          <WhatsInItForYouSectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={4}
           onRef={setSectionRef(4)}
         >
-          <WhatsInItForYouSectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
+          <CommitmentSectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={5}
           onRef={setSectionRef(5)}
         >
-          <CommitmentSectionContent isActive={activeIndex === 5} hasEntered={entered[5]} {...sectionProps} />
-        </LandingSection>
-
-        <LandingSection
-          index={6}
-          onRef={setSectionRef(6)}
-        >
-          <ApplyNowSectionContent isActive={activeIndex === 6} hasEntered={entered[6]} {...sectionProps} />
+          <ApplyNowSectionContent isActive={activeIndex === 5} hasEntered={entered[5]} {...sectionProps} />
         </LandingSection>
       </div>
 
