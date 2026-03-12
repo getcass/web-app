@@ -365,10 +365,6 @@ export function SignUpForm() {
         {submitState.status === 'error' && (
           <p className="md:col-span-2 text-center text-sm text-red-300">{submitState.message}</p>
         )}
-
-        <p className="md:col-span-2 text-center text-sm text-white/55">
-          By submitting, you agree to participate in the alpha testing programme and provide honest feedback.
-        </p>
       </form>
     </div>
   );
