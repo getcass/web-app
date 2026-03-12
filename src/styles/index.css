@@ -15,9 +15,9 @@
   background-color: #050509;
 }
 
-@supports (height: 100dvh) {
+@supports (height: 100svh) {
   :root {
-    --cass-shell-height: 100dvh;
+    --cass-shell-height: 100svh;
   }
 }
 
@@ -25,7 +25,6 @@ html {
   scroll-behavior: smooth;
   height: 100%;
   min-height: 100%;
-  scroll-snap-type: y mandatory;
   background-color: #050509;
 }
 
@@ -69,29 +68,12 @@ body {
 }
 
 .cass-snap-section {
-  height: var(--cass-shell-height);
   min-height: var(--cass-shell-height);
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
 }
 
 .cass-section-scroll {
   padding-top: var(--cass-content-top-pad);
   padding-bottom: var(--cass-content-bottom-pad);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    black var(--cass-fade-top),
-    black calc(100% - var(--cass-fade-bottom)),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0,
-    black var(--cass-fade-top),
-    black calc(100% - var(--cass-fade-bottom)),
-    transparent 100%
-  );
   scrollbar-width: none;
 }
 
@@ -126,6 +108,41 @@ body {
 
 .cass-hover-lift:hover {
   transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  @supports (height: 100dvh) {
+    :root {
+      --cass-shell-height: 100dvh;
+    }
+  }
+
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .cass-snap-section {
+    height: var(--cass-shell-height);
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .cass-section-scroll {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black var(--cass-fade-top),
+      black calc(100% - var(--cass-fade-bottom)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black var(--cass-fade-top),
+      black calc(100% - var(--cass-fade-bottom)),
+      transparent 100%
+    );
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

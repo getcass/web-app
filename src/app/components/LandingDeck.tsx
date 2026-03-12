@@ -6,6 +6,7 @@ import { GrainOverlay } from './GrainOverlay';
 import { Hero } from './Hero';
 import {
   IntroSectionContent,
+  WelcomeScreenshotsSectionContent,
   AlphaProgrammeSectionContent,
   WhatsInItForYouSectionContent,
   CommitmentSectionContent,
@@ -14,7 +15,7 @@ import {
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { motion } from 'motion/react';
 
-const SECTION_COUNT = 6;
+const SECTION_COUNT = 7;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const HERO_CHROME_COLOR = '#9a274c';
 const SCROLLED_CHROME_COLOR = '#050509';
@@ -74,11 +75,11 @@ function LandingSection({
             paddingRight: 'env(safe-area-inset-right)',
           }}
         >
-          <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col justify-center px-6 md:px-10">
+          <div className="mx-auto flex min-h-[var(--cass-shell-height)] w-full max-w-6xl flex-col justify-center px-6 md:h-full md:min-h-0 md:px-10">
             <div
               className={cn(
-                'cass-section-scroll max-h-full min-h-0 overflow-y-auto',
-                index === 5 && 'cass-section-scroll--no-scrollbar',
+                'cass-section-scroll min-h-0 md:max-h-full md:overflow-y-auto',
+                index === SECTION_COUNT - 1 && 'cass-section-scroll--no-scrollbar',
               )}
             >
               {children}
@@ -241,6 +242,21 @@ export function LandingDeck() {
     };
   }, []);
 
+  const setSectionRef = useCallback(
+    (index: number) => (element: HTMLElement | null) => {
+      sectionRefs.current[index] = element;
+    },
+    [],
+  );
+
+  const scrollToSection = useCallback((index: number, behavior: ScrollBehavior) => {
+    const element = sectionRefs.current[index];
+    if (!element) return;
+
+    const top = element.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
+  }, []);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const requestedSection = Number(params.get('section'));
@@ -248,15 +264,14 @@ export function LandingDeck() {
       return;
     }
 
-    const target = sectionRefs.current[requestedSection];
-    if (!target || requestedSection === 0) return;
+    if (!sectionRefs.current[requestedSection] || requestedSection === 0) return;
 
     const raf = window.requestAnimationFrame(() => {
-      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      scrollToSection(requestedSection, 'auto');
     });
 
     return () => window.cancelAnimationFrame(raf);
-  }, []);
+  }, [scrollToSection]);
 
   useEffect(() => {
     let raf = 0;
@@ -281,20 +296,11 @@ export function LandingDeck() {
     };
   }, []);
 
-  const setSectionRef = useCallback(
-    (index: number) => (element: HTMLElement | null) => {
-      sectionRefs.current[index] = element;
-    },
-    [],
-  );
-
   const scrollToIndex = useCallback(
     (index: number) => {
-      const el = sectionRefs.current[index];
-      if (!el) return;
-      el.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      scrollToSection(index, reducedMotion ? 'auto' : 'smooth');
     },
-    [reducedMotion],
+    [reducedMotion, scrollToSection],
   );
 
   useEffect(() => {
@@ -439,28 +445,35 @@ export function LandingDeck() {
           index={2}
           onRef={setSectionRef(2)}
         >
-          <AlphaProgrammeSectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
+          <WelcomeScreenshotsSectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={3}
           onRef={setSectionRef(3)}
         >
-          <WhatsInItForYouSectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
+          <AlphaProgrammeSectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={4}
           onRef={setSectionRef(4)}
         >
-          <CommitmentSectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
+          <WhatsInItForYouSectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
         </LandingSection>
 
         <LandingSection
           index={5}
           onRef={setSectionRef(5)}
         >
-          <ApplyNowSectionContent isActive={activeIndex === 5} hasEntered={entered[5]} {...sectionProps} />
+          <CommitmentSectionContent isActive={activeIndex === 5} hasEntered={entered[5]} {...sectionProps} />
+        </LandingSection>
+
+        <LandingSection
+          index={6}
+          onRef={setSectionRef(6)}
+        >
+          <ApplyNowSectionContent isActive={activeIndex === 6} hasEntered={entered[6]} {...sectionProps} />
         </LandingSection>
       </div>
 

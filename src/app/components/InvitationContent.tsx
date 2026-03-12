@@ -1,5 +1,8 @@
 import { motion } from 'motion/react';
 import { Activity, Bug, Calendar, Gift, Heart, Lock, MessageSquare, Smartphone, Trophy, User } from 'lucide-react';
+import feedScreenshot from '../../assets/feed.jpeg';
+import labsScreenshot from '../../assets/labs.jpeg';
+import profileScreenshot from '../../assets/profile.jpeg';
 import { SignUpForm } from './SignUpForm';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { cn } from './ui/utils';
@@ -21,6 +24,12 @@ const WELCOME_VALUE_DETAILS = {
   Alignment:
     "Most dating apps are designed to keep you swiping for as long as possible. Cass isn't. Our incentives are aligned with yours: to help you meet the right person and move on from the app. Nothing is locked behind paywalls. We believe finding the right connection shouldn't depend on how much you're willing to spend.",
 } as const;
+
+const WELCOME_SCREENSHOTS = [
+  { src: feedScreenshot, alt: 'Cass feed screenshot' },
+  { src: profileScreenshot, alt: 'Cass profile screenshot' },
+  { src: labsScreenshot, alt: 'Cass Labs screenshot' },
+] as const;
 
 function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
   const shouldShow = isActive || hasEntered;
@@ -87,6 +96,53 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
             title="We want the same outcomes you do"
             infoBody={WELCOME_VALUE_DETAILS.Alignment}
           />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export function WelcomeScreenshotsSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto flex w-full max-w-6xl items-center"
+    >
+      <motion.div variants={item} className="w-full">
+        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
+          {WELCOME_SCREENSHOTS.map((screenshot) => (
+            <div
+              key={screenshot.alt}
+              className="w-[78vw] max-w-[19rem] shrink-0 snap-center md:w-full md:max-w-none"
+            >
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+                <img
+                  src={screenshot.src}
+                  alt={screenshot.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-[26rem] w-full object-cover object-top md:h-[30rem]"
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </motion.div>
     </motion.div>
