@@ -567,6 +567,13 @@ export function LandingDeck() {
         <GrainOverlay />
       </div>
 
+      <a
+        href="privacy/"
+        className="fixed right-[calc(1rem+env(safe-area-inset-right))] top-[calc(1rem+env(safe-area-inset-top))] z-50 rounded-full border border-white/12 bg-black/25 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/72 backdrop-blur-md transition-[background-color,color,border-color] duration-150 hover:border-white/22 hover:bg-black/35 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+      >
+        Privacy
+      </a>
+
       <div className="cass-snap-container relative z-10">
         <LandingSection
           index={0}

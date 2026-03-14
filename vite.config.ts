@@ -21,6 +21,14 @@ export default defineConfig(({ command, mode }) => {
       react(),
       tailwindcss(),
     ],
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          privacy: path.resolve(__dirname, 'privacy/index.html'),
+        },
+      },
+    },
     resolve: {
       alias: {
         // Alias @ to the src directory
