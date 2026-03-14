@@ -1,5 +1,4 @@
-import backgroundImage from '../../assets/cass_bg.png';
-import backgroundImageVertical from '../../assets/cass-bg-vertical.png';
+import backgroundImage from '../../assets/privacy-bg.png';
 import { GrainOverlay } from './GrainOverlay';
 
 function PrivacySection({
@@ -30,25 +29,53 @@ function EmailLink({ children }: { children: React.ReactNode }) {
   );
 }
 
+function StackedWordmarkBackground() {
+  return (
+    <div className="absolute inset-0">
+      <div
+        className="absolute inset-0 md:hidden"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundPositionX: 'center',
+          backgroundPositionY: '-16vw',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '320vw auto',
+          opacity: 0.5,
+        }}
+      />
+      <div
+        className="absolute inset-0 hidden md:block lg:hidden"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundPositionX: 'center',
+          backgroundPositionY: '-20vw',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '160vw auto',
+          opacity: 0.38,
+        }}
+      />
+      <div
+        className="absolute inset-0 hidden lg:block"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundPositionX: 'center',
+          backgroundPositionY: '-12vw',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: '132vw auto',
+          opacity: 0.36,
+        }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_20%_10%,rgba(255,255,255,0.06),transparent_60%),radial-gradient(900px_600px_at_75%_35%,rgba(205,215,255,0.05),transparent_64%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,9,0.48),rgba(5,5,9,0.66)_36%,rgba(5,5,9,0.76))]" />
+      <div className="absolute inset-0 bg-black/48" />
+    </div>
+  );
+}
+
 export function PrivacyPage() {
   return (
     <div className="relative min-h-[var(--cass-shell-height)] overflow-hidden bg-[#050509] text-white">
-      <div className="absolute inset-0">
-        <img
-          src={backgroundImageVertical}
-          alt=""
-          className="h-full w-full object-cover object-top saturate-110 contrast-105 lg:hidden"
-          style={{ opacity: 0.24 }}
-        />
-        <img
-          src={backgroundImage}
-          alt=""
-          className="hidden h-full w-full object-cover object-center saturate-110 contrast-105 lg:block"
-          style={{ opacity: 0.24 }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_700px_at_20%_10%,rgba(255,255,255,0.08),transparent_60%),radial-gradient(900px_600px_at_75%_35%,rgba(205,215,255,0.06),transparent_64%)]" />
-        <div className="absolute inset-0 bg-black/72" />
-      </div>
+      <StackedWordmarkBackground />
 
       <GrainOverlay />
 
