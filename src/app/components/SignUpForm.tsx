@@ -217,7 +217,7 @@ export function SignUpForm() {
             value={formData.fullName}
             onChange={handleChange}
             className={fieldClassName}
-            placeholder="John Doe"
+            placeholder="Cassia Smith"
           />
         </div>
 
@@ -234,7 +234,7 @@ export function SignUpForm() {
             value={formData.email}
             onChange={handleChange}
             className={fieldClassName}
-            placeholder="john@example.com"
+            placeholder="cassia@example.com"
           />
         </div>
 
