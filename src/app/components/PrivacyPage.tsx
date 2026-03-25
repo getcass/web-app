@@ -95,8 +95,8 @@ export function PrivacyPage() {
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-03-13" className="text-white/78">
-                March 13, 2026
+              <time dateTime="2026-03-25" className="text-white/78">
+                March 25, 2026
               </time>
             </p>
 
@@ -108,21 +108,52 @@ export function PrivacyPage() {
                 </p>
               </PrivacySection>
 
+              <PrivacySection title="How We Provide This Notice">
+                <p>
+                  We make this privacy notice available in the app at sign-up and at relevant data collection points,
+                  including profile creation, location use, preference selection and account deletion. We may also show
+                  shorter "just-in-time" notices in the app when you use specific features.
+                </p>
+              </PrivacySection>
+
               <PrivacySection title="Who This Policy Applies To">
                 <p>
                   This policy applies to people who use Cass, an adults-only dating app intended for users aged 18 and
-                  over in the UK.
+                  over in the UK. Cass is not intended for children. We take steps designed to prevent under-18s from
+                  using the service and we carry out assessments required by applicable online safety law.
                 </p>
               </PrivacySection>
 
               <PrivacySection title="What Data We Collect">
                 <p>
-                  We collect information you provide directly to us, including your email address for sign-in, your
-                  profile information such as name, age, gender, height, occupation, "looking for" information, profile
-                  summary, tags, discovery preferences, photos, quiz answers and quiz results, messages you send, and
-                  any report text you submit. We also collect location-related information if you choose to provide it,
-                  including typed location information and, if you grant permission, your device's current location and
-                  coordinates.
+                  We collect:
+                </p>
+                <ul className="list-disc space-y-2 pl-5">
+                  <li>account and sign-in data, such as your email address and authentication/session data;</li>
+                  <li>
+                    profile data, such as your first name, age, gender, height, occupation, profile summary, tags,
+                    photos, "looking for" information and discovery preferences;
+                  </li>
+                  <li>quiz data, such as your answers, scores and selected results shown in your profile;</li>
+                  <li>
+                    communications and safety data, such as messages, report text, block records and
+                    moderation-related records;
+                  </li>
+                  <li>
+                    location data, such as typed location information and, if you choose to enable it, device location
+                    data including precise coordinates in private account records and less precise location data used
+                    for discovery features; and
+                  </li>
+                  <li>
+                    technical and security data, such as device, log and diagnostic information needed to operate,
+                    secure and improve the service.
+                  </li>
+                </ul>
+                <p>
+                  Some information you choose to provide on a dating service may reveal or relate to special category
+                  data under UK data protection law, including data concerning sexual orientation. If we process
+                  special category data, we do so only where we have both a valid Article 6 lawful basis and an
+                  Article 9 condition.
                 </p>
               </PrivacySection>
 
@@ -146,11 +177,10 @@ export function PrivacyPage() {
 
               <PrivacySection title="Private and Public Profile Data">
                 <p>
-                  We store some information in a private user record and some information in a public profile record.
-                  Information in your public profile is available to other signed-in users. Based on the current
-                  implementation, this public profile can include your visible profile fields, profile photos, profile
-                  summary, tags, rounded/public location data where present, quiz results, and currently quiz payload
-                  data linked to your profile.
+                  We keep some data private to your account and make some data visible to other signed-in users. Public
+                  profile data is limited to the profile fields and quiz outputs that we intentionally choose to
+                  display in the product. We do not intentionally make raw quiz answer payloads, exact coordinates,
+                  private moderation records, authentication data, or internal account metadata visible to other users.
                 </p>
               </PrivacySection>
 
@@ -180,22 +210,53 @@ export function PrivacyPage() {
                 </p>
               </PrivacySection>
 
+              <PrivacySection title="Safety, Reporting and Complaints">
+                <p>
+                  We use reports, block records, moderation information and related evidence to investigate suspected
+                  abuse, enforce our rules, and protect users. We provide ways for users to report concerns and make
+                  complaints about safety issues in the app.
+                </p>
+              </PrivacySection>
+
               <PrivacySection title="AI Features">
                 <p>
-                  Cass currently uses OpenAI to generate personality insight text based on derived personality trait
-                  data from your quiz results. Based on the current code, this AI feature does not send your chat
-                  messages to OpenAI for that purpose.
+                  Cass may use OpenAI to generate optional personality insight text based on personality or
+                  quiz-derived inputs. We do not use your private chat messages for this feature unless we tell you
+                  otherwise and update this notice.
+                </p>
+                <p>
+                  If we use automated profiling or ranking to personalise discovery, we will describe the main logic,
+                  significance and likely effects in this notice or in an in-app explanation where required.
                 </p>
               </PrivacySection>
 
               <PrivacySection title="Our Legal Bases">
                 <p>
-                  We generally process your personal data because it is necessary to provide the service you ask for,
-                  because it is in our legitimate interests to operate and secure the app, investigate abuse, and
-                  improve service reliability, because you consent where a device permission or optional feature requires
-                  consent, and where necessary to comply with legal obligations. Because this is a dating service, some
-                  information you choose to provide may be sensitive under UK data protection law, and we treat that
-                  information with additional care.
+                  We rely on different lawful bases depending on the feature:
+                </p>
+                <ul className="list-disc space-y-2 pl-5">
+                  <li>
+                    Contract / steps to provide the service: creating and operating your account, authenticating you,
+                    displaying your profile to other users as part of the service, enabling messaging, applying your
+                    selected discovery preferences, and storing your photos and profile content.
+                  </li>
+                  <li>
+                    Legitimate interests: keeping the service secure, preventing abuse, detecting spam or fraud,
+                    investigating reports, enforcing our rules, debugging, maintaining service reliability, and keeping
+                    appropriate internal records.
+                  </li>
+                  <li>
+                    Consent: using optional device permissions such as precise location access, and any other optional
+                    feature where we ask for consent.
+                  </li>
+                  <li>
+                    Legal obligation: where we need to keep or disclose data to comply with applicable law, regulation,
+                    court orders, or law-enforcement requests.
+                  </li>
+                </ul>
+                <p>
+                  Where we process special category data, we also identify a separate Article 9 condition before doing
+                  so.
                 </p>
               </PrivacySection>
 
@@ -211,17 +272,40 @@ export function PrivacyPage() {
 
               <PrivacySection title="International Transfers">
                 <p>
-                  Our providers may process personal data outside the UK. Where that happens, we expect transfers to be
-                  protected by appropriate safeguards under UK data protection law.
+                  Some of our service providers may access or process personal data outside the UK. Where this involves
+                  a restricted transfer under UK data protection law, we use an approved safeguard such as UK adequacy
+                  regulations, the International Data Transfer Agreement, the UK Addendum to the EU Standard
+                  Contractual Clauses, or another lawful transfer mechanism.
                 </p>
               </PrivacySection>
 
               <PrivacySection title="How Long We Keep Data">
                 <p>
-                  We keep account and profile data while your account is active. Based on the current automated deletion
-                  flow, deleting your account removes the authentication account, private/public profile documents, and
-                  uploaded profile photos. We do not currently promise immediate deletion of all chats, messages,
-                  reports, blocks, or technical records unless and until that is separately implemented and verified.
+                  We keep different categories of data for different periods:
+                </p>
+                <ul className="list-disc space-y-2 pl-5">
+                  <li>account and profile data: while your account is active;</li>
+                  <li>
+                    deleted-account core profile records and profile photos: removed from live systems after deletion,
+                    with residual copies in backups deleted or overwritten in the normal backup cycle;
+                  </li>
+                  <li>
+                    messages: retained for as long as needed to provide chat functionality, investigate abuse, resolve
+                    disputes, and enforce our rules;
+                  </li>
+                  <li>
+                    reports, blocks and moderation records: retained for longer where needed for safety,
+                    repeat-offender prevention, legal claims, or regulatory reasons;
+                  </li>
+                  <li>
+                    security, diagnostic and service logs: retained for limited periods appropriate to security and
+                    debugging.
+                  </li>
+                </ul>
+                <p>
+                  Where we cannot give a single fixed period, we decide retention by looking at whether the data is
+                  still needed for the purpose collected, safety and abuse-prevention needs, legal obligations, and the
+                  need to establish, exercise or defend legal claims.
                 </p>
               </PrivacySection>
 
