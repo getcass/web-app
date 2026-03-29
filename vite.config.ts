@@ -26,6 +26,7 @@ export default defineConfig(({ command, mode }) => {
         input: {
           main: path.resolve(__dirname, 'index.html'),
           privacy: path.resolve(__dirname, 'privacy/index.html'),
+          'private-alpha': path.resolve(__dirname, 'private-alpha/index.html'),
         },
       },
     },
