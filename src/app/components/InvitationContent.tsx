@@ -17,7 +17,7 @@ const WELCOME_VALUE_DETAILS = {
   Chemistry:
     "Through Cass Labs quizzes, we go deeper than surface-level preferences to uncover how you think, feel, and connect with others. These insights help us measure genuine compatibility and surface the people you're most likely to click with. This means you're meeting people who actually make sense for you and not endlessly swiping. In fact - there is no swiping mechanic in Cass.",
   Safety:
-    "Cass uses a thorough verification process alongside a referral system that encourages genuine users and discourages bad actors. The result is a community built on trust, where you can feel confident the people you're talking to are real and here for the right reasons.",
+    "Cass will feature a thorough verification process alongside a referral system designed to encourage genuine users and discourage bad actors. The result will be a community built on trust, where you can feel confident the people you're talking to are real and here for the right reasons.",
   Alignment:
     "Most dating apps are designed to keep you swiping for as long as possible. Cass isn't. Our incentives are aligned with yours: to help you meet the right person and move on from the app. Nothing is locked behind paywalls. We believe finding the right connection shouldn't depend on how much you're willing to spend.",
 } as const;
@@ -78,7 +78,7 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
           <FeatureRow
             icon={<Lock className="h-4 w-4" />}
             label="Safety"
-            title="We screen for genuine users"
+            title="We will screen for genuine users"
             infoBody={WELCOME_VALUE_DETAILS.Safety}
           />
           <FeatureRow

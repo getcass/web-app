@@ -95,8 +95,8 @@ export function PrivacyPage() {
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-03-25" className="text-white/78">
-                March 25, 2026
+              <time dateTime="2026-03-30" className="text-white/78">
+                March 30, 2026
               </time>
             </p>
 
@@ -110,9 +110,7 @@ export function PrivacyPage() {
 
               <PrivacySection title="How We Provide This Notice">
                 <p>
-                  We make this privacy notice available in the app at sign-up and at relevant data collection points,
-                  including profile creation, location use, preference selection and account deletion. We may also show
-                  shorter "just-in-time" notices in the app when you use specific features.
+                  We make this privacy notice available at sign-up and in account settings within the app.
                 </p>
               </PrivacySection>
 
