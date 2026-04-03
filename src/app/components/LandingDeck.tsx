@@ -50,15 +50,14 @@ export function LandingDeck() {
         Alpha
       </a>
 
-      <a
-        href="privacy/"
-        className={cn(
-          'fixed right-[calc(1rem+env(safe-area-inset-right))] top-[calc(1rem+env(safe-area-inset-top))] z-50',
-          NAV_LINK_CLASS,
-        )}
-      >
-        Privacy
-      </a>
+      <div className="fixed right-[calc(1rem+env(safe-area-inset-right))] top-[calc(1rem+env(safe-area-inset-top))] z-50 flex gap-3">
+        <a href="terms/" className={NAV_LINK_CLASS}>
+          Terms
+        </a>
+        <a href="privacy/" className={NAV_LINK_CLASS}>
+          Privacy
+        </a>
+      </div>
     </div>
   );
 }
