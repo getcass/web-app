@@ -84,7 +84,7 @@ export function PrivacyPage() {
           <div className="flex items-start justify-end">
             <a
               href="../"
-              className="rounded-full border border-white/12 bg-black/25 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white/72 backdrop-blur-md transition-[background-color,color,border-color] duration-150 hover:border-white/22 hover:bg-black/35 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+              className="cass-nav-link"
             >
               Home
             </a>
