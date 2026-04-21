@@ -272,10 +272,6 @@ body {
     padding-block: clamp(0.9rem, 2.4vw, 1.8rem);
   }
 
-  .cass-landing-headline span:first-child {
-    white-space: nowrap;
-  }
-
   .cass-snap-section {
     height: var(--cass-shell-height);
     scroll-snap-align: center;
@@ -305,13 +301,18 @@ body {
     --cass-landing-headline-size: clamp(3.9rem, 19vw, 7rem);
   }
 
+  .cass-landing-copy {
+    padding-top: clamp(1.35rem, 7vw, 2.5rem);
+  }
+
   .cass-landing-footer {
     gap: 2rem;
   }
 
   .cass-landing-links {
-    max-width: 10rem;
-    gap: 0.7rem 0.85rem;
+    max-width: none;
+    flex-wrap: nowrap;
+    gap: 0.6rem;
   }
 
   .cass-landing-logo {

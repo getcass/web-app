@@ -167,7 +167,7 @@ function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
       transition={transition}
-      className="fixed bottom-[calc(1.75rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white transition-[color] duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15"
+      className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] left-1/2 z-50 flex -translate-x-1/2 flex-col items-center gap-2 text-white transition-[color] duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/15 md:bottom-[calc(1.75rem+env(safe-area-inset-bottom))]"
     >
       <span className="text-xs uppercase tracking-[0.22em]">Scroll to begin</span>
       <motion.span
@@ -512,7 +512,8 @@ export function LandingDeck({ initialAlphaExpanded = false }: LandingDeckProps) 
               className="cass-landing-copy"
             >
               <h1 className="cass-landing-headline">
-                <span>find your</span>
+                <span>find</span>
+                <span>your</span>
                 <span>person</span>
               </h1>
             </motion.div>
