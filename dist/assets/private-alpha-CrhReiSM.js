@@ -1,1 +1,0 @@
-import{j as t,c as e}from"./index-ClKHStYF.js";import{L as n}from"./LandingDeck-BdiOKj4m.js";function r(){return t.jsx(n,{initialAlphaExpanded:!0})}e.createRoot(document.getElementById("root")).render(t.jsx(r,{}));

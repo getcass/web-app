@@ -1,7 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import backgroundImage from '../../assets/plain-bg.png';
 import logoUrl from '../../assets/logo.svg';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import {
@@ -118,32 +117,8 @@ function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProp
   );
 }
 
-type BackgroundLayerProps = {
-  scrollProgress: number;
-  reducedMotion: boolean;
-};
-
-function BackgroundLayer({ scrollProgress, reducedMotion }: BackgroundLayerProps) {
-  const t = Math.max(0, Math.min(1, scrollProgress));
-  const eased = reducedMotion ? t : t * t * (3 - 2 * t);
-  const imageOpacity = 1 - 0.48 * eased;
-  const dimmerOpacity = 0.72 * eased;
-  const vignetteOpacity = 0.28 * eased;
-
-  return (
-    <div className="cass-screen-bleed absolute overflow-hidden bg-[#050509]">
-      <div className="absolute inset-0">
-        <img
-          src={backgroundImage}
-          alt=""
-          className="h-full w-full object-cover object-center"
-          style={!reducedMotion ? { opacity: imageOpacity, willChange: 'opacity' } : { opacity: imageOpacity }}
-        />
-      </div>
-      <div className="absolute inset-0 bg-black" style={{ opacity: dimmerOpacity }} />
-      <div className="absolute inset-0 bg-black" style={{ opacity: vignetteOpacity }} />
-    </div>
-  );
+function BackgroundLayer() {
+  return <div className="cass-screen-bleed absolute overflow-hidden bg-black" />;
 }
 
 type HeroPromptProps = {
@@ -205,7 +180,6 @@ export function LandingDeck({ initialAlphaExpanded = false }: LandingDeckProps) 
 
   const [alphaExpanded, setAlphaExpanded] = useState(initialAlphaExpanded);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [entered, setEntered] = useState<boolean[]>(
     Array.from({ length: SECTION_COUNT }).map(() => false),
   );
@@ -287,33 +261,6 @@ export function LandingDeck({ initialAlphaExpanded = false }: LandingDeckProps) 
   }, [getSectionTop]);
 
   useEffect(() => releaseMobileSnapLock, [releaseMobileSnapLock]);
-
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      if (!alphaExpanded) {
-        setScrollProgress(0);
-        return;
-      }
-      const height = window.innerHeight || document.documentElement.clientHeight || 1;
-      const next = Math.max(0, Math.min(1, window.scrollY / height));
-      setScrollProgress(next);
-    };
-
-    const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(update);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    update();
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
-  }, [alphaExpanded]);
 
   const scrollToIndex = useCallback(
     (index: number) => {
@@ -493,7 +440,7 @@ export function LandingDeck({ initialAlphaExpanded = false }: LandingDeckProps) 
   return (
     <main className="cass-landing-page">
       <div className="cass-background-stage">
-        <BackgroundLayer scrollProgress={scrollProgress} reducedMotion={reducedMotion} />
+        <BackgroundLayer />
       </div>
 
       <div className="cass-snap-container relative z-10">
@@ -512,9 +459,11 @@ export function LandingDeck({ initialAlphaExpanded = false }: LandingDeckProps) 
               className="cass-landing-copy"
             >
               <h1 className="cass-landing-headline">
-                <span>find</span>
-                <span>your</span>
-                <span>person</span>
+                <span className="cass-landing-headline-line cass-landing-headline-line--stack-mobile">
+                  <span>find</span>
+                  <span>your</span>
+                </span>
+                <span className="cass-landing-headline-line">person</span>
               </h1>
             </motion.div>
 

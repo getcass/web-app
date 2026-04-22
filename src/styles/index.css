@@ -14,6 +14,7 @@
   --cass-fade-bottom: max(calc(var(--cass-safe-bottom) + 2.5rem), 5rem);
   --cass-landing-cream: #f6ede8;
   --cass-landing-inner-pad: clamp(1rem, 3.2vw, 2.6rem);
+  --cass-landing-headline-gap: clamp(1.75rem, 4vw, 3rem);
   --cass-landing-headline-size: clamp(4.35rem, 10.9vw, 9.75rem);
   --cass-landing-logo-width: clamp(8.75rem, 18vw, 15rem);
   background-color: #050509;
@@ -53,7 +54,7 @@ body {
 .cass-landing-page {
   position: relative;
   min-height: var(--cass-shell-height);
-  background-color: #050509;
+  background-color: #000000;
 }
 
 .cass-landing-poster {
@@ -89,7 +90,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(1.75rem, 4vw, 3rem);
+  gap: var(--cass-landing-headline-gap);
   color: var(--cass-landing-cream);
   font-family: 'TAN Nimbus', Georgia, serif;
   font-size: var(--cass-landing-headline-size);
@@ -98,8 +99,11 @@ body {
   letter-spacing: -0.055em;
 }
 
-.cass-landing-headline span {
-  display: block;
+.cass-landing-headline-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+  white-space: nowrap;
 }
 
 .cass-landing-footer {
@@ -299,6 +303,13 @@ body {
 @media (max-width: 767px) {
   :root {
     --cass-landing-headline-size: clamp(3.9rem, 19vw, 7rem);
+  }
+
+  .cass-landing-headline-line--stack-mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--cass-landing-headline-gap);
+    white-space: normal;
   }
 
   .cass-landing-copy {
