@@ -95,8 +95,8 @@ export function PrivacyPage() {
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-03-30" className="text-white/78">
-                March 30, 2026
+              <time dateTime="2026-05-02" className="text-white/78">
+                May 2, 2026
               </time>
             </p>
 
@@ -167,9 +167,9 @@ export function PrivacyPage() {
                 <p>
                   We use your data to create and run your account, build and display your profile, show other users in
                   the app, enable messaging, apply discovery and distance filters, store and display your photos, run
-                  quizzes and show quiz-based profile information, generate optional AI personality insight copy,
-                  investigate reports, block users, prevent abuse, secure the service, and comply with legal
-                  obligations.
+                  quizzes and show quiz-based profile information, calculate chemistry scores and breakdowns,
+                  personalise discovery and feed ranking, generate optional AI personality insight copy, investigate
+                  reports, block users, prevent abuse, secure the service, and comply with legal obligations.
                 </p>
               </PrivacySection>
 
@@ -222,9 +222,28 @@ export function PrivacyPage() {
                   quiz-derived inputs. We do not use your private chat messages for this feature unless we tell you
                   otherwise and update this notice.
                 </p>
+              </PrivacySection>
+
+              <PrivacySection title="Chemistry Scores and Discovery Ranking">
                 <p>
-                  If we use automated profiling or ranking to personalise discovery, we will describe the main logic,
-                  significance and likely effects in this notice or in an in-app explanation where required.
+                  Cass calculates chemistry scores and breakdowns to help personalise discovery and explain why one
+                  profile may be more compatible with another. The main inputs are profile tags, Cass Labs and quiz
+                  answers, scores and results, available shared signal between two profiles, discovery preferences, and
+                  the current feed configuration.
+                </p>
+                <p>
+                  Discovery preferences and location settings can affect which profiles are eligible to appear before
+                  Chemistry sorting is applied. Chemistry scores can affect feed ordering, Chemistry sorting, profile
+                  prominence in discovery, and the score and breakdown shown in the app. They are compatibility signals,
+                  not guarantees about a person or relationship.
+                </p>
+                <p>
+                  You can influence these inputs by updating your profile tags, Labs and quiz answers, discovery
+                  preferences, and location settings. You can also contact us using the details below to ask about,
+                  object to, or exercise other rights relating to this processing. We do not intentionally use
+                  private chat messages, exact coordinates, authentication metadata, private moderation records, or
+                  report and block records to calculate chemistry scores unless we explain the change in this notice or
+                  another appropriate in-app notice.
                 </p>
               </PrivacySection>
 
@@ -236,7 +255,8 @@ export function PrivacyPage() {
                   <li>
                     Contract / steps to provide the service: creating and operating your account, authenticating you,
                     displaying your profile to other users as part of the service, enabling messaging, applying your
-                    selected discovery preferences, and storing your photos and profile content.
+                    selected discovery preferences, personalising discovery, showing chemistry scores and breakdowns,
+                    and storing your photos and profile content.
                   </li>
                   <li>
                     Legitimate interests: keeping the service secure, preventing abuse, detecting spam or fraud,
