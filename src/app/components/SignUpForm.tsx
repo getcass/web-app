@@ -6,6 +6,9 @@ import { db, firebaseConfigError, firebaseSetupHint, isFirebaseConfigured } from
 import { VALID_INVITE_CODES } from '../lib/inviteCodes';
 
 type InviteCodeValidationStatus = 'idle' | 'checking' | 'valid' | 'invalid';
+const ARTICLE9_CONSENT_VERSION = 'article9-special-category-v1';
+const ARTICLE9_CONSENT_COPY_VERSION = 'web-signup-article9-2026-05-03';
+const PRIVACY_POLICY_VERSION = '2026-05-03';
 
 export function SignUpForm() {
   const formUnavailable = !isFirebaseConfigured;
@@ -17,6 +20,7 @@ export function SignUpForm() {
     dateOfBirth: '',
     livesInLondon: false,
     hasIphone: false,
+    article9ConsentAccepted: false,
     consent: false
   });
   const [submitState, setSubmitState] = useState<
@@ -75,9 +79,18 @@ export function SignUpForm() {
 
     setSubmitState({ status: 'submitting' });
 
+    const { article9ConsentAccepted, ...submittedFormData } = formData;
     const payload = {
-      ...formData,
+      ...submittedFormData,
       inviteCode,
+      article9Consent: {
+        granted: article9ConsentAccepted,
+        consentVersion: ARTICLE9_CONSENT_VERSION,
+        copyVersion: ARTICLE9_CONSENT_COPY_VERSION,
+        privacyPolicyVersion: PRIVACY_POLICY_VERSION,
+        source: 'web_signup',
+        capturedAt: serverTimestamp()
+      },
       submittedAt: serverTimestamp()
     };
 
@@ -314,6 +327,30 @@ export function SignUpForm() {
             <div className="flex-1">
               <span className="block text-white/75">
                 I confirm that I have an iPhone <span className="text-red-300">*</span>
+              </span>
+            </div>
+          </label>
+        </div>
+
+        {/* Article 9 consent */}
+        <div className="md:col-span-2">
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <div className="relative mt-0.5 flex-shrink-0">
+              <input
+                type="checkbox"
+                name="article9ConsentAccepted"
+                required
+                checked={formData.article9ConsentAccepted}
+                onChange={handleChange}
+                className="sr-only peer"
+              />
+              <div className="relative h-6 w-6 rounded-full border border-white/15 bg-white/10 shadow-[0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150 transition-[border-color,transform,box-shadow] group-active:scale-95 peer-focus-visible:ring-4 peer-focus-visible:ring-white/10 peer-checked:border-white/30 after:absolute after:inset-1.5 after:rounded-full after:bg-white after:opacity-0 after:scale-75 after:transition-[opacity,transform] peer-checked:after:opacity-100 peer-checked:after:scale-100" />
+            </div>
+            <div className="flex-1">
+              <span className="block text-white/75">
+                I explicitly consent to Cass processing dating profile, preference and quiz information that may reveal
+                special category data, including information about relationships, sex life or sexual orientation, for
+                profile display, matching, discovery and optional AI-generated insights. <span className="text-red-300">*</span>
               </span>
             </div>
           </label>

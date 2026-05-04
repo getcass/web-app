@@ -95,8 +95,8 @@ export function PrivacyPage() {
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-05-02" className="text-white/78">
-                May 2, 2026
+              <time dateTime="2026-05-03" className="text-white/78">
+                May 3, 2026
               </time>
             </p>
 
@@ -127,7 +127,10 @@ export function PrivacyPage() {
                   We collect:
                 </p>
                 <ul className="list-disc space-y-2 pl-5">
-                  <li>account and sign-in data, such as your email address and authentication/session data;</li>
+                  <li>
+                    account and sign-in data, such as your email address, phone number where you verify by SMS, and
+                    authentication/session data;
+                  </li>
                   <li>
                     profile data, such as your first name, age, gender, height, occupation, profile summary, tags,
                     photos, "looking for" information and discovery preferences;
@@ -143,15 +146,15 @@ export function PrivacyPage() {
                     for discovery features; and
                   </li>
                   <li>
-                    technical and security data, such as device, log and diagnostic information needed to operate,
-                    secure and improve the service.
+                    technical and security data, such as device identifiers, push tokens, notification metadata, log and
+                    diagnostic information needed to operate, secure and improve the service.
                   </li>
                 </ul>
                 <p>
                   Some information you choose to provide on a dating service may reveal or relate to special category
-                  data under UK data protection law, including data concerning sexual orientation. If we process
-                  special category data, we do so only where we have both a valid Article 6 lawful basis and an
-                  Article 9 condition.
+                  data under UK data protection law, including data concerning sexual orientation or sex life. We ask
+                  for explicit Article 9 consent before you submit profile, preference or quiz information for the
+                  dating service.
                 </p>
               </PrivacySection>
 
@@ -160,6 +163,10 @@ export function PrivacyPage() {
                   Cass uses magic-link email sign-in. To complete sign-in on your device, the app temporarily stores
                   your email locally in secure storage and Firebase authentication also keeps local session data on your
                   device so you remain signed in.
+                </p>
+                <p>
+                  If you choose phone verification, Firebase Phone Auth sends an SMS code and Cass stores the verified
+                  phone number and verification timestamp for account trust, waitlist and badge features.
                 </p>
               </PrivacySection>
 
@@ -265,7 +272,8 @@ export function PrivacyPage() {
                   </li>
                   <li>
                     Consent: using optional device permissions such as precise location access, and any other optional
-                    feature where we ask for consent.
+                    feature where we ask for consent. For special category data in the dating service, we rely on your
+                    explicit Article 9 consent.
                   </li>
                   <li>
                     Legal obligation: where we need to keep or disclose data to comply with applicable law, regulation,
@@ -273,18 +281,19 @@ export function PrivacyPage() {
                   </li>
                 </ul>
                 <p>
-                  Where we process special category data, we also identify a separate Article 9 condition before doing
-                  so.
+                  You can withdraw Article 9 consent by deleting your account or contacting us. If you withdraw consent,
+                  we cannot continue running an active Cass dating profile for you.
                 </p>
               </PrivacySection>
 
               <PrivacySection title="Who We Share Data With">
                 <p>
                   We share data with service providers that help us run the app, including Google/Firebase for
-                  authentication, database, storage and cloud functions, Google Workspace/Gmail infrastructure for
-                  sending sign-in emails, OpenAI for the personality insight feature, and location/geocoding providers
-                  used when you search for or derive location data. We may also disclose data to advisers, regulators,
-                  law enforcement, or courts where required.
+                  authentication, Firebase Phone Auth and SMS verification, database, storage and cloud functions,
+                  Google Workspace/Gmail infrastructure for sending sign-in emails, Expo, Apple APNs and Google FCM for
+                  push notifications, OpenAI for the personality insight feature, and location/geocoding providers used
+                  when you search for or derive location data. We may also disclose data to advisers, regulators, law
+                  enforcement, or courts where required.
                 </p>
               </PrivacySection>
 
@@ -304,16 +313,20 @@ export function PrivacyPage() {
                 <ul className="list-disc space-y-2 pl-5">
                   <li>account and profile data: while your account is active;</li>
                   <li>
-                    deleted-account core profile records and profile photos: removed from live systems after deletion,
-                    with residual copies in backups deleted or overwritten in the normal backup cycle;
+                    deleted-account core profile, waitlist, quiz staging, phone verification, consent, signup and
+                    profile photo records: removed from live systems after deletion, with residual copies in backups
+                    deleted or overwritten in the normal backup cycle;
                   </li>
                   <li>
                     messages: retained for as long as needed to provide chat functionality, investigate abuse, resolve
-                    disputes, and enforce our rules;
+                    disputes, enforce our rules, or keep safety evidence after account deletion;
                   </li>
                   <li>
                     reports, blocks and moderation records: retained for longer where needed for safety,
                     repeat-offender prevention, legal claims, or regulatory reasons;
+                  </li>
+                  <li>
+                    consent and deletion audit records: retained as minimal compliance evidence;
                   </li>
                   <li>
                     security, diagnostic and service logs: retained for limited periods appropriate to security and

@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { Activity, Bug, Calendar, Gift, Heart, Lock, MessageSquare, Smartphone, Trophy, User } from 'lucide-react';
-import { SignUpForm } from './SignUpForm';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { cn } from './ui/utils';
 
@@ -22,6 +21,9 @@ const WELCOME_VALUE_DETAILS = {
     "Most dating apps are designed to keep you swiping for as long as possible. Cass isn't. Our incentives are aligned with yours: to help you meet the right person and move on from the app. Nothing is locked behind paywalls. We believe finding the right connection shouldn't depend on how much you're willing to spend.",
 } as const;
 
+const CLOSED_ALPHA_TITLE = 'Private alpha is now closed.';
+const CLOSED_ALPHA_BODY = 'We are no longer accepting new applications for this alpha cohort.';
+
 function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
   const shouldShow = isActive || hasEntered;
   const enterY = reducedMotion ? 0 : 18;
@@ -30,6 +32,36 @@ function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionCon
     : { duration: 0.65, ease: EASE_OUT };
 
   return { shouldShow, enterY, transition };
+}
+
+export function ClosedAlphaSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="mx-auto w-full max-w-6xl"
+    >
+      <motion.div variants={item}>
+        <ClosedAlphaIntakeState />
+      </motion.div>
+    </motion.div>
+  );
 }
 
 export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
@@ -63,7 +95,7 @@ export function IntroSectionContent({ isActive, hasEntered, reducedMotion }: Sec
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        Hello! I’m Zain, the founder of Cass. Cass is an app designed to help you find your person. 
+        Cass is an app designed to help you find your person. 
         It does things differently from traditional dating apps in three key ways:
       </motion.p>
 
@@ -262,27 +294,34 @@ export function ApplyNowSectionContent({ isActive, hasEntered, reducedMotion }: 
       initial="hidden"
       animate={shouldShow ? 'show' : 'hidden'}
       variants={container}
-      className="mx-auto w-full max-w-6xl"
+      className="mx-auto flex min-h-[min(680px,calc(var(--cass-shell-height)-8rem))] w-full max-w-6xl items-center justify-center"
     >
-      <motion.h2
-        variants={item}
-        className="text-balance text-4xl font-semibold tracking-tight text-white drop-shadow-[0_18px_48px_rgba(0,0,0,0.55)] md:text-6xl"
-      >
-        Apply Now
-      </motion.h2>
-
-      <motion.div variants={item} className="mt-10">
-        <SignUpForm />
-      </motion.div>
-
-      <motion.div variants={item} className="mt-10 text-center">
-        <p className="text-white/80">
-          <span className="font-semibold text-white">Zain</span>
-          <br />
-          <span className="text-white/60">Founder, Cass</span>
-        </p>
+      <motion.div variants={item} className="w-full">
+        <ClosedAlphaIntakeState />
       </motion.div>
     </motion.div>
+  );
+}
+
+function ClosedAlphaIntakeState() {
+  return (
+    <div
+      role="dialog"
+      aria-labelledby="closed-alpha-title"
+      aria-describedby="closed-alpha-description"
+      className="relative z-10 mx-auto w-full max-w-xl rounded-[2rem] border border-white/12 bg-[#101010]/88 p-6 text-center text-white shadow-[0_24px_80px_rgba(0,0,0,0.58)] backdrop-blur-2xl md:p-8"
+    >
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/75">
+        <Lock className="h-5 w-5" aria-hidden="true" />
+      </div>
+      <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-white/50">Private alpha</p>
+      <h2 id="closed-alpha-title" className="mt-3 text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
+        {CLOSED_ALPHA_TITLE}
+      </h2>
+      <p id="closed-alpha-description" className="mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-white/70 md:text-lg">
+        {CLOSED_ALPHA_BODY}
+      </p>
+    </div>
   );
 }
 

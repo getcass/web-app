@@ -198,6 +198,15 @@ export function TermsPage() {
                 </p>
               </TermsSection>
 
+              <TermsSection title="Special Category Consent">
+                <p>
+                  Cass is a dating app, so profile, preference, quiz and compatibility information you provide may
+                  reveal special category information, including information about relationships, sex life or sexual
+                  orientation. You must give explicit consent for this processing to use an active Cass dating profile.
+                  If you withdraw that consent, we may need to close or delete your account.
+                </p>
+              </TermsSection>
+
               <TermsSection title="Interactions with Other Users">
                 <p>
                   Cass facilitates introductions but is not responsible for the conduct of its users.
@@ -236,9 +245,10 @@ export function TermsPage() {
 
               <TermsSection title="Account Deletion">
                 <p>
-                  You can delete your account at any time from within the app. Deletion removes
-                  your profile, photos, and account data. Some data may be retained as set out in
-                  our Privacy Policy, including reports and moderation records.
+                  You can delete your account at any time from within the app. Deletion removes your profile, photos,
+                  waitlist, quiz staging, consent, phone verification and account records from live systems. Some data
+                  may be retained as set out in our Privacy Policy, including messages, reports, blocks, audit records
+                  and moderation records needed for safety, legal or regulatory reasons.
                 </p>
               </TermsSection>
 

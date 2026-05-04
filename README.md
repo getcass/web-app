@@ -64,7 +64,8 @@
       match /signups/{docId} {
         allow create: if request.resource.data.keys().hasOnly([
           "fullName","email","inviteCode","gender","dateOfBirth",
-          "livesInLondon","deviceType","osVersion","consent","submittedAt"
+          "livesInLondon","deviceType","osVersion","consent",
+          "article9Consent","submittedAt"
         ])
         && request.resource.data.fullName is string
         && request.resource.data.email is string
@@ -74,7 +75,13 @@
         && request.resource.data.livesInLondon is bool
         && request.resource.data.deviceType is string
         && request.resource.data.osVersion is string
-        && request.resource.data.consent is bool;
+        && request.resource.data.consent is bool
+        && request.resource.data.article9Consent is map
+        && request.resource.data.article9Consent.granted == true
+        && request.resource.data.article9Consent.consentVersion == "article9-special-category-v1"
+        && request.resource.data.article9Consent.copyVersion == "web-signup-article9-2026-05-03"
+        && request.resource.data.article9Consent.privacyPolicyVersion == "2026-05-03"
+        && request.resource.data.article9Consent.source == "web_signup";
 
         allow read, update, delete: if false;
       }
