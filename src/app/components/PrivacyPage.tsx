@@ -95,8 +95,8 @@ export function PrivacyPage() {
             <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Privacy Policy</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-05-03" className="text-white/78">
-                May 3, 2026
+              <time dateTime="2026-05-05" className="text-white/78">
+                May 5, 2026
               </time>
             </p>
 
@@ -215,6 +215,17 @@ export function PrivacyPage() {
                 </p>
               </PrivacySection>
 
+              <PrivacySection title="Push Notifications">
+                <p>
+                  If you enable push notifications, Cass uses Expo, Apple APNs and Google FCM to deliver them. Chat
+                  notifications may include the sender's name. For established chats, they may also include a short
+                  message preview so you can recognise the conversation before opening the app. Message request
+                  notifications do not include the message text. On updated Android clients, chat notification content
+                  is marked private for lock-screen display where supported; on iOS, preview visibility follows your
+                  device notification settings.
+                </p>
+              </PrivacySection>
+
               <PrivacySection title="Safety, Reporting and Complaints">
                 <p>
                   We use reports, block records, moderation information and related evidence to investigate suspected
@@ -291,9 +302,10 @@ export function PrivacyPage() {
                   We share data with service providers that help us run the app, including Google/Firebase for
                   authentication, Firebase Phone Auth and SMS verification, database, storage and cloud functions,
                   Google Workspace/Gmail infrastructure for sending sign-in emails, Expo, Apple APNs and Google FCM for
-                  push notifications, OpenAI for the personality insight feature, and location/geocoding providers used
-                  when you search for or derive location data. We may also disclose data to advisers, regulators, law
-                  enforcement, or courts where required.
+                  push notifications, which can include sender names and active chat previews where notification
+                  previews are enabled, OpenAI for the personality insight feature, and location/geocoding providers
+                  used when you search for or derive location data. We may also disclose data to advisers, regulators,
+                  law enforcement, or courts where required.
                 </p>
               </PrivacySection>
 
@@ -327,6 +339,11 @@ export function PrivacyPage() {
                   </li>
                   <li>
                     consent and deletion audit records: retained as minimal compliance evidence;
+                  </li>
+                  <li>
+                    push tokens and notification events: push tokens are kept until replaced, invalidated, or your
+                    account is deleted; notification event records are metadata-only, deleted on account deletion where
+                    linked to you, and otherwise retained for 90 days;
                   </li>
                   <li>
                     security, diagnostic and service logs: retained for limited periods appropriate to security and
