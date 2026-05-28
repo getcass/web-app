@@ -21,8 +21,8 @@ const WELCOME_VALUE_DETAILS = {
     "Most dating apps are designed to keep you swiping for as long as possible. Cass isn't. Our incentives are aligned with yours: to help you meet the right person and move on from the app. Nothing is locked behind paywalls. We believe finding the right connection shouldn't depend on how much you're willing to spend.",
 } as const;
 
-const CLOSED_ALPHA_TITLE = 'Private alpha is now closed.';
-const CLOSED_ALPHA_BODY = 'We are no longer accepting new applications for this alpha cohort.';
+const CLOSED_ALPHA_TITLE = 'Cass is now open to the waitlist.';
+const CLOSED_ALPHA_BODY = 'Create an account in the app to join the waitlist. Invitation codes are no longer required.';
 
 function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
   const shouldShow = isActive || hasEntered;
@@ -156,7 +156,7 @@ export function AlphaProgrammeSectionContent({ isActive, hasEntered, reducedMoti
       </motion.h2>
 
       <motion.p variants={item} className="mt-6 max-w-3xl text-pretty text-lg leading-relaxed text-white/75 md:text-xl">
-        As an alpha tester, you’ll help us shape the very first iteration of the app. Your feedback will directly influence the UX and feature set before we launch.
+        Cass is continuing to grow with feedback from early members while expanding access through the app waitlist.
       </motion.p>
 
       <motion.dl variants={item} className="mt-10 grid gap-6 sm:grid-cols-3">
@@ -205,8 +205,8 @@ export function WhatsInItForYouSectionContent({ isActive, hasEntered, reducedMot
       <motion.div variants={item} className="mt-10 grid gap-8 md:grid-cols-2">
         <BenefitItem
           icon={<Trophy className="h-5 w-5" />}
-          title="Founding member status"
-          description='A permanent “Alpha" verification badge post‑launch, making your profile more visible.'
+          title="Early member status"
+          description="A visible early-member marker that helps your profile stand out as the community grows."
         />
         <BenefitItem
           icon={<Gift className="h-5 w-5" />}
@@ -314,7 +314,7 @@ function ClosedAlphaIntakeState() {
       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/12 bg-white/5 text-white/75">
         <Lock className="h-5 w-5" aria-hidden="true" />
       </div>
-      <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-white/50">Private alpha</p>
+      <p className="mt-6 text-xs font-medium uppercase tracking-[0.22em] text-white/50">Waitlist access</p>
       <h2 id="closed-alpha-title" className="mt-3 text-balance text-3xl font-semibold tracking-tight text-white md:text-5xl">
         {CLOSED_ALPHA_TITLE}
       </h2>

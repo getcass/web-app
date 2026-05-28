@@ -92,19 +92,18 @@ export function TermsPage() {
 
           <article className="mx-auto mt-10 max-w-3xl rounded-[32px] border border-white/10 bg-white/[0.06] p-6 shadow-[0_32px_100px_rgba(0,0,0,0.32)] backdrop-blur-xl md:mt-14 md:p-10">
             <p className="text-xs font-medium uppercase tracking-[0.22em] text-white/50">Cass Technologies LTD</p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Alpha Terms of Use</h1>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">Terms of Use</h1>
             <p className="mt-4 text-sm text-white/60 md:text-base">
               Last updated:{' '}
-              <time dateTime="2026-04-03" className="text-white/78">
-                April 3, 2026
+              <time dateTime="2026-05-22" className="text-white/78">
+                May 22, 2026
               </time>
             </p>
 
             <div className="mt-10">
               <TermsSection title="About These Terms">
                 <p>
-                  These terms govern your use of the Cass app during the private alpha testing period. By using
-                  Cass you agree to these terms, our{' '}
+                  These terms govern your use of the Cass app. By using Cass you agree to these terms, our{' '}
                   <a
                     href="../privacy/"
                     className="text-white underline decoration-white/35 underline-offset-4 transition hover:decoration-white/70"
@@ -119,16 +118,11 @@ export function TermsPage() {
                 </p>
               </TermsSection>
 
-              <TermsSection title="Alpha Testing">
+              <TermsSection title="Service Status">
                 <p>
-                  Cass is in early development. You are using a pre-release product that is incomplete,
-                  may contain bugs, and will change. Features may be added, modified, or removed at any time
-                  without notice. We do not guarantee uptime, reliability, or that data created during
-                  the alpha will be preserved.
-                </p>
-                <p>
-                  Access is by invitation only. Your invitation is personal to you and may not be transferred
-                  or shared.
+                  Cass is still evolving. The app may contain bugs and features may be added, modified,
+                  or removed over time. We do not guarantee uninterrupted availability, reliability,
+                  or that every feature will remain available in its current form.
                 </p>
               </TermsSection>
 
@@ -232,9 +226,9 @@ export function TermsPage() {
                   arising from or related to your use of the app.
                 </p>
                 <p>
-                  The app is provided "as is" and "as available" during the alpha period, without
-                  warranties of any kind, whether express or implied, including implied warranties
-                  of merchantability, fitness for a particular purpose, and non-infringement.
+                  The app is provided "as is" and "as available", without warranties of any kind,
+                  whether express or implied, including implied warranties of merchantability,
+                  fitness for a particular purpose, and non-infringement.
                 </p>
                 <p>
                   Nothing in these terms excludes or limits our liability for death or personal injury

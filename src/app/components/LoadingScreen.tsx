@@ -49,7 +49,7 @@ export function LoadingScreen({ isLoading }: LoadingScreenProps) {
                 ease: 'easeInOut',
               }}
             >
-              Loading your invitation...
+              Loading Cass...
             </motion.p>
           </motion.div>
         </motion.div>

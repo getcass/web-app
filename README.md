@@ -1,7 +1,7 @@
 
-  # Alpha Tester Invitation Page
+  # Cass Web App
 
-  This is a code bundle for Alpha Tester Invitation Page. The original project is available at https://www.figma.com/design/Q3Cxoun5nt1sYPX1c0ET3c/Alpha-Tester-Invitation-Page.
+  This is the public Cass web app, including the landing page, Terms, Privacy Policy, and related static pages.
 
   ## Running the code
 
@@ -21,7 +21,7 @@
   - GitHub Pages repo site: `VITE_BASE=/your-repo/`
   - Custom domain at root: `VITE_BASE=/`
 
-  ## Closed alpha intake
+  ## Public access copy
 
-  The private alpha intake is closed. This web app intentionally does not include a signup form, client invite-code list, or client-side submission path.
+  The public web app points users to the mobile app waitlist. It intentionally does not include a signup form or client-side account submission path; account creation happens in the mobile app.
   
