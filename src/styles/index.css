@@ -442,12 +442,6 @@ body.bg-white-theme {
   translate: 0 -50%;
 }
 
-.cass-product-depth-stage {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-}
-
 .cass-product-render {
   position: absolute;
   left: 50%;
@@ -475,25 +469,13 @@ body.bg-white-theme {
   width: clamp(31rem, 38vw, 39rem);
 }
 
-.cass-product-render--feed {
+.cass-product-render--feed,
+.cass-product-render--chats-stack {
   width: clamp(24.5rem, 31vw, 32rem);
 }
 
-.cass-product-render--chats-stack {
-  width: clamp(28.5rem, 36vw, 37.25rem);
-}
-
-.cass-product-render--depth {
-  width: 16.5rem;
-}
-
-.cass-product-render--depth-back .cass-product-render-image {
-  opacity: 1;
-  filter: drop-shadow(0 34px 58px rgba(33, 27, 37, 0.16));
-}
-
-.cass-product-render--depth-front .cass-product-render-image {
-  filter: drop-shadow(0 34px 58px rgba(33, 27, 37, 0.16));
+.cass-product-render--compatibility {
+  width: clamp(29rem, 36vw, 37.5rem);
 }
 
 .cass-find-person-section {
@@ -870,7 +852,8 @@ body.bg-white-theme {
     width: min(18rem, 76vw);
   }
 
-  .cass-product-showcase--mobile .cass-product-render--feed {
+  .cass-product-showcase--mobile .cass-product-render--feed,
+  .cass-product-showcase--mobile .cass-product-render--chats-stack {
     width: min(17rem, 72vw);
   }
 
@@ -881,10 +864,6 @@ body.bg-white-theme {
     width: min(22rem, 100%);
     height: 24rem;
     translate: -50% -50%;
-  }
-
-  .cass-product-showcase--mobile .cass-product-render--chats-stack {
-    width: min(19.75rem, 83.75vw);
   }
 
   .cass-product-showcase--mobile .cass-product-scene--depth {
@@ -901,16 +880,8 @@ body.bg-white-theme {
     height: 24rem;
   }
 
-  .cass-product-showcase--mobile .cass-product-render--depth {
-    width: min(9.75rem, 39vw);
-  }
-
-  .cass-product-showcase--mobile .cass-product-render--depth-back {
-    transform-origin: 50% 50%;
-  }
-
-  .cass-product-showcase--mobile .cass-product-render--depth-front {
-    transform-origin: 50% 50%;
+  .cass-product-showcase--mobile .cass-product-render--compatibility {
+    width: min(19rem, 80vw);
   }
 
   .cass-product-showcase--mobile .cass-product-scene--hero {

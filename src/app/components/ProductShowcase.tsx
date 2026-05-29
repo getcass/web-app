@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import feedImg from '../../assets/screenshot-feed.png';
-import labsImg from '../../assets/screenshot-labs.png';
-import profileImg from '../../assets/screenshot-profile.png';
-import chatsImg from '../../assets/chats.png';
+import feedImg from '../../assets/scroll-section-1-mockup.png';
+import compatibilityImg from '../../assets/scroll-section-2-mockup.png';
+import chatsImg from '../../assets/scroll-section-3-mockup.png';
 import { cn } from './ui/utils';
 
 type ProductShowcaseProps = {
@@ -22,14 +21,12 @@ type ProductRenderProps = {
 };
 
 const SHOWCASE_EASE = [0.22, 1, 0.36, 1] as const;
-const DESKTOP_DEPTH_PHONE_OFFSET = 144;
-const MOBILE_DEPTH_PHONE_OFFSET = 82;
 const STRAIGHT_PHONE_ROTATION = {
   rotate: 0,
   rotateY: 0,
   rotateX: 0,
 };
-const PRODUCT_IMAGE_SOURCES = [feedImg, labsImg, profileImg, chatsImg];
+const PRODUCT_IMAGE_SOURCES = [feedImg, compatibilityImg, chatsImg];
 
 let productImagesPreloaded = false;
 
@@ -158,19 +155,15 @@ function ChatsStackScene({
   );
 }
 
-function DepthRenderScene({
+function CompatibilityScene({
   active,
   reducedMotion,
-  isDesktop,
   sceneTransition,
 }: {
   active: boolean;
   reducedMotion: boolean;
-  isDesktop: boolean;
   sceneTransition?: ReturnType<typeof getTransition>;
 }) {
-  const phoneOffset = isDesktop ? DESKTOP_DEPTH_PHONE_OFFSET : MOBILE_DEPTH_PHONE_OFFSET;
-
   return (
     <motion.div
       className="cass-product-scene cass-product-scene--depth"
@@ -179,36 +172,16 @@ function DepthRenderScene({
       transition={sceneTransition ?? getTransition(reducedMotion)}
       style={{ willChange: 'transform, opacity, filter' }}
     >
-      <div className="cass-product-depth-stage">
-        <ProductRender
-          src={labsImg}
-          alt="Cass Labs profile completion"
-          reducedMotion={reducedMotion}
-          className="cass-product-render--depth cass-product-render--depth-back"
-          animate={{
-            x: reducedMotion ? -phoneOffset : active ? -phoneOffset : -Math.round(phoneOffset * 0.55),
-            y: 0,
-            z: 0,
-            ...STRAIGHT_PHONE_ROTATION,
-            scale: active ? 0.88 : 0.76,
-            opacity: active ? 1 : 0,
-          }}
-        />
-        <ProductRender
-          src={profileImg}
-          alt="Compatibility overlay details"
-          reducedMotion={reducedMotion}
-          className="cass-product-render--depth cass-product-render--depth-front"
-          animate={{
-            x: reducedMotion ? phoneOffset : active ? phoneOffset : Math.round(phoneOffset * 0.55),
-            y: 0,
-            z: 0,
-            ...STRAIGHT_PHONE_ROTATION,
-            scale: active ? 0.88 : 0.76,
-            opacity: active ? 1 : 0,
-          }}
-        />
-      </div>
+      <ProductRender
+        src={compatibilityImg}
+        alt="Cass Labs compatibility and overlap screens"
+        reducedMotion={reducedMotion}
+        className="cass-product-render--compatibility"
+        animate={{
+          ...STRAIGHT_PHONE_ROTATION,
+          scale: 1,
+        }}
+      />
     </motion.div>
   );
 }
@@ -276,10 +249,9 @@ export function ProductShowcase({
         reducedMotion={reducedMotion}
         sceneTransition={boundaryTransition}
       />
-      <DepthRenderScene
+      <CompatibilityScene
         active={activeIndex === 2}
         reducedMotion={reducedMotion}
-        isDesktop={isDesktop}
         sceneTransition={boundaryTransition}
       />
       <ChatsStackScene
