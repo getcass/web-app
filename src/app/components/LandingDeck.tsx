@@ -145,28 +145,41 @@ type HeroPromptProps = {
   isActive: boolean;
   reducedMotion: boolean;
   onNext?: () => void;
+  onBeta?: () => void;
 };
 
-function HeroPrompt({ isActive, reducedMotion, onNext }: HeroPromptProps) {
+function HeroPrompt({ isActive, reducedMotion, onNext, onBeta }: HeroPromptProps) {
   const visibleTransition = reducedMotion
     ? { duration: 0.12, ease: 'linear' as const }
     : { duration: 0.55, ease: EASE_OUT };
   const hiddenTransition = { duration: reducedMotion ? 0.08 : 0.12, ease: 'linear' as const };
 
   return (
-    <motion.button
-      type="button"
-      onClick={onNext}
-      disabled={!isActive}
+    <motion.div
       aria-hidden={!isActive}
       initial={{ opacity: 0, y: reducedMotion ? 0 : 10 }}
       animate={{ opacity: isActive ? 1 : 0, y: isActive || reducedMotion ? 0 : 10 }}
       transition={isActive ? visibleTransition : hiddenTransition}
-      className="cass-hero-prompt-button"
+      className="cass-hero-prompt-actions"
       style={{ pointerEvents: isActive ? 'auto' : 'none' }}
     >
-      <span>Explore Cass</span>
-    </motion.button>
+      <button
+        type="button"
+        onClick={onNext}
+        disabled={!isActive}
+        className="cass-hero-prompt-button cass-hero-prompt-button--secondary"
+      >
+        <span>About Cass</span>
+      </button>
+      <button
+        type="button"
+        onClick={onBeta}
+        disabled={!isActive}
+        className="cass-hero-prompt-button cass-hero-prompt-button--primary"
+      >
+        <span>Join the Beta</span>
+      </button>
+    </motion.div>
   );
 }
 
@@ -429,19 +442,25 @@ export function LandingDeck() {
           aria-label="Cass landing page"
         >
           <div className="cass-landing-content">
+            <motion.h1
+              initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.72, delay: 0.16, ease: EASE_OUT }}
+              className="cass-landing-headline"
+            >
+              find your person
+            </motion.h1>
+
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.82, delay: 0.08, ease: EASE_OUT }}
               className="cass-landing-copy"
             >
-              <h1 className="cass-landing-headline">
-                <span className="cass-landing-headline-line cass-landing-headline-line--stack-mobile">
-                  <span>find</span>
-                  <span>your</span>
-                </span>
-                <span className="cass-landing-headline-line">person</span>
-              </h1>
+              <span role="img" aria-label="Cass" className="cass-landing-logo" style={LOGO_MASK_STYLE} />
+              <p className="cass-landing-subcopy">
+                A safer, more intentional dating app, without the endless swiping
+              </p>
             </motion.div>
 
             <div
@@ -462,14 +481,6 @@ export function LandingDeck() {
               </nav>
             </div>
 
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.82, delay: 0.18, ease: EASE_OUT }}
-              className="cass-landing-logo-anchor"
-            >
-              <span role="img" aria-label="Cass" className="cass-landing-logo" style={LOGO_MASK_STYLE} />
-            </motion.div>
           </div>
         </section>
 
@@ -515,6 +526,7 @@ export function LandingDeck() {
         isActive={activeIndex === 0 && isAtPageTop}
         reducedMotion={reducedMotion}
         onNext={() => scrollToIndex(1)}
+        onBeta={() => scrollToIndex(SECTION_COUNT - 1)}
       />
     </main>
   );

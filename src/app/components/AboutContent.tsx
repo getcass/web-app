@@ -60,7 +60,7 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Most dating apps are designed to keep you swiping endlessly. Cass is built on a different premise: to help you meet the people you're most compatible with. We present a highly curated daily feed of matches, calculated across psychological dimensions.
+          Every day, Cass shows you a smaller set of people chosen for real compatibility, not just who keeps you swiping.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -70,13 +70,13 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
         <motion.div variants={item} className="mt-8 space-y-4">
           <AboutBulletPoint
             icon={<Compass className="h-5 w-5 text-pink-600" />}
-            title="Zero Swiping Mechanic"
-            description="No infinite scroll or gamification. We focus your attention on people who actually make sense for you."
+            title="No Endless Swiping"
+            description="A focused daily feed helps you spend more attention on people who feel worth meeting."
           />
           <AboutBulletPoint
             icon={<ShieldCheck className="h-5 w-5 text-pink-600" />}
-            title="Screened Community"
-            description="Referrals and active verifications ensure a trusted network of high-intent people."
+            title="A More Intentional Community"
+            description="Referrals and verification help Cass stay thoughtful, safer, and real."
           />
         </motion.div>
       </div>
@@ -122,7 +122,7 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Get real context from the start. Share how you think, communicate, and love. Complete bite-sized compatibility tiles in Cass Labs to unlock personality overlaps and daily habits with radar overlays and side-by-side matches.
+          Answer thoughtful prompts and see where you naturally overlap before you start a conversation.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -132,13 +132,13 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
         <motion.div variants={item} className="mt-8 space-y-4">
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
-            title="Love Languages & Traits Calibration"
-            description="Map out how you give and receive love across key psychological dimensions to build a unique compatibility profile."
+            title="Thoughtful Prompts"
+            description="Share how you communicate, spend time, and build trust, then see the patterns that matter."
           />
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
-            title="Interactive Radar & Metrics Overlays"
-            description="Visualize your relationship traits side-by-side to understand alignment and balance before sending the first message."
+            title="Natural Overlaps"
+            description="Compare habits and relationship cues side by side without turning people into scores."
           />
         </motion.div>
       </div>
@@ -180,11 +180,11 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
           variants={item}
           className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
-          Message anyone, freely and safely
+          Start thoughtful conversations without paywalls
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Message anyone you like. Your message will appear in your sent inbox and their received inbox. Once they reply, it'll become an active chat.
+          Send an opener when something feels right. New messages stay separate until both people choose to keep talking.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -194,13 +194,13 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
         <motion.div variants={item} className="mt-8 space-y-4">
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-[#b11236]" />}
-            title="Start With Intent"
-            description="Send a thoughtful opener, using their profile and compatibility cues to make it relevant."
+            title="Open With Context"
+            description="Use their profile and compatibility cues to write something personal from the start."
           />
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-[#b11236]" />}
             title="Clear Conversation Flow"
-            description="Sent, received, and active chats stay separated so both people know where each conversation stands."
+            description="Sent openers, replies, and active chats stay organized so both people know where things stand."
           />
         </motion.div>
       </div>
