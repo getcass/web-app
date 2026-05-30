@@ -100,8 +100,9 @@ body.bg-white-theme {
   height: 100%;
   flex: 1 1 auto;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: calc(var(--cass-safe-top) + clamp(2.4rem, 4.2vw, 4.4rem));
+  align-items: center;
+  justify-content: center;
+  padding-top: calc(var(--cass-safe-top) + var(--cass-landing-inner-pad));
   padding-right: calc(var(--cass-safe-right) + var(--cass-landing-inner-pad));
   padding-bottom: calc(var(--cass-safe-bottom) + var(--cass-landing-inner-pad));
   padding-left: calc(var(--cass-safe-left) + var(--cass-landing-inner-pad));
@@ -109,7 +110,8 @@ body.bg-white-theme {
 
 .cass-landing-copy {
   max-width: min(48rem, 64vw);
-  padding-block: 0 clamp(0.55rem, 2vw, 1.1rem);
+  padding-block: 0;
+  text-align: center;
 }
 
 .cass-landing-kicker,
@@ -136,6 +138,7 @@ body.bg-white-theme {
   margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--cass-landing-headline-gap);
   color: var(--cass-landing-cream);
   font-family: 'TAN Nimbus', Georgia, serif;
@@ -195,6 +198,7 @@ body.bg-white-theme {
 .cass-landing-headline-line {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: 0.18em;
   white-space: nowrap;
 }
@@ -283,8 +287,9 @@ body.bg-white-theme {
 
 .cass-landing-logo-anchor {
   position: absolute;
+  top: calc(var(--cass-safe-top) + var(--cass-landing-inner-pad));
   right: calc(var(--cass-safe-right) + var(--cass-landing-inner-pad));
-  bottom: var(--cass-hero-prompt-bottom);
+  bottom: auto;
   z-index: 12;
   display: block;
 }
@@ -367,9 +372,14 @@ body.bg-white-theme {
 
 .cass-product-showcase--desktop {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   z-index: 2;
+  width: 100%;
+  max-width: 104rem;
   overflow: hidden;
+  translate: -50% 0;
 }
 
 .cass-product-showcase--mobile {
@@ -624,12 +634,11 @@ body.bg-white-theme {
   }
 
   .cass-landing-content {
-    padding-top: calc(var(--cass-safe-top) + clamp(2.4rem, 4.2vw, 4.4rem));
+    padding-top: calc(var(--cass-safe-top) + var(--cass-landing-inner-pad));
   }
 
   .cass-landing-copy {
     max-width: min(50rem, 58vw);
-    padding-block: 0 clamp(0.9rem, 2.4vw, 1.8rem);
   }
 
   .cass-feature-copy {
@@ -728,14 +737,14 @@ body.bg-white-theme {
 
   .cass-landing-headline-line--stack-mobile {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--cass-landing-headline-gap);
     white-space: normal;
   }
 
   .cass-landing-copy {
     max-width: min(12.5ch, 82vw);
-    padding-top: clamp(4.25rem, 13.5vh, 6.75rem);
+    padding-top: 0;
   }
 
   .cass-landing-kicker-logo {

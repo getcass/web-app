@@ -197,8 +197,6 @@ export function ProductShowcase({
   const isDesktop = mode === 'desktop';
   const isFeature = activeIndex >= 1 && activeIndex <= 3;
   const isInstantBoundary =
-    (previousActiveIndex === 0 && activeIndex === 1) ||
-    (previousActiveIndex === 1 && activeIndex === 0) ||
     (previousActiveIndex === 3 && activeIndex === 4) ||
     (previousActiveIndex === 4 && activeIndex === 3);
   const transition = getTransition(reducedMotion);

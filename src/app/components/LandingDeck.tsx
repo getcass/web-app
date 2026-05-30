@@ -16,6 +16,8 @@ import { cn } from './ui/utils';
 
 const SECTION_COUNT = 5;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+const MOBILE_BREAKPOINT = 768;
+const MOBILE_ENTER_RATIO = 0.04;
 
 type LandingDeckProps = {};
 
@@ -274,7 +276,7 @@ export function LandingDeck() {
         nextShowcaseIndex = 3;
       } else if (section2Top < height * 0.5) {
         nextShowcaseIndex = 2;
-      } else if (section1Top < height) {
+      } else if (section1Top < height * 0.5) {
         nextShowcaseIndex = 1;
       }
       setScrollProgress(next);
@@ -310,14 +312,39 @@ export function LandingDeck() {
     if (!sections.length) return;
 
     const ratios = Array.from({ length: SECTION_COUNT }).map(() => 0);
-    const thresholds = [0, 0.25, 0.5, 0.75, 1];
+    const thresholds = [0, MOBILE_ENTER_RATIO, 0.25, 0.5, 0.75, 1];
 
     const observer = new IntersectionObserver(
       (entries) => {
+        const enteredOnMobile: number[] = [];
+
         for (const entry of entries) {
           const index = Number((entry.target as HTMLElement).dataset.index);
           if (Number.isNaN(index)) continue;
           ratios[index] = entry.intersectionRatio;
+
+          if (
+            window.innerWidth < MOBILE_BREAKPOINT &&
+            index > 0 &&
+            entry.isIntersecting &&
+            entry.intersectionRatio >= MOBILE_ENTER_RATIO
+          ) {
+            enteredOnMobile.push(index);
+          }
+        }
+
+        if (enteredOnMobile.length) {
+          setEntered((prev) => {
+            let changed = false;
+            const next = [...prev];
+            for (const index of enteredOnMobile) {
+              if (!next[index]) {
+                next[index] = true;
+                changed = true;
+              }
+            }
+            return changed ? next : prev;
+          });
         }
 
         let bestIndex = 0;
