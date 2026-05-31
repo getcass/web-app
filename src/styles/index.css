@@ -407,7 +407,6 @@ body.bg-white-theme {
   position: relative;
   margin-top: clamp(1rem, 2vw, 1.35rem);
   padding: 0;
-  border-top: 1px solid rgba(33, 27, 37, 0.12);
 }
 
 .cass-safety-flow-topline {
@@ -476,12 +475,12 @@ body.bg-white-theme {
 
 .cass-safety-step-pulse {
   position: absolute;
-  inset: 0.24rem;
+  inset: 0.42rem;
   border-radius: 9999px;
   background: var(--safety-accent);
-  opacity: 0.24;
-  filter: blur(16px);
-  transform: scale(1.08);
+  opacity: 0.2;
+  filter: blur(9px);
+  transform: scale(1);
 }
 
 .cass-safety-step-icon {
@@ -496,7 +495,7 @@ body.bg-white-theme {
   color: var(--safety-accent);
   box-shadow:
     inset 0 0 0 1px var(--safety-border),
-    0 16px 34px var(--safety-shadow);
+    0 8px 18px var(--safety-shadow);
 }
 
 .cass-safety-step-icon-image {

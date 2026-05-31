@@ -260,7 +260,7 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
           variants={item}
           className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
-          See how you overlap before chatting
+           Match based on compatibility
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
@@ -274,13 +274,13 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
         <motion.div variants={item} className="mt-8 space-y-4">
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
-            title="Thoughtful Prompts"
-            description="Share how you communicate, spend time, and build trust, then see the patterns that matter."
+            title="Signal building"
+            description="Answer quick prompts about how you think, connect, and show care, so Cass can understand the signals behind better matches."
           />
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
             title="Natural Overlaps"
-            description="Compare habits and relationship cues side by side without turning people into scores."
+            description="Explore side-by-side comparisons and visualisations that show what is driving your chemistry score."
           />
         </motion.div>
       </div>
@@ -322,7 +322,7 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
           variants={item}
           className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
-          Start thoughtful conversations without paywalls
+          Choose who to message
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
