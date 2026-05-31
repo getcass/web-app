@@ -262,17 +262,20 @@ export function LandingDeck() {
     [],
   );
 
-  const getSectionTop = useCallback((index: number) => {
-    const element = sectionRefs.current[index];
-    if (!element) return null;
-    return Math.max(0, element.getBoundingClientRect().top + window.scrollY);
-  }, []);
-
   const scrollToSection = useCallback((index: number, behavior: ScrollBehavior) => {
-    const top = getSectionTop(index);
-    if (top === null) return;
-    window.scrollTo({ top: Math.max(0, top), left: 0, behavior });
-  }, [getSectionTop]);
+    const element = sectionRefs.current[index];
+    if (!element) return;
+
+    const top = Math.max(0, element.getBoundingClientRect().top + window.scrollY);
+    const scrollOptions: ScrollToOptions = { top, left: 0, behavior };
+
+    element.scrollIntoView({ block: 'start', inline: 'nearest', behavior });
+    window.requestAnimationFrame(() => {
+      const distance = Math.abs(element.getBoundingClientRect().top);
+      if (distance <= 2) return;
+      (document.scrollingElement ?? document.documentElement).scrollTo(scrollOptions);
+    });
+  }, []);
 
   useEffect(() => {
     let raf = 0;
