@@ -27,7 +27,7 @@ const WAITLIST_REVEAL_DELAY = 0.65;
 const SAFETY_LEVELS = [
   {
     step: '01',
-    title: 'Not verified',
+    title: 'Approved',
     description: "All accounts complete SMS verification and a liveness check, so we know you're real.",
     tone: 'neutral',
     imageSrc: safetyNotVerifiedIcon,
@@ -98,7 +98,7 @@ export function SafetySectionContent({ isActive, hasEntered, reducedMotion }: Se
             </motion.h2>
 
             <motion.p variants={item} className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-              We're building a genuine community of trusted users looking to find their person. Cass uses clear verification levels based on liveness checks, ID checks, and referrals from existing users.
+              We're building a genuine community of trusted users looking to find their person. Cass uses verification tiers based on ID checks and referrals from existing users.
             </motion.p>
           </div>
         </div>
@@ -202,7 +202,7 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Every day, Cass shows you a small set of people chosen for real compatibility, not just who keeps you swiping.
+          Cass shows you a small set of people we think you're most compatibile with, and your feed refreshes daily with new users.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -264,7 +264,7 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Answer thoughtful prompts and see where you naturally overlap before you start a conversation.
+          See where you naturally overlap with other users before you start a conversation.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -275,7 +275,7 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
             title="Signal building"
-            description="Answer quick prompts about how you think, connect, and show care, so Cass can understand the signals behind better matches."
+            description="Answer questions about how you think, connect, and show care, so we can improve your match quality."
           />
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-purple-600" />}
@@ -342,7 +342,7 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
           <AboutBulletPoint
             icon={<CheckCircle2 className="h-5 w-5 text-[#b11236]" />}
             title="Clear Conversation Flow"
-            description="Sent openers, replies, and active chats stay organized so both people know where things stand."
+            description="Sent messages, requests, and active chats stay organized so both people know where things stand."
           />
         </motion.div>
       </div>
