@@ -1,5 +1,17 @@
 import { motion } from 'motion/react';
-import { Heart, Lock, MessageSquare, Sparkles, ShieldCheck, Compass, CheckCircle2 } from 'lucide-react';
+import {
+  CheckCircle2,
+  Compass,
+  Heart,
+  Lock,
+  MessageSquare,
+  Shield,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react';
+import safetyNotVerifiedIcon from '../../assets/safety-not-verified.png';
+import safetyTrustedIcon from '../../assets/safety-trusted.png';
+import safetyVerifiedIcon from '../../assets/safety-verified.png';
 import { ProductShowcase } from './ProductShowcase';
 
 type SectionContentProps = {
@@ -12,6 +24,30 @@ type SectionContentProps = {
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const WAITLIST_REVEAL_DELAY = 0.65;
 
+const SAFETY_LEVELS = [
+  {
+    step: '01',
+    title: 'Not verified',
+    description: "All accounts complete SMS verification and a liveness check, so we know you're real.",
+    tone: 'neutral',
+    imageSrc: safetyNotVerifiedIcon,
+  },
+  {
+    step: '02',
+    title: 'Verified',
+    description: <>Verified means you completed ID verification <strong>or</strong> were referred by an existing user.</>,
+    tone: 'pink',
+    imageSrc: safetyVerifiedIcon,
+  },
+  {
+    step: '03',
+    title: 'Trusted',
+    description: <>Trusted means you completed ID verification <strong>and</strong> were referred by an existing user.</>,
+    tone: 'purple',
+    imageSrc: safetyTrustedIcon,
+  },
+] as const;
+
 function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionContentProps, 'isActive' | 'hasEntered' | 'reducedMotion'>) {
   const shouldShow = isActive || hasEntered;
   const enterY = reducedMotion ? 0 : 24;
@@ -22,7 +58,113 @@ function useEnterMotion({ isActive, hasEntered, reducedMotion }: Pick<SectionCon
   return { shouldShow, enterY, transition };
 }
 
-// Section 1: Designed for Chemistry / The Cass Feed
+// Section 1: Safety / Trust
+export function SafetySectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
+  const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.08,
+        delayChildren: reducedMotion ? 0 : 0.02,
+      },
+    },
+  };
+  const item = {
+    hidden: { opacity: 0, y: enterY },
+    show: { opacity: 1, y: 0, transition },
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate={shouldShow ? 'show' : 'hidden'}
+      variants={container}
+      className="cass-feature-copy cass-safety-feature-copy mx-auto w-full max-w-6xl text-zinc-950"
+    >
+      <div className="cass-safety-section-inner">
+        <div className="cass-safety-section-header">
+          <div>
+            <motion.div variants={item} className="inline-flex items-center gap-2 rounded-full border border-zinc-950/10 bg-white/50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-700 shadow-[0_14px_40px_rgba(33,27,37,0.06)] backdrop-blur-md">
+              <Shield className="h-3 w-3 text-zinc-700" />
+              <span>Trust</span>
+            </motion.div>
+
+            <motion.h2
+              variants={item}
+              className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
+            >
+              Safety first
+            </motion.h2>
+
+            <motion.p variants={item} className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
+              We're building a genuine community of trusted users looking to find their person. Cass uses clear verification levels based on liveness checks, ID checks, and referrals from existing users.
+            </motion.p>
+          </div>
+        </div>
+
+        <motion.div variants={item} className="cass-safety-flow-heading">
+          <div className="cass-safety-flow-topline">
+            <span>Verification levels</span>
+          </div>
+        </motion.div>
+
+        <motion.div variants={item}>
+          <SafetyVerificationFlow shouldShow={shouldShow} reducedMotion={reducedMotion} />
+        </motion.div>
+
+        <motion.div variants={item} className="cass-safety-assurance" aria-label="Safety operations">
+          <p className="cass-safety-assurance-label">Intentional AI</p>
+          <p className="cass-safety-assurance-copy">
+            We use AI to detect bad actors, not to make dating decisions for you. Our advanced safety system works around the clock to help identify fake accounts, scams, and harmful behaviour before they become your problem.
+          </p>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+function SafetyVerificationFlow({ shouldShow, reducedMotion }: { shouldShow: boolean; reducedMotion: boolean }) {
+  const stepTransition = (index: number) =>
+    reducedMotion
+      ? { duration: 0.14, ease: 'linear' as const }
+      : { duration: 0.64, delay: 0.2 + index * 0.14, ease: EASE_OUT };
+
+  return (
+    <div className="cass-safety-flow" aria-label="Verification levels">
+      <div className="cass-safety-flow-stage">
+        {SAFETY_LEVELS.map(({ step, title, description, tone, imageSrc }, index) => (
+          <motion.div
+            key={title}
+            className={`cass-safety-step cass-safety-step--${tone}`}
+            initial={false}
+            animate={{
+              opacity: shouldShow ? 1 : 0,
+              y: reducedMotion ? 0 : shouldShow ? 0 : 18,
+              scale: reducedMotion ? 1 : shouldShow ? 1 : 0.97,
+            }}
+            transition={stepTransition(index)}
+          >
+            <div className="cass-safety-step-marker" aria-hidden="true">
+              <span className="cass-safety-step-pulse" />
+              <span className="cass-safety-step-icon">
+                <img src={imageSrc} alt="" className="cass-safety-step-icon-image" draggable="false" />
+              </span>
+            </div>
+
+            <div className="cass-safety-step-copy">
+              <span className="cass-safety-step-number">{step}</span>
+              <h3>{title}</h3>
+              <p className="cass-safety-step-description">{description}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Section 2: Designed for Chemistry / The Cass Feed
 export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
   const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
   const container = {
@@ -56,11 +198,11 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
           variants={item}
           className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
-          Stop swiping, find your person
+          No more swiping
         </motion.h2>
 
         <motion.p variants={item} className="mt-5 text-pretty text-base leading-relaxed text-zinc-600 md:mt-6 md:text-xl">
-          Every day, Cass shows you a smaller set of people chosen for real compatibility, not just who keeps you swiping.
+          Every day, Cass shows you a small set of people chosen for real compatibility, not just who keeps you swiping.
         </motion.p>
 
         <motion.div variants={item} className="md:hidden">
@@ -70,13 +212,13 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
         <motion.div variants={item} className="mt-8 space-y-4">
           <AboutBulletPoint
             icon={<Compass className="h-5 w-5 text-pink-600" />}
-            title="No Endless Swiping"
+            title="Less noise, more meaning"
             description="A focused daily feed helps you spend more attention on people who feel worth meeting."
           />
           <AboutBulletPoint
             icon={<ShieldCheck className="h-5 w-5 text-pink-600" />}
-            title="A More Intentional Community"
-            description="Referrals and verification help Cass stay thoughtful, safer, and real."
+            title="A transparent algorithm"
+            description="Chemistry scores show you how compatible you are with someone and why we think that."
           />
         </motion.div>
       </div>
@@ -84,7 +226,7 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
   );
 }
 
-// Section 2: Deep Compatibility & Calibration / Cass Labs
+// Section 3: Deep Compatibility & Calibration / Cass Labs
 export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
   const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
   const container = {
@@ -146,7 +288,7 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
   );
 }
 
-// Section 3: Messaging on Cass / Chats
+// Section 4: Messaging on Cass / Chats
 export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
   const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
   const container = {
@@ -208,7 +350,7 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
   );
 }
 
-// Section 4: Waitlist Signup / CTA Card
+// Section 5: Waitlist Signup / CTA Card
 export function WaitlistCTASectionContent({ isActive, hasEntered, reducedMotion }: SectionContentProps) {
   const { shouldShow, enterY, transition } = useEnterMotion({ isActive, hasEntered, reducedMotion });
   const container = {

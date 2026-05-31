@@ -9,12 +9,13 @@ import {
   ChatsSectionContent,
   ChemistrySectionContent,
   CompatibilitySectionContent,
+  SafetySectionContent,
   WaitlistCTASectionContent,
 } from './AboutContent';
 import { ProductShowcase } from './ProductShowcase';
 import { cn } from './ui/utils';
 
-const SECTION_COUNT = 5;
+const SECTION_COUNT = 6;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 const MOBILE_BREAKPOINT = 768;
 const MOBILE_ENTER_RATIO = 0.04;
@@ -96,7 +97,7 @@ function ProgressDots({ activeIndex, onSelect, reducedMotion }: ProgressDotsProp
     >
       {Array.from({ length: SECTION_COUNT }).map((_, index) => {
         const isActive = index === activeIndex;
-        // In sections 1-5 background is white (light section).
+        // After the hero, the background is white (light section).
         const isLightSection = activeIndex >= 1;
         return (
           <button
@@ -281,15 +282,15 @@ export function LandingDeck() {
       const scrollY = Math.max(0, window.scrollY);
       const next = Math.max(0, Math.min(1, scrollY / height));
       const nextIsAtPageTop = scrollY === 0;
-      const section1Top = sectionRefs.current[1]?.getBoundingClientRect().top ?? height;
       const section2Top = sectionRefs.current[2]?.getBoundingClientRect().top ?? height * 2;
       const section3Top = sectionRefs.current[3]?.getBoundingClientRect().top ?? height * 3;
+      const section4Top = sectionRefs.current[4]?.getBoundingClientRect().top ?? height * 4;
       let nextShowcaseIndex = 0;
-      if (section3Top < height * 0.5) {
+      if (section4Top < height * 0.5) {
         nextShowcaseIndex = 3;
-      } else if (section2Top < height * 0.5) {
+      } else if (section3Top < height * 0.5) {
         nextShowcaseIndex = 2;
-      } else if (section1Top < height * 0.5) {
+      } else if (section2Top < height * 0.5) {
         nextShowcaseIndex = 1;
       }
       setScrollProgress(next);
@@ -442,14 +443,19 @@ export function LandingDeck() {
           aria-label="Cass landing page"
         >
           <div className="cass-landing-content">
-            <motion.h1
-              initial={reducedMotion ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.72, delay: 0.16, ease: EASE_OUT }}
-              className="cass-landing-headline"
+            <div
+              className={cn('cass-landing-headline-shell', !isAtPageTop && 'cass-landing-headline-shell--hidden')}
+              aria-hidden={!isAtPageTop}
             >
-              find your person
-            </motion.h1>
+              <motion.h1
+                initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.72, delay: 0.16, ease: EASE_OUT }}
+                className="cass-landing-headline"
+              >
+                find your person
+              </motion.h1>
+            </div>
 
             <motion.div
               initial={reducedMotion ? false : { opacity: 0, y: 28 }}
@@ -459,7 +465,7 @@ export function LandingDeck() {
             >
               <span role="img" aria-label="Cass" className="cass-landing-logo" style={LOGO_MASK_STYLE} />
               <p className="cass-landing-subcopy">
-                A safer, more intentional dating app, without the endless swiping
+                A more intentional dating app, optimised for trust and safety
               </p>
             </motion.div>
 
@@ -491,29 +497,33 @@ export function LandingDeck() {
 
           <div className="cass-feature-showcase-content">
             <LandingSection index={1} onRef={setSectionRef(1)}>
-              <ChemistrySectionContent isActive={activeIndex === 1} hasEntered={entered[1]} {...sectionProps} />
+              <SafetySectionContent isActive={activeIndex === 1} hasEntered={entered[1]} {...sectionProps} />
             </LandingSection>
 
             <LandingSection index={2} onRef={setSectionRef(2)}>
-              <CompatibilitySectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
+              <ChemistrySectionContent isActive={activeIndex === 2} hasEntered={entered[2]} {...sectionProps} />
             </LandingSection>
 
             <LandingSection index={3} onRef={setSectionRef(3)}>
-              <ChatsSectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
+              <CompatibilitySectionContent isActive={activeIndex === 3} hasEntered={entered[3]} {...sectionProps} />
+            </LandingSection>
+
+            <LandingSection index={4} onRef={setSectionRef(4)}>
+              <ChatsSectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
             </LandingSection>
           </div>
         </div>
 
         <section
-          ref={setSectionRef(4)}
-          data-index={4}
-          id="section-4"
+          ref={setSectionRef(5)}
+          data-index={5}
+          id="section-5"
           className="cass-snap-section cass-find-person-section"
           aria-label="Find your person and join the waitlist"
         >
           <FindYourPersonImageSection />
           <div className="cass-find-person-waitlist-overlay">
-            <WaitlistCTASectionContent isActive={activeIndex === 4} hasEntered={entered[4]} {...sectionProps} />
+            <WaitlistCTASectionContent isActive={activeIndex === 5} hasEntered={entered[5]} {...sectionProps} />
           </div>
         </section>
       </div>
