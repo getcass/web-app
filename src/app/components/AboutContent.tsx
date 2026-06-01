@@ -2,12 +2,8 @@ import { motion } from 'motion/react';
 import {
   CheckCircle2,
   Compass,
-  Heart,
   Lock,
-  MessageSquare,
-  Shield,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 import safetyNotVerifiedIcon from '../../assets/safety-not-verified.png';
 import safetyTrustedIcon from '../../assets/safety-trusted.png';
@@ -85,14 +81,9 @@ export function SafetySectionContent({ isActive, hasEntered, reducedMotion }: Se
       <div className="cass-safety-section-inner">
         <div className="cass-safety-section-header">
           <div>
-            <motion.div variants={item} className="inline-flex items-center gap-2 rounded-full border border-zinc-950/10 bg-white/50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-700 shadow-[0_14px_40px_rgba(33,27,37,0.06)] backdrop-blur-md">
-              <Shield className="h-3 w-3 text-zinc-700" />
-              <span>Trust</span>
-            </motion.div>
-
             <motion.h2
               variants={item}
-              className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
+              className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
             >
               Safety first
             </motion.h2>
@@ -189,14 +180,9 @@ export function ChemistrySectionContent({ isActive, hasEntered, reducedMotion }:
       className="cass-feature-copy mx-auto w-full max-w-6xl text-zinc-950"
     >
       <div className="max-w-2xl">
-        <motion.div variants={item} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-pink-500/10 bg-pink-500/5 text-xs font-semibold uppercase tracking-[0.18em] text-pink-700">
-          <Heart className="h-3 w-3 fill-pink-600 stroke-pink-600" />
-          <span>Feed</span>
-        </motion.div>
-
         <motion.h2
           variants={item}
-          className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
+          className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
           No more swiping
         </motion.h2>
@@ -251,14 +237,9 @@ export function CompatibilitySectionContent({ isActive, hasEntered, reducedMotio
       className="cass-feature-copy mx-auto w-full max-w-6xl text-zinc-950"
     >
       <div className="max-w-2xl">
-        <motion.div variants={item} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/10 bg-purple-500/5 text-xs font-semibold uppercase tracking-[0.18em] text-purple-700">
-          <Sparkles className="h-3 w-3 text-purple-600 fill-purple-200" />
-          <span>Labs</span>
-        </motion.div>
-
         <motion.h2
           variants={item}
-          className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
+          className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
            Match based on compatibility
         </motion.h2>
@@ -313,14 +294,9 @@ export function ChatsSectionContent({ isActive, hasEntered, reducedMotion }: Sec
       className="cass-feature-copy mx-auto w-full max-w-6xl text-zinc-950"
     >
       <div className="max-w-2xl">
-        <motion.div variants={item} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#b11236]/10 bg-[#b11236]/5 text-xs font-semibold uppercase tracking-[0.18em] text-[#9f1239]">
-          <MessageSquare className="h-3 w-3 text-[#b11236] fill-[#b11236]/10" />
-          <span>Chats</span>
-        </motion.div>
-
         <motion.h2
           variants={item}
-          className="mt-6 text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
+          className="text-balance text-4xl font-semibold tracking-tight text-zinc-900 md:text-5xl lg:text-6xl"
         >
           Choose who to message
         </motion.h2>
