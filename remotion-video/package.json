@@ -1,0 +1,36 @@
+{
+  "name": "remotion-video",
+  "version": "1.0.0",
+  "description": "Cass 9.9-second cinematic background montage",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.487",
+    "@remotion/media": "4.0.487",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.487"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.487",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.19.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "render": "remotion render CassSizzle out/cass-sizzle.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "render:web-asset": "remotion render CassSizzle out/cass-sizzle-web.mp4 --codec h264 --crf 23 --pixel-format yuv420p --muted --width 960 --height 720 --x264-preset medium --gop 60",
+    "render:legacy-web-asset": "remotion render CassSizzleLegacy out/cass-sizzle-legacy-web.mp4 --codec h264 --crf 23 --pixel-format yuv420p --muted --width 960 --height 720 --x264-preset medium --gop 60",
+    "render:web-preview": "remotion render CassSizzleWebPreview out/cass-sizzle-web-preview.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

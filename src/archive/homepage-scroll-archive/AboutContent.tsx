@@ -5,9 +5,9 @@ import {
   Lock,
   ShieldCheck,
 } from 'lucide-react';
-import safetyNotVerifiedIcon from '../../assets/safety-not-verified.png';
-import safetyTrustedIcon from '../../assets/safety-trusted.png';
-import safetyVerifiedIcon from '../../assets/safety-verified.png';
+import safetyNotVerifiedIcon from './assets/safety-not-verified.png';
+import safetyTrustedIcon from './assets/safety-trusted.png';
+import safetyVerifiedIcon from './assets/safety-verified.png';
 import { ProductShowcase } from './ProductShowcase';
 
 type SectionContentProps = {

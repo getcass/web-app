@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import feedImg from '../../assets/scroll-section-1-mockup.png';
-import compatibilityImg from '../../assets/scroll-section-2-mockup.png';
-import chatsImg from '../../assets/scroll-section-3-mockup.png';
-import { cn } from './ui/utils';
+import feedImg from './assets/scroll-section-1-mockup.png';
+import compatibilityImg from './assets/scroll-section-2-mockup.png';
+import chatsImg from './assets/scroll-section-3-mockup.png';
+import { cn } from '../../app/components/ui/utils';
 
 type ProductShowcaseProps = {
   activeIndex: number;
