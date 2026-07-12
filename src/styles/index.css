@@ -199,23 +199,23 @@ body.cass-home-locked #root {
 }
 
 .cass-cinematic-enter-headline {
-  animation-delay: 3850ms;
+  animation-delay: 2750ms;
 }
 
 .cass-cinematic-enter-intentional {
-  animation-delay: 1300ms;
+  animation-delay: 950ms;
 }
 
 .cass-cinematic-enter-trust {
-  animation-delay: 2150ms;
+  animation-delay: 1550ms;
 }
 
 .cass-cinematic-enter-action {
-  animation-delay: 3000ms;
+  animation-delay: 2150ms;
 }
 
 .cass-cinematic-enter-footer {
-  animation-delay: 3850ms;
+  animation-delay: 2750ms;
 }
 
 .cass-cinematic-logo {
