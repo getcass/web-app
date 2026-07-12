@@ -224,7 +224,7 @@ body.cass-home-locked #root {
   max-width: calc(100vw - (2 * var(--cass-home-gutter)));
   height: auto;
   flex-shrink: 0;
-  filter: brightness(0) invert(1) drop-shadow(0 14px 36px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 14px 36px rgba(0, 0, 0, 0.2));
 }
 
 .cass-cinematic-headline {
