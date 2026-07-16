@@ -10,6 +10,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { CASS_LOGO_REVEAL, CassLogoReveal } from "./CassLogoReveal";
 
 const FPS = 30;
 const WIDTH = 1440;
@@ -495,6 +496,14 @@ export const CassSizzle: React.FC<CassSizzleProps> = ({
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="CassLogoReveal"
+        component={CassLogoReveal}
+        durationInFrames={CASS_LOGO_REVEAL.durationInFrames}
+        fps={CASS_LOGO_REVEAL.fps}
+        width={CASS_LOGO_REVEAL.width}
+        height={CASS_LOGO_REVEAL.height}
+      />
       <Composition
         id="CassSizzle"
         component={CassSizzle}

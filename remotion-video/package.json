@@ -1,7 +1,7 @@
 {
   "name": "remotion-video",
   "version": "1.0.0",
-  "description": "Cass 9.9-second cinematic background montage",
+  "description": "Cass Remotion brand films and website background assets",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
@@ -27,6 +27,8 @@
     "render:web-asset": "remotion render CassSizzle out/cass-sizzle-web.mp4 --codec h264 --crf 23 --pixel-format yuv420p --muted --width 960 --height 720 --x264-preset medium --gop 60",
     "render:legacy-web-asset": "remotion render CassSizzleLegacy out/cass-sizzle-legacy-web.mp4 --codec h264 --crf 23 --pixel-format yuv420p --muted --width 960 --height 720 --x264-preset medium --gop 60",
     "render:web-preview": "remotion render CassSizzleWebPreview out/cass-sizzle-web-preview.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "render:logo": "remotion render CassLogoReveal out/cass-logo-reveal.mp4 --codec h264 --crf 18 --pixel-format yuv420p --muted",
+    "render:logo:web": "remotion render CassLogoReveal ../src/assets/cass-logo-reveal.mp4 --codec h264 --crf 16 --pixel-format yuv420p --muted --x264-preset slow --gop 120",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },

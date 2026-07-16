@@ -6,8 +6,8 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import logoUrl from '../../assets/logo.svg';
-import posterUrl from '../../assets/cass-sizzle-poster.jpg';
-import videoUrl from '../../assets/cass-sizzle.mp4';
+import posterUrl from '../../assets/cass-logo-reveal-poster.png';
+import videoUrl from '../../assets/cass-logo-reveal.mp4';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const LEGAL_LINKS = [
@@ -27,11 +27,21 @@ type Point = {
 
 const BETA_PULSE_CLEANUP_DELAY = 420;
 const BETA_REDUCED_PULSE_CLEANUP_DELAY = 220;
+const CONTENT_REVEAL_AT_SECONDS = 4.88;
+
+type VideoFrameMetadata = {
+  readonly mediaTime: number;
+};
 
 export function LandingDeck() {
   const reducedMotion = usePrefersReducedMotion();
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const [showStaticLogo, setShowStaticLogo] = useState(false);
+  const [contentVisible, setContentVisible] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoStartedRef = useRef(false);
+  const videoFrameCallbackRef = useRef<number | null>(null);
   const betaButtonRef = useRef<HTMLButtonElement>(null);
   const spotlightFrameRef = useRef<number | null>(null);
   const spotlightLastFrameRef = useRef<number | null>(null);
@@ -40,6 +50,86 @@ export function LandingDeck() {
   const spotlightTargetRef = useRef<Point>({ x: 0, y: 0 });
   const pulseFrameRef = useRef<number | null>(null);
   const pulseTimerRef = useRef<number | null>(null);
+
+  const cancelVideoProgressMonitor = useCallback(() => {
+    const video = videoRef.current;
+
+    if (
+      video &&
+      videoFrameCallbackRef.current !== null &&
+      typeof video.cancelVideoFrameCallback === 'function'
+    ) {
+      video.cancelVideoFrameCallback(videoFrameCallbackRef.current);
+    }
+
+    videoFrameCallbackRef.current = null;
+  }, []);
+
+  const monitorVideoProgress = useCallback(
+    function monitor(_timestamp: number, metadata: VideoFrameMetadata) {
+      const video = videoRef.current;
+
+      if (!video) {
+        videoFrameCallbackRef.current = null;
+        return;
+      }
+
+      if (metadata.mediaTime >= CONTENT_REVEAL_AT_SECONDS) {
+        setContentVisible(true);
+        videoFrameCallbackRef.current = null;
+        return;
+      }
+
+      videoFrameCallbackRef.current = video.requestVideoFrameCallback(monitor);
+    },
+    [],
+  );
+
+  const handleVideoError = useCallback(() => {
+    cancelVideoProgressMonitor();
+    videoStartedRef.current = false;
+    setShouldLoadVideo(false);
+    setVideoReady(false);
+    setShowStaticLogo(true);
+    setContentVisible(true);
+  }, [cancelVideoProgressMonitor]);
+
+  const handleVideoTimeUpdate = useCallback(() => {
+    const video = videoRef.current;
+
+    if (video && video.currentTime >= CONTENT_REVEAL_AT_SECONDS) {
+      setContentVisible(true);
+    }
+  }, []);
+
+  const handleVideoEnded = useCallback(() => {
+    setContentVisible(true);
+  }, []);
+
+  const handleVideoCanPlay = useCallback(() => {
+    const video = videoRef.current;
+
+    if (!video || videoStartedRef.current) {
+      return;
+    }
+
+    videoStartedRef.current = true;
+    cancelVideoProgressMonitor();
+    video.pause();
+    video.currentTime = 0;
+    setContentVisible(false);
+    setVideoReady(true);
+
+    window.requestAnimationFrame(() => {
+      if (typeof video.requestVideoFrameCallback === 'function') {
+        videoFrameCallbackRef.current = video.requestVideoFrameCallback(
+          monitorVideoProgress,
+        );
+      }
+
+      void video.play().catch(handleVideoError);
+    });
+  }, [cancelVideoProgressMonitor, handleVideoError, monitorVideoProgress]);
 
   const animateBetaSpotlight = useCallback(
     function tick(timestamp: number) {
@@ -205,10 +295,17 @@ export function LandingDeck() {
 
   useEffect(() => {
     if (reducedMotion) {
+      cancelVideoProgressMonitor();
+      videoStartedRef.current = false;
       setShouldLoadVideo(false);
       setVideoReady(false);
+      setShowStaticLogo(true);
+      setContentVisible(true);
       return;
     }
+
+    setShowStaticLogo(false);
+    setContentVisible(false);
 
     const connection = (
       navigator as Navigator & { readonly connection?: NetworkInformation }
@@ -219,19 +316,17 @@ export function LandingDeck() {
       connection?.effectiveType === 'slow-2g' ||
       connection?.effectiveType === '2g'
     ) {
+      setShowStaticLogo(true);
+      setContentVisible(true);
       return;
     }
 
-    const startVideoLoad = () => setShouldLoadVideo(true);
+    // The first-frame SVG is already on screen, so start loading immediately and
+    // replace it only once the video has been rewound to frame zero.
+    setShouldLoadVideo(true);
+  }, [cancelVideoProgressMonitor, reducedMotion]);
 
-    if (typeof window.requestIdleCallback === 'function') {
-      const idleId = window.requestIdleCallback(startVideoLoad, { timeout: 700 });
-      return () => window.cancelIdleCallback(idleId);
-    }
-
-    const timerId = window.setTimeout(startVideoLoad, 180);
-    return () => window.clearTimeout(timerId);
-  }, [reducedMotion]);
+  useEffect(() => cancelVideoProgressMonitor, [cancelVideoProgressMonitor]);
 
   useEffect(() => {
     if (reducedMotion) {
@@ -263,30 +358,44 @@ export function LandingDeck() {
   }, [reducedMotion]);
 
   return (
-    <main className="cass-cinematic-home">
+    <main
+      className={`cass-cinematic-home${contentVisible ? ' is-content-visible' : ''}`}
+    >
       <div className="cass-cinematic-backdrop" aria-hidden="true">
-        <img
-          src={posterUrl}
-          alt=""
-          className="cass-cinematic-media cass-cinematic-poster"
-          draggable="false"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-        />
+        {!showStaticLogo ? (
+          <img
+            src={posterUrl}
+            alt=""
+            className="cass-cinematic-media cass-cinematic-poster"
+            draggable="false"
+            loading="eager"
+            decoding="sync"
+          />
+        ) : null}
+        {showStaticLogo ? (
+          <img
+            src={logoUrl}
+            alt=""
+            className="cass-cinematic-static-logo"
+            draggable="false"
+            loading="eager"
+            decoding="async"
+          />
+        ) : null}
         {shouldLoadVideo ? (
           <video
+            ref={videoRef}
             className={`cass-cinematic-media cass-cinematic-video${videoReady ? ' is-ready' : ''}`}
             src={videoUrl}
             poster={posterUrl}
-            autoPlay
             muted
-            loop
             playsInline
-            preload="metadata"
+            preload="auto"
             tabIndex={-1}
-            onPlaying={() => setVideoReady(true)}
-            onError={() => setShouldLoadVideo(false)}
+            onCanPlay={handleVideoCanPlay}
+            onTimeUpdate={handleVideoTimeUpdate}
+            onEnded={handleVideoEnded}
+            onError={handleVideoError}
           />
         ) : null}
         <div className="cass-cinematic-vignette" />
@@ -297,13 +406,6 @@ export function LandingDeck() {
 
       <section className="cass-cinematic-content" aria-label="Cass landing page">
         <div className="cass-cinematic-copy">
-          <img
-            src={logoUrl}
-            alt="Cass"
-            className="cass-cinematic-logo cass-cinematic-enter cass-cinematic-enter-logo"
-            draggable="false"
-          />
-
           <h1 className="cass-cinematic-headline cass-cinematic-enter cass-cinematic-enter-headline">
             find your person
           </h1>

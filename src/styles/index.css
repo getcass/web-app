@@ -9,7 +9,7 @@
   --cass-safe-left: env(safe-area-inset-left, 0px);
   --cass-shell-height: 100vh;
   --cass-home-gutter: clamp(1.5rem, 3.2vw, 2.75rem);
-  background-color: #050509;
+  background-color: #fff;
 }
 
 @supports (height: 100svh) {
@@ -29,7 +29,7 @@ html {
   max-width: 100%;
   overflow-x: hidden;
   overflow-x: clip;
-  background-color: #050509;
+  background-color: #fff;
 }
 
 body {
@@ -39,7 +39,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   overflow-x: clip;
-  background-color: #050509;
+  background-color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -73,8 +73,8 @@ body.cass-home-locked #root {
   height: var(--cass-shell-height);
   min-height: var(--cass-shell-height);
   overflow: hidden;
-  background: #050509;
-  color: #fff;
+  background: #fff;
+  color: #111;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -87,7 +87,7 @@ body.cass-home-locked #root {
 .cass-cinematic-backdrop {
   z-index: 0;
   overflow: hidden;
-  background: #050509;
+  background: #fff;
   pointer-events: none;
 }
 
@@ -95,26 +95,38 @@ body.cass-home-locked #root {
   position: absolute;
   inset: 0;
   width: 100%;
+  max-width: none;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: 50% 50%;
-  transform: scale(1.015);
   backface-visibility: hidden;
+}
+
+.cass-cinematic-static-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  display: block;
+  width: 54%;
+  height: auto;
+  filter: brightness(0);
+  transform: translate(-50%, -66%);
 }
 
 .cass-cinematic-poster {
   z-index: 0;
-  filter: saturate(0.88) contrast(1.06);
 }
 
 .cass-cinematic-video {
   z-index: 1;
   opacity: 0;
-  transition: opacity 420ms ease;
+  visibility: hidden;
 }
 
 .cass-cinematic-video.is-ready {
   opacity: 1;
+  visibility: visible;
 }
 
 .cass-cinematic-vignette,
@@ -124,6 +136,7 @@ body.cass-home-locked #root {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  display: none;
 }
 
 .cass-cinematic-vignette {
@@ -160,7 +173,7 @@ body.cass-home-locked #root {
 .cass-cinematic-content {
   z-index: 10;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   padding:
     calc(var(--cass-safe-top) + var(--cass-home-gutter))
@@ -190,32 +203,40 @@ body.cass-home-locked #root {
 }
 
 .cass-cinematic-enter {
+  --cass-enter-delay: 0ms;
+
   opacity: 0;
-  animation: cass-cinematic-fade-in 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+}
+
+.cass-cinematic-home.is-content-visible .cass-cinematic-enter {
+  animation: cass-cinematic-fade-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--cass-enter-delay);
 }
 
 .cass-cinematic-enter-logo {
-  animation-delay: 140ms;
+  --cass-enter-delay: 0ms;
 }
 
 .cass-cinematic-enter-headline {
-  animation-delay: 2750ms;
+  --cass-enter-delay: 0ms;
 }
 
 .cass-cinematic-enter-intentional {
-  animation-delay: 950ms;
+  --cass-enter-delay: 120ms;
 }
 
 .cass-cinematic-enter-trust {
-  animation-delay: 1550ms;
+  --cass-enter-delay: 240ms;
 }
 
 .cass-cinematic-enter-action {
-  animation-delay: 2150ms;
+  --cass-enter-delay: 360ms;
 }
 
 .cass-cinematic-enter-footer {
-  animation-delay: 2750ms;
+  --cass-enter-delay: 480ms;
 }
 
 .cass-cinematic-logo {
@@ -233,7 +254,7 @@ body.cass-home-locked #root {
   bottom: calc(var(--cass-safe-bottom) + var(--cass-home-gutter));
   max-width: min(18rem, calc(100% - (2 * var(--cass-home-gutter))));
   margin: 0;
-  color: rgba(255, 255, 255, 0.98);
+  color: rgba(17, 17, 17, 0.92);
   font-family: 'TAN Nimbus', Georgia, serif;
   font-size: 0.875rem;
   font-weight: 400;
@@ -246,7 +267,7 @@ body.cass-home-locked #root {
 .cass-cinematic-subcopy {
   max-width: 33rem;
   margin: 1.35rem auto 0;
-  color: rgba(255, 255, 255, 0.76);
+  color: rgba(17, 17, 17, 0.72);
   font-size: 1.05rem;
   font-weight: 450;
   line-height: 1.48;
@@ -282,7 +303,7 @@ body.cass-home-locked #root {
   border-radius: 9999px;
   padding: 0 1.35rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.72);
+  color: #fff;
   cursor: not-allowed;
   font: inherit;
   font-size: 0.85rem;
@@ -291,9 +312,7 @@ body.cass-home-locked #root {
   line-height: 1;
   opacity: 0.9;
   pointer-events: none;
-  box-shadow:
-    0 10px 34px rgba(0, 0, 0, 0.18),
-    0 0 0 0 rgba(143, 95, 255, 0);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
   transition: box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -310,7 +329,7 @@ body.cass-home-locked #root {
 .cass-cinematic-beta-fill {
   z-index: 0;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
+  background: #111;
 }
 
 .cass-cinematic-beta-energy {
@@ -407,17 +426,15 @@ body.cass-home-locked #root {
 
 .cass-cinematic-beta-edge {
   z-index: 3;
-  border: 1px solid rgba(255, 255, 255, 0.19);
-  box-shadow:
-    inset 0.75px 0.75px 0 rgba(255, 255, 255, 0.24),
-    inset -0.75px -0.75px 1px rgba(255, 255, 255, 0.14);
+  border: 1px solid #111;
+  box-shadow: none;
 }
 
 .cass-cinematic-beta-label {
   position: relative;
   z-index: 4;
-  color: rgba(255, 255, 255, 0.94);
-  text-shadow: 0 1px 9px rgba(7, 4, 13, 0.5);
+  color: #fff;
+  text-shadow: none;
 }
 
 @keyframes cass-cinematic-beta-shimmer {
@@ -569,7 +586,7 @@ body.cass-home-locked #root {
 
 .cass-cinematic-legal-link,
 .cass-nav-link {
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(17, 17, 17, 0.58);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -583,7 +600,7 @@ body.cass-home-locked #root {
 .cass-cinematic-legal-link:focus-visible,
 .cass-nav-link:hover,
 .cass-nav-link:focus-visible {
-  color: rgba(255, 255, 255, 0.96);
+  color: rgba(17, 17, 17, 0.96);
   outline: none;
 }
 
@@ -595,6 +612,16 @@ body.cass-home-locked #root {
 }
 
 @media (max-width: 640px) {
+  .cass-cinematic-poster,
+  .cass-cinematic-video {
+    left: -25%;
+    width: 150%;
+  }
+
+  .cass-cinematic-static-logo {
+    width: 65.9%;
+  }
+
   .cass-cinematic-subcopy {
     max-width: 21rem;
   }
@@ -620,6 +647,7 @@ body.cass-home-locked #root {
   .cass-cinematic-enter {
     opacity: 1;
     animation: none;
+    transform: none;
   }
 
   .cass-cinematic-video {
