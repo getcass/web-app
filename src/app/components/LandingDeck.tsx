@@ -400,10 +400,12 @@ export function LandingDeck() {
             className={`cass-cinematic-media cass-cinematic-video${videoReady ? ' is-ready' : ''}`}
             src={videoUrl}
             poster={posterUrl}
+            autoPlay
             muted
             playsInline
             preload="auto"
             tabIndex={-1}
+            onLoadedData={handleVideoCanPlay}
             onCanPlay={handleVideoCanPlay}
             onTimeUpdate={handleVideoTimeUpdate}
             onEnded={handleVideoEnded}
