@@ -3,7 +3,7 @@ import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { WORDMARK_PATHS } from "./logoPaths";
 
 export const CASS_LOGO_REVEAL = {
-  durationInFrames: 336,
+  durationInFrames: 376,
   fps: 60,
   height: 630,
   width: 1500,
@@ -19,14 +19,15 @@ const TIMELINE = {
   morphStart: 112,
   heartBuilt: 218,
   heartLiftStart: 232,
-  wordmarkStart: 238,
-  wordmarkEnd: 266,
-  assembledHoldEnd: 286,
-  finalMoveEnd: 322,
+  heartLiftEnd: 266,
+  wordmarkStart: 278,
+  wordmarkEnd: 306,
+  assembledHoldEnd: 326,
+  finalMoveEnd: 362,
 } as const;
 
-const INTRO_SCALE = 0.62;
-const FINAL_SCALE = 0.54;
+const INTRO_SCALE = 0.55;
+const FINAL_SCALE = 0.48;
 const HEART_CENTER_OFFSET_Y = 224;
 const LIQUID_SCALE_X = 1.552;
 const LIQUID_SCALE_Y = 1.383;
@@ -656,7 +657,7 @@ const LiquidHeart: React.FC = () => {
   const lift = timelineProgress(
     frame,
     TIMELINE.heartLiftStart,
-    TIMELINE.wordmarkEnd,
+    TIMELINE.heartLiftEnd,
   );
 
   if (frame >= TIMELINE.heartBuilt) {

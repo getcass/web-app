@@ -9,6 +9,7 @@ import logoUrl from '../../assets/logo.svg';
 import posterUrl from '../../assets/cass-logo-reveal-poster.png';
 import videoUrl from '../../assets/cass-logo-reveal.mp4';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { LivingBlob } from './LivingBlob';
 
 const LEGAL_LINKS = [
   { href: 'terms/', label: 'Terms' },
@@ -27,7 +28,7 @@ type Point = {
 
 const BETA_PULSE_CLEANUP_DELAY = 420;
 const BETA_REDUCED_PULSE_CLEANUP_DELAY = 220;
-const CONTENT_REVEAL_AT_SECONDS = 4.88;
+const CONTENT_REVEAL_AT_SECONDS = 5.55;
 
 type VideoFrameMetadata = {
   readonly mediaTime: number;
@@ -37,6 +38,7 @@ export function LandingDeck() {
   const reducedMotion = usePrefersReducedMotion();
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const [showLivingBlob, setShowLivingBlob] = useState(false);
   const [showStaticLogo, setShowStaticLogo] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -90,6 +92,7 @@ export function LandingDeck() {
     videoStartedRef.current = false;
     setShouldLoadVideo(false);
     setVideoReady(false);
+    setShowLivingBlob(false);
     setShowStaticLogo(true);
     setContentVisible(true);
   }, [cancelVideoProgressMonitor]);
@@ -103,7 +106,12 @@ export function LandingDeck() {
   }, []);
 
   const handleVideoEnded = useCallback(() => {
+    setShowLivingBlob(false);
     setContentVisible(true);
+  }, []);
+
+  const handleLivingBlobComplete = useCallback(() => {
+    setShowLivingBlob(false);
   }, []);
 
   const handleVideoCanPlay = useCallback(() => {
@@ -119,6 +127,7 @@ export function LandingDeck() {
     video.currentTime = 0;
     setContentVisible(false);
     setVideoReady(true);
+    setShowLivingBlob(true);
 
     window.requestAnimationFrame(() => {
       if (typeof video.requestVideoFrameCallback === 'function') {
@@ -299,6 +308,7 @@ export function LandingDeck() {
       videoStartedRef.current = false;
       setShouldLoadVideo(false);
       setVideoReady(false);
+      setShowLivingBlob(false);
       setShowStaticLogo(true);
       setContentVisible(true);
       return;
@@ -306,6 +316,7 @@ export function LandingDeck() {
 
     setShowStaticLogo(false);
     setContentVisible(false);
+    setShowLivingBlob(false);
 
     const connection = (
       navigator as Navigator & { readonly connection?: NetworkInformation }
@@ -318,6 +329,7 @@ export function LandingDeck() {
     ) {
       setShowStaticLogo(true);
       setContentVisible(true);
+      setShowLivingBlob(false);
       return;
     }
 
@@ -396,6 +408,12 @@ export function LandingDeck() {
             onTimeUpdate={handleVideoTimeUpdate}
             onEnded={handleVideoEnded}
             onError={handleVideoError}
+          />
+        ) : null}
+        {showLivingBlob && videoReady ? (
+          <LivingBlob
+            mediaRef={videoRef}
+            onComplete={handleLivingBlobComplete}
           />
         ) : null}
         <div className="cass-cinematic-vignette" />

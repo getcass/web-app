@@ -2,7 +2,7 @@
 
 ## Cass logo reveal
 
-`CassLogoReveal` is the 5.6-second, 60 fps identity animation used by the
+`CassLogoReveal` is the 6.27-second, 60 fps identity animation used by the
 homepage. It renders at the logo's native 1500 × 630 aspect ratio. One flat
 black gel form begins alone in the centre at a steady visual mass and flows
 through twelve independently phased, spatially softened edge motions into the
@@ -26,6 +26,19 @@ homepage buffers its first decoded frame before playback so the reveal always
 starts from frame zero rather than fading in halfway through the animation. A
 matching frame-zero PNG poster prevents a blank first paint while the MP4
 decodes.
+
+On the homepage, a live SVG covers the opening through frame 224 while this
+MP4 plays underneath as the master clock. Each mount receives a cryptographic
+motion seed, producing travelling asymmetric bulges and a smooth wandering
+spin. Twelve broad motion drivers are interpolated across 36 anchors and
+spatially softened. A smooth convex support envelope and periodic cubic
+B-spline then turn those anchors into a fully outward-curving 36-cubic contour,
+so the live blob stays rounded without dents, cusps, or small independent
+ripples. The seeded geometry begins converging to the exact 36-cubic heart at
+frame 112 and reaches it at frame 218; the SVG is then removed during the
+stable-heart hold, leaving the approved wordmark choreography in the video
+unchanged. Reduced-motion, data-saver, and playback-error paths continue to use
+the static logo.
 
 ## Cass cinematic sizzle
 

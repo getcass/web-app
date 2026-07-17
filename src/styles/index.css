@@ -108,7 +108,7 @@ body.cass-home-locked #root {
   left: 50%;
   z-index: 0;
   display: block;
-  width: 54%;
+  width: 48%;
   height: auto;
   filter: brightness(0);
   transform: translate(-50%, -66%);
@@ -127,6 +127,12 @@ body.cass-home-locked #root {
 .cass-cinematic-video.is-ready {
   opacity: 1;
   visibility: visible;
+}
+
+.cass-cinematic-living-blob {
+  z-index: 2;
+  display: block;
+  pointer-events: none;
 }
 
 .cass-cinematic-vignette,
@@ -553,6 +559,11 @@ body.cass-home-locked #root {
   .cass-cinematic-beta-button[data-hovered='true'] .cass-cinematic-beta-energy::after {
     opacity: 0.34;
   }
+
+  .cass-cinematic-action-shell:hover .cass-cinematic-beta-edge,
+  .cass-cinematic-beta-button[data-hovered='true'] .cass-cinematic-beta-edge {
+    border-color: transparent;
+  }
 }
 
 .cass-cinematic-beta-button[data-pulsing='true'] {
@@ -565,6 +576,10 @@ body.cass-home-locked #root {
 
 .cass-cinematic-beta-button[data-pulsing='true'] .cass-cinematic-beta-pulse::before {
   animation-play-state: running;
+}
+
+.cass-cinematic-beta-button[data-pulsing='true'] .cass-cinematic-beta-edge {
+  border-color: transparent;
 }
 
 .cass-cinematic-footer {
@@ -613,13 +628,14 @@ body.cass-home-locked #root {
 
 @media (max-width: 640px) {
   .cass-cinematic-poster,
-  .cass-cinematic-video {
+  .cass-cinematic-video,
+  .cass-cinematic-living-blob {
     left: -25%;
     width: 150%;
   }
 
   .cass-cinematic-static-logo {
-    width: 65.9%;
+    width: 58.6%;
   }
 
   .cass-cinematic-subcopy {
