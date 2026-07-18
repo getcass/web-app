@@ -551,13 +551,23 @@ const getLocalMotion = (frame: number, anchorIndex: number, motions: readonly Lo
 
 const softLimit = (value: number, limit: number) => limit * Math.tanh(value / limit);
 
-const getLivingPoints = (mediaTime: number, profile: CassBlobProfile) => {
+const getLivingPoints = (
+  mediaTime: number,
+  profile: CassBlobProfile,
+  morphToHeart: boolean,
+) => {
   const frame = mediaTime * FRAME_RATE;
   const seconds = mediaTime * MOTION_TIME_SCALE;
   const entry = timelineProgress(frame, 0, 22);
-  const heartProgress = timelineProgress(frame, CASS_BLOB_TIMELINE.morphStartFrame, CASS_BLOB_TIMELINE.exactHeartFrame);
+  const heartProgress = morphToHeart
+    ? timelineProgress(
+        frame,
+        CASS_BLOB_TIMELINE.morphStartFrame,
+        CASS_BLOB_TIMELINE.exactHeartFrame,
+      )
+    : 0;
 
-  if (frame >= CASS_BLOB_TIMELINE.exactHeartFrame) {
+  if (morphToHeart && frame >= CASS_BLOB_TIMELINE.exactHeartFrame) {
     return HEART_TARGET_POINTS;
   }
 
@@ -659,4 +669,9 @@ const getLivingPoints = (mediaTime: number, profile: CassBlobProfile) => {
 };
 
 export const getCassBlobPath = (mediaTime: number, profile: CassBlobProfile) =>
-  buildCubicPath(getLivingPoints(Math.max(mediaTime, 0), profile));
+  buildCubicPath(getLivingPoints(Math.max(mediaTime, 0), profile, true));
+
+export const getCassLivingBlobPath = (
+  mediaTime: number,
+  profile: CassBlobProfile,
+) => buildCubicPath(getLivingPoints(Math.max(mediaTime, 0), profile, false));
