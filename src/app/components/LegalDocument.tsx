@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import "@fontsource/jetbrains-mono/latin-400.css";
 import "@fontsource/jetbrains-mono/latin-500.css";
 import logo from "../../assets/logo.svg";
-import { requestHomeWithoutIntro } from "../../shared/cassIntroNavigation";
 
 type LegalDocumentProps = {
   title: string;
@@ -33,7 +32,6 @@ export function LegalDocument({
             href="../"
             className="cass-legal-back"
             aria-label="Back to Cass home"
-            onClick={requestHomeWithoutIntro}
           >
             <svg aria-hidden="true" viewBox="0 0 24 24">
               <path d="M15 5 8 12l7 7M8 12h12" />

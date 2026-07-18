@@ -1,8 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import logoUrl from '../../assets/logo.svg';
-import { consumeHomeIntroSkip } from '../../shared/cassIntroNavigation';
-import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import { LivingBlob } from './LivingBlob';
+import { JournalDotPattern } from './JournalDotPattern';
 
 const LEGAL_LINKS = [
   { href: 'terms/', label: 'Terms' },
@@ -10,14 +8,6 @@ const LEGAL_LINKS = [
 ] as const;
 
 export function LandingDeck() {
-  const reducedMotion = usePrefersReducedMotion();
-  const [skipIntro] = useState(consumeHomeIntroSkip);
-  const [introComplete, setIntroComplete] = useState(reducedMotion || skipIntro);
-
-  const handleIntroComplete = useCallback(() => {
-    setIntroComplete(true);
-  }, []);
-
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -31,22 +21,13 @@ export function LandingDeck() {
     };
   }, []);
 
-  useEffect(() => {
-    if (reducedMotion) {
-      setIntroComplete(true);
-    }
-  }, [reducedMotion]);
-
   return (
-    <main
-      className={`cass-cinematic-home${introComplete ? ' is-intro-complete is-content-visible' : ''}${skipIntro ? ' is-intro-skipped' : ''}`}
-      data-intro-complete={introComplete}
-      data-intro-skipped={skipIntro}
-    >
+    <main className="cass-cinematic-home">
       <div className="cass-cinematic-backdrop" aria-hidden="true">
-        {!introComplete && !reducedMotion ? (
-          <LivingBlob onComplete={handleIntroComplete} />
-        ) : null}
+        <div className="cass-journal-background" aria-hidden="true">
+          <div className="cass-dot-field" />
+          <JournalDotPattern />
+        </div>
       </div>
 
       <div className="cass-cinematic-logo-layer">

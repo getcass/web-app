@@ -72,6 +72,8 @@ body.cass-home-locked #root {
 }
 
 .cass-cinematic-home {
+  --cass-crosshair-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 15 15'%3E%3Cpath d='M7.5 2.25V12.75M2.25 7.5H12.75' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M7.5 2.25V12.75M2.25 7.5H12.75' fill='none' stroke='%23111111' stroke-width='1.1' stroke-linecap='round'/%3E%3C/svg%3E") 8 8, crosshair;
+
   position: fixed;
   inset: 0;
   isolation: isolate;
@@ -79,7 +81,7 @@ body.cass-home-locked #root {
   height: var(--cass-shell-height);
   min-height: var(--cass-shell-height);
   overflow: hidden;
-  background: #000;
+  background: #fff;
   color: #111;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -87,65 +89,47 @@ body.cass-home-locked #root {
 .cass-cinematic-backdrop {
   position: absolute;
   inset: 0;
-}
-
-.cass-cinematic-backdrop {
   z-index: 0;
   overflow: hidden;
-  background: #000;
-  pointer-events: none;
-}
-
-.cass-cinematic-home.is-intro-complete,
-.cass-cinematic-home.is-intro-complete .cass-cinematic-backdrop {
   background: #fff;
+  pointer-events: none;
 }
 
-.cass-cinematic-living-blob {
+.cass-journal-background {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cass-dot-field {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at center,
+    #a8a8a8 0 1.02px,
+    transparent 1.24px
+  );
+  background-position: 11px 11px;
+  background-size: 22px 22px;
+}
+
+.cass-dot-pattern {
+  position: absolute;
+  inset: 0;
   display: block;
-  width: 1500px;
-  max-width: none;
-  height: 630px;
-  backface-visibility: hidden;
-  /* Keep the initial blob fixed-size without clipping the flood to this canvas. */
-  overflow: visible;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-}
-
-.cass-cinematic-blob-shape {
-  --cass-blob-flood-scale-end: 15;
-
-  transform: scale(0.55);
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
-
-.cass-cinematic-blob-measure {
-  opacity: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-@keyframes cass-cinematic-blob-flood {
-  0% {
-    transform: scale(0.55);
+@media (hover: hover) and (pointer: fine),
+  (any-hover: hover) and (any-pointer: fine) {
+  .cass-cinematic-home,
+  .cass-cinematic-home a {
+    cursor: var(--cass-crosshair-cursor);
   }
-
-  100% {
-    transform: scale(var(--cass-blob-flood-scale-end));
-  }
-}
-
-.cass-cinematic-blob-shape.is-flooding {
-  animation:
-    cass-cinematic-blob-flood
-    var(--cass-blob-flood-duration)
-    cubic-bezier(0.12, 0.78, 0.22, 1)
-    both;
 }
 
 .cass-cinematic-logo-layer {
@@ -182,19 +166,10 @@ body.cass-home-locked #root {
   --cass-enter-delay: 0ms;
 
   opacity: 0;
-  transform: translateY(10px) scale(0.985);
-  will-change: opacity, transform;
-}
-
-.cass-cinematic-home.is-content-visible .cass-cinematic-enter {
   animation: cass-cinematic-fade-in 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--cass-enter-delay);
-}
-
-.cass-cinematic-home.is-intro-skipped .cass-cinematic-enter {
-  opacity: 1;
-  animation: none;
-  transform: none;
+  transform: translateY(10px) scale(0.985);
+  will-change: opacity, transform;
 }
 
 .cass-cinematic-enter-headline {
@@ -239,6 +214,12 @@ body.cass-home-locked #root {
   gap: 1rem;
 }
 
+@media (min-width: 64rem) {
+  .cass-cinematic-static-logo {
+    width: min(32rem, calc(100vw - (2 * var(--cass-home-gutter))));
+  }
+}
+
 .cass-cinematic-legal-link,
 .cass-nav-link {
   color: rgba(17, 17, 17, 0.58);
@@ -248,7 +229,7 @@ body.cass-home-locked #root {
   line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 180ms ease, opacity 180ms ease;
+  transition: color 180ms ease, opacity 180ms ease, transform 180ms ease;
 }
 
 .cass-cinematic-legal-link:hover,
@@ -259,23 +240,16 @@ body.cass-home-locked #root {
   outline: none;
 }
 
+.cass-cinematic-legal-link:hover,
+.cass-cinematic-legal-link:focus-visible {
+  transform: translateY(-2px);
+}
+
 .cass-cinematic-legal-link:focus-visible,
 .cass-nav-link:focus-visible {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.35rem;
-}
-
-@media (max-aspect-ratio: 4 / 5) {
-  .cass-cinematic-blob-shape {
-    --cass-blob-flood-scale-end: 20;
-  }
-}
-
-@media (max-aspect-ratio: 1 / 2) {
-  .cass-cinematic-blob-shape {
-    --cass-blob-flood-scale-end: 24;
-  }
 }
 
 @media (max-height: 620px) {
@@ -294,6 +268,11 @@ body.cass-home-locked #root {
   .cass-cinematic-legal-link,
   .cass-nav-link {
     transition: none;
+  }
+
+  .cass-cinematic-legal-link:hover,
+  .cass-cinematic-legal-link:focus-visible {
+    transform: none;
   }
 }
 
