@@ -1,9 +1,16 @@
 import { useLayoutEffect, useRef } from 'react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
-const GRID_SIZE = 22;
-const DOT_RADIUS = 1.05;
+const DESKTOP_GRID_SIZE = 33;
+const DESKTOP_DOT_RADIUS = 1.4;
+const MOBILE_GRID_SIZE_MIN = 25.5;
+const MOBILE_GRID_SIZE_MAX = 30;
+const MOBILE_GRID_SIZE_VIEWPORT_RATIO = 0.072;
+const MOBILE_DOT_RADIUS_MIN = 0.82;
+const MOBILE_DOT_RADIUS_MAX = 1.01;
+const MOBILE_DOT_RADIUS_VIEWPORT_RATIO = 0.00235;
 const TAU = Math.PI * 2;
+const GREY = '#a8a8a8';
 const PINK = '#ff23b6';
 const PURPLE = '#8f5fff';
 
@@ -42,8 +49,10 @@ type PatternField = {
 type PatternScene = {
   readonly canvas: HTMLCanvasElement;
   readonly context: CanvasRenderingContext2D;
+  readonly dotRadius: number;
   readonly dots: readonly PatternDot[];
   readonly fields: readonly PatternField[];
+  readonly greyDots: PatternDot[];
   readonly height: number;
   readonly pinkDots: PatternDot[];
   readonly purpleDots: PatternDot[];
@@ -122,8 +131,8 @@ const createFields = (
 const buildScene = (canvas: HTMLCanvasElement, seed: number): PatternScene | null => {
   const context = canvas.getContext('2d');
   const bounds = canvas.getBoundingClientRect();
-  const width = Math.ceil(bounds.width);
-  const height = Math.ceil(bounds.height);
+  const width = bounds.width;
+  const height = bounds.height;
 
   if (!context || width <= 0 || height <= 0) {
     return null;
@@ -132,9 +141,22 @@ const buildScene = (canvas: HTMLCanvasElement, seed: number): PatternScene | nul
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
   canvas.width = Math.ceil(width * pixelRatio);
   canvas.height = Math.ceil(height * pixelRatio);
-  context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  context.setTransform(canvas.width / width, 0, 0, canvas.height / height, 0, 0);
 
   const largestDimension = Math.max(width, height);
+  const isDesktop = window.matchMedia('(min-width: 64rem)').matches;
+  const gridSize = isDesktop
+    ? DESKTOP_GRID_SIZE
+    : Math.min(
+        MOBILE_GRID_SIZE_MAX,
+        Math.max(MOBILE_GRID_SIZE_MIN, width * MOBILE_GRID_SIZE_VIEWPORT_RATIO),
+      );
+  const dotRadius = isDesktop
+    ? DESKTOP_DOT_RADIUS
+    : Math.min(
+        MOBILE_DOT_RADIUS_MAX,
+        Math.max(MOBILE_DOT_RADIUS_MIN, width * MOBILE_DOT_RADIUS_VIEWPORT_RATIO),
+      );
   const extentX = width / largestDimension / 2;
   const extentY = height / largestDimension / 2;
   const random = createRandom(seed);
@@ -142,8 +164,8 @@ const buildScene = (canvas: HTMLCanvasElement, seed: number): PatternScene | nul
   const fields = createFields(random, fieldCount, extentX, extentY);
   const dots: PatternDot[] = [];
 
-  for (let y = 0, row = 0; y <= height; y += GRID_SIZE, row += 1) {
-    for (let x = 0, column = 0; x <= width; x += GRID_SIZE, column += 1) {
+  for (let y = 0, row = 0; y <= height; y += gridSize, row += 1) {
+    for (let x = 0, column = 0; x <= width; x += gridSize, column += 1) {
       dots.push({
         edgeThreshold: 0.86 + coordinateHash(column, row, seed ^ 0x9e3779b9) * 0.26,
         normalizedX: (x - width / 2) / largestDimension,
@@ -157,8 +179,10 @@ const buildScene = (canvas: HTMLCanvasElement, seed: number): PatternScene | nul
   return {
     canvas,
     context,
+    dotRadius,
     dots,
     fields,
+    greyDots: [],
     height,
     pinkDots: [],
     purpleDots: [],
@@ -170,12 +194,13 @@ const drawDots = (
   context: CanvasRenderingContext2D,
   dots: readonly PatternDot[],
   color: string,
+  radius: number,
 ) => {
   context.beginPath();
 
   dots.forEach(({ x, y }) => {
-    context.moveTo(x + DOT_RADIUS, y);
-    context.arc(x, y, DOT_RADIUS, 0, TAU);
+    context.moveTo(x + radius, y);
+    context.arc(x, y, radius, 0, TAU);
   });
 
   context.fillStyle = color;
@@ -183,7 +208,18 @@ const drawDots = (
 };
 
 const paintScene = (scene: PatternScene, elapsedSeconds: number) => {
-  const { context, dots, fields, pinkDots, purpleDots, width, height } = scene;
+  const {
+    context,
+    dotRadius,
+    dots,
+    fields,
+    greyDots,
+    pinkDots,
+    purpleDots,
+    width,
+    height,
+  } = scene;
+  greyDots.length = 0;
   pinkDots.length = 0;
   purpleDots.length = 0;
 
@@ -220,13 +256,16 @@ const paintScene = (scene: PatternScene, elapsedSeconds: number) => {
       pinkDots.push(dot);
     } else if (color === 'purple') {
       purpleDots.push(dot);
+    } else {
+      greyDots.push(dot);
     }
   });
 
   context.clearRect(0, 0, width, height);
   context.globalAlpha = 1;
-  drawDots(context, purpleDots, PURPLE);
-  drawDots(context, pinkDots, PINK);
+  drawDots(context, greyDots, GREY, dotRadius);
+  drawDots(context, purpleDots, PURPLE, dotRadius);
+  drawDots(context, pinkDots, PINK, dotRadius);
 };
 
 export function JournalDotPattern() {

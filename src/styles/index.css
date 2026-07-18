@@ -103,18 +103,6 @@ body.cass-home-locked #root {
   pointer-events: none;
 }
 
-.cass-dot-field {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-    circle at center,
-    #a8a8a8 0 1.02px,
-    transparent 1.24px
-  );
-  background-position: 11px 11px;
-  background-size: 22px 22px;
-}
-
 .cass-dot-pattern {
   position: absolute;
   inset: 0;

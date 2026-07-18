@@ -25,7 +25,6 @@ export function LandingDeck() {
     <main className="cass-cinematic-home">
       <div className="cass-cinematic-backdrop" aria-hidden="true">
         <div className="cass-journal-background" aria-hidden="true">
-          <div className="cass-dot-field" />
           <JournalDotPattern />
         </div>
       </div>
