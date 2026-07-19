@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import '@fontsource/jetbrains-mono/latin-500.css';
 import logoUrl from '../../assets/logo.svg';
 import { JournalDotPattern } from './JournalDotPattern';
 

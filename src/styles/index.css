@@ -202,6 +202,12 @@ body.cass-home-locked #root {
   gap: 1rem;
 }
 
+.cass-cinematic-legal-link {
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+}
+
 @media (min-width: 64rem) {
   .cass-cinematic-static-logo {
     width: min(32rem, calc(100vw - (2 * var(--cass-home-gutter))));
